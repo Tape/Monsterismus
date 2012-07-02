@@ -14,3 +14,4 @@ public class EmptyBlock extends Block
     $graphics.rect(pos.x, pos.y, Board.BLOCK_SIZE, Board.BLOCK_SIZE);
   }
 }
+

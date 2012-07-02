@@ -12,3 +12,4 @@ public abstract class Block
   
   public abstract void draw(final PGraphics graphics);
 }
+

@@ -17,3 +17,4 @@ void draw()
 {
   board.draw(g);
 }
+
