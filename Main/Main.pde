@@ -1,4 +1,5 @@
 Board _board;
+Player _player;
 int _width, _height;
 float _last_time, _dt;
 
@@ -10,8 +11,10 @@ void setup()
   _height = sy * Board.BLOCK_SIZE;
   size(_width, _height);
   
-  //Build the board.
+  //Build the board and player.
   _board = new Board(sx, sy);
+  int offset = (Board.BLOCK_SIZE - Player.BLOCK_SIZE) / 2;
+  _player = new Player(new PVector(offset, offset));
   
   //Prep time calculations.
   _last_time = millis();
@@ -26,5 +29,19 @@ void draw()
   
   //Draw everything.
   _board.draw(g, _dt);
+  _player.draw(g, _dt);
 }
 
+void keyPressed()
+{
+  if(key == CODED && ! _player.isMoving())
+  {
+    switch(keyCode)
+    {
+    case UP: _player.move(Player.MOVE_UP); return;
+    case DOWN: _player.move(Player.MOVE_DOWN); return;
+    case LEFT: _player.move(Player.MOVE_LEFT); return;
+    case RIGHT: _player.move(Player.MOVE_RIGHT); return;
+    }
+  }
+}
