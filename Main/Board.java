@@ -1,36 +1,36 @@
 import processing.core.PVector;
 import processing.core.PGraphics;
 
-public class Board
+public class Board implements Drawable
 {
   public static final int BLOCK_SIZE = 30;
-  private Block[][] blocks;
-  private int sx, sy;
+  private Block[][] _blocks;
+  private int _size_x, _size_y;
   
   public Board(final int $sx, final int $sy)
   {
-    sx = $sx;
-    sy = $sy;
-    blocks = new Block[sx][sy];
+    _size_x = $sx;
+    _size_y = $sy;
+    _blocks = new Block[_size_x][_size_y];
     
     //Initialize board array.
-    for(int y = 0; y < sy; y++)
+    for(int y = 0; y < _size_y; y++)
     {
-      for(int x = 0; x < sx; x++)
+      for(int x = 0; x < _size_x; x++)
       {
-        blocks[x][y] = BlockFactory.create(new PVector(x * BLOCK_SIZE, y * BLOCK_SIZE), BlockType.EMPTY);
+        _blocks[x][y] = BlockFactory.create(new PVector(x * BLOCK_SIZE, y * BLOCK_SIZE), BlockType.EMPTY);
       }
     }
   }
   
-  public void draw(final PGraphics graphics)
+  public void draw(final PGraphics $graphics, final float $dt)
   {
-    graphics.rectMode(PGraphics.CORNER);
-    for(int y = 0; y < sy; y++)
+    $graphics.rectMode(PGraphics.CORNER);
+    for(int y = 0; y < _size_y; y++)
     {
-      for(int x = 0; x < sx; x++)
+      for(int x = 0; x < _size_x; x++)
       {
-        blocks[x][y].draw(graphics);
+        _blocks[x][y].draw($graphics, $dt);
       }
     }
   }

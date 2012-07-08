@@ -9,7 +9,6 @@ public class BlockFactory
     {
     case FOOD:
       return new FoodBlock($pos);
-    case EMPTY:
     default:
       return new EmptyBlock($pos);
     }

@@ -1,20 +1,30 @@
-Board board;
-PGraphics graphics;
-int width, height;
+Board _board;
+int _width, _height;
+float _last_time, _dt;
 
 void setup()
 {
+  //Prep the board size.
   int sx = 7, sy = 7;
-  width = sx * board.BLOCK_SIZE;
-  height = sy * board.BLOCK_SIZE;
+  _width = sx * Board.BLOCK_SIZE;
+  _height = sy * Board.BLOCK_SIZE;
+  size(_width, _height);
   
-  board = new Board(sx, sy);
-  size(width, height);
-  graphics = createGraphics(width, height, P2D);
+  //Build the board.
+  _board = new Board(sx, sy);
+  
+  //Prep time calculations.
+  _last_time = millis();
 }
 
 void draw()
 {
-  board.draw(g);
+  //Calculate the time delta.
+  float temp = millis();
+  _dt = (temp - _last_time) / 1000;
+  _last_time = temp;
+  
+  //Draw everything.
+  _board.draw(g, _dt);
 }
 

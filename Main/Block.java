@@ -1,7 +1,7 @@
 import processing.core.PVector;
 import processing.core.PGraphics;
 
-public abstract class Block
+public abstract class Block implements Drawable
 {
   protected PVector pos;
   
@@ -9,7 +9,5 @@ public abstract class Block
   {
     pos = $pos;
   }
-  
-  public abstract void draw(final PGraphics graphics);
 }
 
