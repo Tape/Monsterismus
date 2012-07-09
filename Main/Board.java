@@ -3,7 +3,10 @@ import processing.core.PGraphics;
 
 public class Board implements Drawable
 {
+  //Constants
   public static final int BLOCK_SIZE = 48;
+  
+  //Instance variables.
   private Block[][] _blocks;
   private int _size_x, _size_y;
   private PVector _dims;
@@ -11,9 +14,12 @@ public class Board implements Drawable
   
   private Board(final int $sx, final int $sy)
   {
+    //Store the size of the board.
     _size_x = $sx;
     _size_y = $sy;
     _dims = new PVector($sx * BLOCK_SIZE, $sy * BLOCK_SIZE);
+    
+    //Initialize the block array.
     _blocks = new Block[_size_x][_size_y];
     
     //Initialize board array.

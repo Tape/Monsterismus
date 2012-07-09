@@ -54,27 +54,29 @@ public class Player implements Drawable
   {
     if( ! _is_moving) return;
     
-    float distance = ($dt * BLOCK_SIZE) * ANIM_SPEED;
+    //Calculate the distance that will be moved.
+    boolean vertical = _move_direction < 3;
+    float distance = ($dt * BLOCK_SIZE) * ANIM_SPEED * _move_direction_modifier;
     
-    if(_move_direction < 3)
-    {
-      _position.y += distance * _move_direction_modifier;
-      if(Math.abs(_prev_position.y - _position.y) > Board.BLOCK_SIZE)
-      {
-        _position.y = _prev_position.y + _move_direction_modifier * Board.BLOCK_SIZE;
-        Board.getInstance().visitBlock(_position);
-        _is_moving = false;
-      }
-    }
+    //UP/DOWN movements.
+    if(vertical)
+      _position.y += distance;
+    //LEFT/RIGHT movements.
     else
+      _position.x += distance;
+    
+    if((vertical && Math.abs(_prev_position.y - _position.y) > Board.BLOCK_SIZE)
+      || Math.abs(_prev_position.x - _position.x) > Board.BLOCK_SIZE)
     {
-      _position.x += distance * _move_direction_modifier;
-      if(Math.abs(_prev_position.x - _position.x) > Board.BLOCK_SIZE)
-      {
+      //Set the final position.
+      if(vertical)
+        _position.y = _prev_position.y + _move_direction_modifier * Board.BLOCK_SIZE;
+      else
         _position.x = _prev_position.x + _move_direction_modifier * Board.BLOCK_SIZE;
-        Board.getInstance().visitBlock(_position);
-        _is_moving = false;
-      }
+      
+      //Visit the block and stop moving.
+      Board.getInstance().visitBlock(_position);
+      _is_moving = false;
     }
   }
   
