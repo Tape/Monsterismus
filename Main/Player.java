@@ -62,6 +62,7 @@ public class Player implements Drawable
       if(Math.abs(_prev_position.y - _position.y) > Board.BLOCK_SIZE)
       {
         _position.y = _prev_position.y + _move_direction_modifier * Board.BLOCK_SIZE;
+        Board.getInstance().visitBlock(_position);
         _is_moving = false;
       }
     }
@@ -71,6 +72,7 @@ public class Player implements Drawable
       if(Math.abs(_prev_position.x - _position.x) > Board.BLOCK_SIZE)
       {
         _position.x = _prev_position.x + _move_direction_modifier * Board.BLOCK_SIZE;
+        Board.getInstance().visitBlock(_position);
         _is_moving = false;
       }
     }

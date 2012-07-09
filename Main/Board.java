@@ -58,5 +58,13 @@ public class Board implements Drawable
   {
     return new PVector(_dims.x, _dims.y);
   }
+  
+  public void visitBlock(final PVector $position)
+  {
+    int x = (int) Math.floor($position.x / BLOCK_SIZE),
+        y = (int) Math.floor($position.y / BLOCK_SIZE);
+    
+    _blocks[x][y].doAction();
+  }
 }
 
