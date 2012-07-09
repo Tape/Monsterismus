@@ -89,3 +89,4 @@ public class Player implements Drawable
     return _is_moving;
   }
 }
+
