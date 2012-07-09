@@ -11,5 +11,9 @@ public class FoodBlock extends Block
   public void draw(final PGraphics $graphics, final float $dt)
   {
   }
+  
+  public void doAction()
+  {
+  }
 }
 

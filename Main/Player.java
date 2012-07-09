@@ -4,7 +4,7 @@ import processing.core.PGraphics;
 public class Player implements Drawable
 {
   //Size constants.
-  public static final int BLOCK_SIZE = 20;
+  public static final int BLOCK_SIZE = 34;
   
   //Movement constants
   public static final int MOVE_UP = 1;

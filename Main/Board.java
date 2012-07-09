@@ -3,7 +3,7 @@ import processing.core.PGraphics;
 
 public class Board implements Drawable
 {
-  public static final int BLOCK_SIZE = 30;
+  public static final int BLOCK_SIZE = 48;
   private Block[][] _blocks;
   private int _size_x, _size_y;
   private PVector _dims;

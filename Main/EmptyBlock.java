@@ -15,5 +15,7 @@ public class EmptyBlock extends Block
     $graphics.fill(FILL_COLOR);
     $graphics.rect(pos.x, pos.y, Board.BLOCK_SIZE, Board.BLOCK_SIZE);
   }
+  
+  public void doAction() { }
 }
 

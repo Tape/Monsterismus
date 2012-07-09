@@ -9,5 +9,7 @@ public abstract class Block implements Drawable
   {
     pos = $pos;
   }
+  
+  public abstract void doAction();
 }
 
