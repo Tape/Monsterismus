@@ -6,13 +6,13 @@ float _last_time, _dt;
 void setup()
 {
   //Prep the board size.
-  int sx = 7, sy = 7;
+  int sx = 10, sy = 10;
   _width = sx * Board.BLOCK_SIZE;
   _height = sy * Board.BLOCK_SIZE;
   size(_width, _height);
   
   //Build the board and player.
-  _board = new Board(sx, sy);
+  _board = Board.getInstance(sx, sy);
   int offset = (Board.BLOCK_SIZE - Player.BLOCK_SIZE) / 2;
   _player = new Player(new PVector(offset, offset));
   

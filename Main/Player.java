@@ -20,6 +20,7 @@ public class Player implements Drawable
   private boolean _is_moving = false;
   private PVector _position, _prev_position;
   private int _move_direction;
+  private float _move_direction_modifier;
   
   public Player(final PVector $pos)
   {
@@ -27,9 +28,25 @@ public class Player implements Drawable
   }
   
   public void move(final int $direction)
-  {
-    _prev_position = new PVector(_position.x, _position.y);
+  { 
+    //Prepare to validate the direction.
     _move_direction = $direction;
+    _move_direction_modifier = ((_move_direction & 1) > 0) ? -1.0f : 1.0f;
+    
+    //Validate the direction.
+    PVector newpos = new PVector(_position.x, _position.y),
+            boardDims = Board.getInstance().getDims();
+    
+    if(_move_direction < 3)
+      newpos.y += _move_direction_modifier * Board.BLOCK_SIZE;
+    else
+      newpos.x += _move_direction_modifier * Board.BLOCK_SIZE;
+    
+    if(newpos.x < 0 || newpos.x >= boardDims.x || newpos.y < 0 || newpos.y >= boardDims.y)
+      return;
+    
+    //Move is valid, store the previous position.
+    _prev_position = new PVector(_position.x, _position.y);
     _is_moving = true;
   }
   
@@ -37,29 +54,25 @@ public class Player implements Drawable
   {
     if( ! _is_moving) return;
     
-    float distance = ($dt * BLOCK_SIZE) * ANIM_SPEED,
-          dir = ((_move_direction & 1) > 0) ? -1 : 1;
+    float distance = ($dt * BLOCK_SIZE) * ANIM_SPEED;
     
-    switch(_move_direction)
+    if(_move_direction < 3)
     {
-    case MOVE_UP:
-    case MOVE_DOWN:
-      _position.y += distance * dir;
+      _position.y += distance * _move_direction_modifier;
       if(Math.abs(_prev_position.y - _position.y) > Board.BLOCK_SIZE)
       {
-        _position.y = _prev_position.y + dir * Board.BLOCK_SIZE;
+        _position.y = _prev_position.y + _move_direction_modifier * Board.BLOCK_SIZE;
         _is_moving = false;
       }
-      break;
-    case MOVE_LEFT:
-    case MOVE_RIGHT:
-      _position.x += distance * dir;
+    }
+    else
+    {
+      _position.x += distance * _move_direction_modifier;
       if(Math.abs(_prev_position.x - _position.x) > Board.BLOCK_SIZE)
       {
-        _position.x = _prev_position.x + dir * Board.BLOCK_SIZE;
+        _position.x = _prev_position.x + _move_direction_modifier * Board.BLOCK_SIZE;
         _is_moving = false;
       }
-      break;
     }
   }
   
