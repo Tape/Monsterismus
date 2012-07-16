@@ -1,7 +1,9 @@
 Board _board;
+Editor _editor;
 Player _player;
 int _width, _height;
 float _last_time, _dt;
+Drawable _screen;
 
 void setup()
 {
@@ -12,9 +14,11 @@ void setup()
   size(_width, _height);
   
   //Build the board and player.
-  _board = Board.getInstance(sx, sy);
+  _screen = _board = Board.getInstance(sx, sy);
+  _editor = new Editor(new PVector(_width, _height));
   int offset = (Board.BLOCK_SIZE - Player.BLOCK_SIZE) / 2;
   _player = new Player(new PVector(offset, offset));
+  _board.addEntity(_player);
   
   //Prep time calculations.
   _last_time = millis();
@@ -28,8 +32,7 @@ void draw()
   _last_time = temp;
   
   //Draw everything.
-  _board.draw(g, _dt);
-  _player.draw(g, _dt);
+  _screen.draw(g, _dt);
 }
 
 void keyPressed()
@@ -42,6 +45,19 @@ void keyPressed()
     case DOWN: _player.move(Player.MOVE_DOWN); return;
     case LEFT: _player.move(Player.MOVE_LEFT); return;
     case RIGHT: _player.move(Player.MOVE_RIGHT); return;
+    }
+  }
+  else
+  {
+    switch(key)
+    {
+      case 's':
+      case 'S':
+        if(_screen instanceof Board)
+          _screen = _editor;
+        else
+          _screen = _board;
+        break;
     }
   }
 }

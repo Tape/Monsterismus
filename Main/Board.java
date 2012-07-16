@@ -1,3 +1,6 @@
+import java.util.List;
+import java.util.ArrayList;
+
 import processing.core.PVector;
 import processing.core.PGraphics;
 
@@ -11,6 +14,7 @@ public class Board implements Drawable
   private int _size_x, _size_y;
   private PVector _dims;
   private static Board _board;
+  private List<Drawable> _entities = new ArrayList<Drawable>();
   
   private Board(final int $sx, final int $sy)
   {
@@ -48,8 +52,15 @@ public class Board implements Drawable
     return _board;
   }
   
+  public void addEntity(Drawable $entity)
+  {
+    _entities.add($entity);
+  }
+  
   public void draw(final PGraphics $graphics, final float $dt)
   {
+    //Set up the graphics mode to correcty draw the blocks
+    //and draw each block.
     $graphics.rectMode(PGraphics.CORNER);
     for(int y = 0; y < _size_y; y++)
     {
@@ -57,6 +68,12 @@ public class Board implements Drawable
       {
         _blocks[x][y].draw($graphics, $dt);
       }
+    }
+    
+    //Draw each entity associated with the board.
+    for(Drawable entity : _entities)
+    {
+      entity.draw($graphics, $dt);
     }
   }
   
