@@ -2,6 +2,8 @@ import processing.core.PGraphics;
 
 public interface Drawable
 {
-  public void draw(final PGraphics $graphics, final float $dt);
+  public void update(final float $dt);
+  
+  public void draw(final PGraphics $graphics);
 }
 

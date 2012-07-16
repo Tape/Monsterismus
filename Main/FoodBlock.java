@@ -8,7 +8,11 @@ public class FoodBlock extends Block
     super($pos);
   }
   
-  public void draw(final PGraphics $graphics, final float $dt)
+  public void update(final float $dt)
+  {
+  }
+  
+  public void draw(final PGraphics $graphics)
   {
   }
   

@@ -11,9 +11,14 @@ public class Editor implements Drawable
     _dims = $dims;
   }
   
-  public void draw(final PGraphics $graphics, final float $dt)
+  public void update(final float $dt)
+  {
+  }
+  
+  public void draw(final PGraphics $graphics)
   {
     $graphics.fill(FILL_COLOR);
     $graphics.rect(0, 0, _dims.x, _dims.y);
   }
 }
+

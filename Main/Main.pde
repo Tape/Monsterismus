@@ -31,13 +31,17 @@ void draw()
   _dt = (temp - _last_time) / 1000;
   _last_time = temp;
   
-  //Draw everything.
-  _screen.draw(g, _dt);
+  //Update the core screens.
+  _board.update(_dt);
+  _editor.update(_dt);
+  
+  //Draw only the current selected screen.
+  _screen.draw(g);
 }
 
 void keyPressed()
 {
-  if(key == CODED && ! _player.isMoving())
+  if(key == CODED && _screen instanceof Board && ! _player.isMoving())
   {
     switch(keyCode)
     {

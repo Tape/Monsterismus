@@ -50,7 +50,7 @@ public class Player implements Drawable
     _is_moving = true;
   }
   
-  private void update(final float $dt)
+  public void update(final float $dt)
   {
     if( ! _is_moving) return;
     
@@ -80,10 +80,8 @@ public class Player implements Drawable
     }
   }
   
-  public void draw(final PGraphics $graphics, final float $dt)
+  public void draw(final PGraphics $graphics)
   {
-    update($dt);
-    
     $graphics.fill(FILL_COLOR);
     $graphics.rect(_position.x, _position.y, BLOCK_SIZE, BLOCK_SIZE);
   }

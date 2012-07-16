@@ -57,7 +57,16 @@ public class Board implements Drawable
     _entities.add($entity);
   }
   
-  public void draw(final PGraphics $graphics, final float $dt)
+  public void update(final float $dt)
+  {
+    //Update each entity associated with the board.
+    for(Drawable entity : _entities)
+    {
+      entity.update($dt);
+    }
+  }
+  
+  public void draw(final PGraphics $graphics)
   {
     //Set up the graphics mode to correcty draw the blocks
     //and draw each block.
@@ -66,14 +75,14 @@ public class Board implements Drawable
     {
       for(int x = 0; x < _size_x; x++)
       {
-        _blocks[x][y].draw($graphics, $dt);
+        _blocks[x][y].draw($graphics);
       }
     }
     
     //Draw each entity associated with the board.
     for(Drawable entity : _entities)
     {
-      entity.draw($graphics, $dt);
+      entity.draw($graphics);
     }
   }
   

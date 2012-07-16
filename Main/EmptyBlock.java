@@ -10,7 +10,11 @@ public class EmptyBlock extends Block
     super($pos);
   }
   
-  public void draw(final PGraphics $graphics, final float $dt)
+  public void update(final float $dt)
+  {
+  }
+  
+  public void draw(final PGraphics $graphics)
   {
     $graphics.fill(FILL_COLOR);
     $graphics.rect(pos.x, pos.y, Board.BLOCK_SIZE, Board.BLOCK_SIZE);
