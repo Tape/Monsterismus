@@ -124,7 +124,22 @@ public class Editor implements Screen
       break;
     case MouseEvent.MOUSE_RELEASED:
       _dragstart = false;
-      _instance = null;
+      
+      if(_instance != null)
+      {
+        int offset = StatementInstance.SPACING,
+            prev_index = _instances.size() - 2;
+        
+        System.out.println(prev_index);
+        if(prev_index >= 0)
+        {
+          StatementInstance instance = _instances.get(prev_index);
+          offset += instance.getPos().y + instance.getHeight();
+        }
+        
+        _instance.setPos((int)_toolbar.x + StatementInstance.SPACING, offset);
+        _instance = null;
+      }
       break;
     }
   }

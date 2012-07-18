@@ -15,13 +15,18 @@ public class IfStatement extends ProgrammingStatement
   }
   
   private class IfStatementInstance extends StatementInstance
-  {
+  { 
     public void update(final float $dt) { }
     
     public void draw(final PGraphics $graphics)
     {
       $graphics.fill(FILL_COLOR);
       $graphics.rect(_pos.x, _pos.y, 200, 40);
+    }
+    
+    public int getHeight()
+    {
+      return 40;
     }
   }
 }
