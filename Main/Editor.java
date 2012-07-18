@@ -1,11 +1,15 @@
 import java.util.Collections;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
 import processing.core.PVector;
 import processing.core.PGraphics;
 
-public class Editor implements Drawable
+import java.awt.event.MouseEvent;
+
+public class Editor implements Screen
 {
   private static final int FILL_COLOR = 0xFFFFFFFF;
   private PVector _dims;
@@ -13,6 +17,13 @@ public class Editor implements Drawable
   
   //For drawing each icon in the toolbar.
   private int _icon_bounds, _icon_size, _icon_offset;
+  
+  //Related to the drag handling.
+  private boolean _dragstart;
+  
+  //List to contain all of our drawable elements.
+  StatementInstance _instance;
+  List<StatementInstance> _instances = new ArrayList<StatementInstance>();
   
   //Map containing our statements.
   private static final Map<Class, ProgrammingStatement> _statements;
@@ -62,6 +73,59 @@ public class Editor implements Drawable
       $graphics.rect(_icon_offset, offset + _icon_offset, _icon_size, _icon_size);
       
       offset += _icon_bounds;
+    }
+    
+    for(Drawable instance : _instances)
+    {
+      instance.draw($graphics);
+    }
+  }
+  
+  public void handleMouseEvent(MouseEvent $event)
+  {
+    int x = $event.getX(),
+        y = $event.getY();
+    
+    switch($event.getID())
+    {
+    case MouseEvent.MOUSE_MOVED:
+      break;
+    case MouseEvent.MOUSE_PRESSED:
+      _dragstart = true;
+      break;
+    case MouseEvent.MOUSE_DRAGGED:
+      if(_dragstart && x > _icon_offset && x < _icon_offset + _icon_size)
+      {
+        //Stop dragging.
+        _dragstart = false;
+        
+        //Helper values.
+        int index = y / _icon_bounds,
+            pos = y % _icon_bounds;
+        
+        //Get an array of statement types on the toolbar.
+        Class _statement_types[] = _statements.keySet().toArray(new Class[0]);
+        
+        if(index < _statement_types.length && pos > _icon_offset && pos < _icon_offset + _icon_size)
+        {
+          _instance = _statements.get(_statement_types[index]).spawnInstance();
+          _instances.add(_instance);
+        }
+        else
+        {
+          _instance = null;
+        }
+      }
+      
+      if(_instance != null)
+      {
+        _instance.setPos(x, y);
+      }
+      break;
+    case MouseEvent.MOUSE_RELEASED:
+      _dragstart = false;
+      _instance = null;
+      break;
     }
   }
 }

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import processing.core.PVector;
 import processing.core.PGraphics;
 
-public class Board implements Drawable
+import java.awt.event.MouseEvent;
+
+public class Board implements Screen
 {
   //Constants
   public static final int BLOCK_SIZE = 48;
@@ -97,6 +99,10 @@ public class Board implements Drawable
         y = (int) Math.floor($position.y / BLOCK_SIZE);
     
     _blocks[x][y].doAction();
+  }
+  
+  public void handleMouseEvent(MouseEvent $event)
+  {
   }
 }
 

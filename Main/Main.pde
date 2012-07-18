@@ -3,7 +3,7 @@ Editor _editor;
 Player _player;
 int _width, _height;
 float _last_time, _dt;
-Drawable _screen;
+Screen _screen;
 
 void setup()
 {
@@ -39,6 +39,11 @@ void draw()
   _screen.draw(g);
 }
 
+void mouseDragged() { _screen.handleMouseEvent(mouseEvent); }
+void mouseMoved() { _screen.handleMouseEvent(mouseEvent); }
+void mousePressed() { _screen.handleMouseEvent(mouseEvent); }
+void mouseReleased() { _screen.handleMouseEvent(mouseEvent); }
+
 void keyPressed()
 {
   if(key == CODED && _screen instanceof Board && ! _player.isMoving())
@@ -55,13 +60,13 @@ void keyPressed()
   {
     switch(key)
     {
-      case 's':
-      case 'S':
-        if(_screen instanceof Board)
-          _screen = _editor;
-        else
-          _screen = _board;
-        break;
+    case 's':
+    case 'S':
+      if(_screen instanceof Board)
+        _screen = _editor;
+      else
+        _screen = _board;
+      break;
     }
   }
 }

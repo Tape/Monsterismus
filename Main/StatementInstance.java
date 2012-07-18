@@ -9,5 +9,11 @@ public abstract class StatementInstance implements Drawable
   {
     _pos = new PVector();
   }
+  
+  public void setPos(int x, int y)
+  {
+    _pos.x = x;
+    _pos.y = y;
+  }
 }
 
