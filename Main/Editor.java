@@ -1,6 +1,6 @@
 import java.util.Collections;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -11,9 +11,14 @@ import java.awt.event.MouseEvent;
 
 public class Editor implements Screen
 {
+  //Fill color of the background.
   private static final int FILL_COLOR = 0xFFFFFFFF;
-  private PVector _dims;
-  private PVector _toolbar;
+  
+  //Vector for the dimensions of the screen and the toolbar.
+  private PVector _dims, _toolbar;
+  
+  //Cordinates where the mouse started dragging, in integer form.
+  private int _drag_start_x, _drag_start_y;
   
   //For drawing each icon in the toolbar.
   private int _icon_bounds, _icon_size, _icon_offset;
@@ -23,7 +28,7 @@ public class Editor implements Screen
   
   //List to contain all of our drawable elements.
   StatementInstance _instance;
-  List<StatementInstance> _instances = new ArrayList<StatementInstance>();
+  List<StatementInstance> _instances = new LinkedList<StatementInstance>();
   
   //Map containing our statements.
   private static final Map<Class, ProgrammingStatement> _statements;
@@ -92,16 +97,19 @@ public class Editor implements Screen
       break;
     case MouseEvent.MOUSE_PRESSED:
       _dragstart = true;
+      _drag_start_x = x;
+      _drag_start_y = y;
       break;
     case MouseEvent.MOUSE_DRAGGED:
-      if(_dragstart && x > _icon_offset && x < _icon_offset + _icon_size)
+      //If we are about to start dragging an item.
+      if(_dragstart && _drag_start_x > _icon_offset && _drag_start_x < _icon_offset + _icon_size)
       {
         //Stop dragging.
         _dragstart = false;
         
         //Helper values.
-        int index = y / _icon_bounds,
-            pos = y % _icon_bounds;
+        int index = _drag_start_y / _icon_bounds,
+            pos = _drag_start_y % _icon_bounds;
         
         //Get an array of statement types on the toolbar.
         Class _statement_types[] = _statements.keySet().toArray(new Class[0]);
@@ -117,6 +125,7 @@ public class Editor implements Screen
         }
       }
       
+      //If we are dragging an item.
       if(_instance != null)
       {
         _instance.setPos(x, y);
@@ -125,12 +134,19 @@ public class Editor implements Screen
     case MouseEvent.MOUSE_RELEASED:
       _dragstart = false;
       
+      //If we are dropping a currently carried instance.
       if(_instance != null)
       {
+        //Check and see if the instance is over the toolbar (that means we want to delete it)
+        if(x < _toolbar.x)
+        {
+          _instances.remove(_instance);
+          return;
+        }
+        
         int offset = StatementInstance.SPACING,
             prev_index = _instances.size() - 2;
         
-        System.out.println(prev_index);
         if(prev_index >= 0)
         {
           StatementInstance instance = _instances.get(prev_index);
