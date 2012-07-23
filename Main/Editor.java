@@ -101,7 +101,7 @@ public class Editor implements Screen
       _drag_start_y = y;
       break;
     case MouseEvent.MOUSE_DRAGGED:
-      //If we are about to start dragging an item.
+      //If we are about to start dragging an item from the toolbar.
       if(_dragstart && _drag_start_x > _icon_offset && _drag_start_x < _icon_offset + _icon_size)
       {
         //Stop dragging.
@@ -122,6 +122,20 @@ public class Editor implements Screen
         else
         {
           _instance = null;
+        }
+      }
+      //Otherwise we're on the board, let's find exactly which element is hovered over.
+      else if(_dragstart)
+      {
+        for(StatementInstance instance : _instances)
+        {
+          StatementInstance under = instance.instanceUnder(_drag_start_x, _drag_start_y);
+          
+          if(under != null)
+          {
+            _instance = under;
+            break;
+          }
         }
       }
       

@@ -23,6 +23,8 @@ public abstract class StatementInstance implements Drawable
     return _pos;
   }
   
+  public abstract boolean isChild();
+  public abstract StatementInstance instanceUnder(int $x, int $y);
   public abstract int getHeight();
 }
 

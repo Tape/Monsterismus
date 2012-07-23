@@ -3,6 +3,8 @@ import processing.core.PGraphics;
 public class IfStatement extends ProgrammingStatement
 {
   private static final int FILL_COLOR = 0xFFFF0000;
+  private static final int BASE_WIDTH = 200;
+  private static final int BASE_HEIGHT = 40;
   
   public int getColor()
   {
@@ -21,12 +23,27 @@ public class IfStatement extends ProgrammingStatement
     public void draw(final PGraphics $graphics)
     {
       $graphics.fill(FILL_COLOR);
-      $graphics.rect(_pos.x, _pos.y, 200, 40);
+      $graphics.rect(_pos.x, _pos.y, BASE_WIDTH, BASE_HEIGHT);
     }
     
     public int getHeight()
     {
-      return 40;
+      return BASE_HEIGHT;
+    }
+    
+    public StatementInstance instanceUnder(int $x, int $y)
+    {
+      if($x > _pos.x && $y > _pos.y
+        && $x < _pos.x + BASE_WIDTH && $y < _pos.y + BASE_HEIGHT)
+      {
+        return this;
+      }
+      return null;
+    }
+    
+    public boolean isChild()
+    {
+      return false;
     }
   }
 }
