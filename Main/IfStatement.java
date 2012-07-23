@@ -3,7 +3,7 @@ import processing.core.PGraphics;
 public class IfStatement extends ProgrammingStatement
 {
   private static final int FILL_COLOR = 0xFFFF0000;
-  private static final int BASE_WIDTH = 200;
+  private static final int BASE_WIDTH = 300;
   private static final int BASE_HEIGHT = 40;
   
   public int getColor()
@@ -24,6 +24,8 @@ public class IfStatement extends ProgrammingStatement
     {
       $graphics.fill(FILL_COLOR);
       $graphics.rect(_pos.x, _pos.y, BASE_WIDTH, BASE_HEIGHT);
+      $graphics.fill(0xFFFFFFFF);
+      $graphics.text(toString(), _pos.x + 3, _pos.y + 12);
     }
     
     public int getHeight()

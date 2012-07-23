@@ -93,8 +93,6 @@ public class Editor implements Screen
     
     switch($event.getID())
     {
-    case MouseEvent.MOUSE_MOVED:
-      break;
     case MouseEvent.MOUSE_PRESSED:
       _dragstart = true;
       _drag_start_x = x;
@@ -155,22 +153,46 @@ public class Editor implements Screen
         if(x < _toolbar.x)
         {
           _instances.remove(_instance);
-          return;
         }
-        
-        int offset = StatementInstance.SPACING,
-            prev_index = _instances.size() - 2;
-        
-        if(prev_index >= 0)
+        else
         {
-          StatementInstance instance = _instances.get(prev_index);
-          offset += instance.getPos().y + instance.getHeight();
+          int i, len;
+          //Remove the instance from the current list.
+          _instances.remove(_instance);
+          
+          //Find where it belongs using it's y position.
+          for(i = 0, len = _instances.size(); i < len; i++)
+          {
+            if(_instances.get(i).getPos().y > y)
+            {
+              _instances.add(i, _instance);
+              break;
+            }
+          }
+          
+          //This means we reached the end of the list.
+          if(i == len)
+          {
+            _instances.add(_instance);
+          }
         }
         
-        _instance.setPos((int)_toolbar.x + StatementInstance.SPACING, offset);
+        reshuffle();
         _instance = null;
       }
       break;
+    }
+  }
+  
+  private void reshuffle()
+  {
+    int offset_y = StatementInstance.SPACING,
+        offset_x = (int)_toolbar.x + StatementInstance.SPACING;
+    
+    for(StatementInstance instance : _instances)
+    {
+      instance.setPos(offset_x, offset_y);
+      offset_y += StatementInstance.SPACING + instance.getHeight();
     }
   }
 }
