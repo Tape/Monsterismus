@@ -9,8 +9,8 @@ import processing.core.PGraphics;
  * @author Trevor Vardeman
  * @author Carlos Martinez
  */
-public class FoodBlock extends Block {
-  public FoodBlock(final PVector $pos) {
+public class TreasureBlock extends Block {
+  public TreasureBlock(final PVector $pos) {
     super($pos);
   }
 
@@ -18,11 +18,9 @@ public class FoodBlock extends Block {
   }
 
   public void draw(final PGraphics $graphics) {
-    $graphics.fill(255,0,0);
+    $graphics.fill(255,255,0);
     $graphics.rect(pos.x, pos.y, Block.SIZE, Block.SIZE);
   }
 
-  public void doAction() {
-  }
+  public void doAction() { }
 }
-

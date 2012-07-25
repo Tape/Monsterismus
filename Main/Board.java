@@ -6,103 +6,278 @@ import processing.core.PGraphics;
 
 import java.awt.event.MouseEvent;
 
-public class Board implements Screen
-{
-  //Constants
-  public static final int BLOCK_SIZE = 48;
-  
+/**
+ *
+ * @author David Kosub
+ * @author Jeffery Wooldridge
+ * @author Matthew A. Johnston
+ * @author Trevor Vardeman
+ * @author Carlos Martinez
+ */
+public class Board implements Screen {
   //Instance variables.
   private Block[][] _blocks;
   private int _size_x, _size_y;
   private PVector _dims;
   private static Board _board;
   private List<Drawable> _entities = new ArrayList<Drawable>();
-  
-  private Board(final int $sx, final int $sy)
-  {
-    //Store the size of the board.
+  private int level;
+
+  /**
+   * Creates a new board instance
+   *
+   * @param $sx The width of the board
+   * @param $sy The height of the board
+   */
+  public Board(final int $sx, final int $sy) {
     _size_x = $sx;
     _size_y = $sy;
-    _dims = new PVector($sx * BLOCK_SIZE, $sy * BLOCK_SIZE);
-    
-    //Initialize the block array.
-    _blocks = new Block[_size_x][_size_y];
-    
-    //Initialize board array.
-    for(int y = 0; y < _size_y; y++)
-    {
-      for(int x = 0; x < _size_x; x++)
-      {
-        _blocks[x][y] = BlockFactory.create(new PVector(x * BLOCK_SIZE, y * BLOCK_SIZE), BlockType.EMPTY);
-      }
-    }
+    _dims = new PVector($sx * Block.SIZE, $sy * Block.SIZE);
+    level = 0;
+
+    this.generateBoard(level);
   }
-  
+
   public static Board getInstance()
   {
     if(_board == null)
       throw new RuntimeException("Board has not been created yet");
-    
+
     return _board;
   }
-  
+
   public static Board getInstance(int $sx, int $sy)
   {
     if(_board == null)
       return (_board = new Board($sx, $sy));
-    
+
     return _board;
   }
-  
-  public void addEntity(Drawable $entity)
-  {
+
+  public void addEntity(Drawable $entity) {
     _entities.add($entity);
   }
-  
-  public void update(final float $dt)
-  {
+
+  public void update(final float $dt) {
     //Update each entity associated with the board.
-    for(Drawable entity : _entities)
-    {
+    for(Drawable entity : _entities) {
       entity.update($dt);
     }
   }
-  
-  public void draw(final PGraphics $graphics)
-  {
+
+  public void draw(final PGraphics $graphics) {
     //Set up the graphics mode to correcty draw the blocks
     //and draw each block.
     $graphics.rectMode(PGraphics.CORNER);
-    for(int y = 0; y < _size_y; y++)
-    {
-      for(int x = 0; x < _size_x; x++)
-      {
+    for(int y = 0; y < _size_y; y++) {
+      for(int x = 0; x < _size_x; x++) {
         _blocks[x][y].draw($graphics);
       }
     }
-    
+
     //Draw each entity associated with the board.
-    for(Drawable entity : _entities)
-    {
+    for(Drawable entity : _entities) {
       entity.draw($graphics);
     }
   }
-  
-  public final PVector getDims()
-  {
+
+  public final PVector getDims() {
     return new PVector(_dims.x, _dims.y);
   }
-  
-  public void visitBlock(final PVector $position)
-  {
-    int x = (int) Math.floor($position.x / BLOCK_SIZE),
-        y = (int) Math.floor($position.y / BLOCK_SIZE);
-    
+
+  public void visitBlock(final PVector $position) {
+    int x = (int) Math.floor($position.x / Block.SIZE),
+        y = (int) Math.floor($position.y / Block.SIZE);
+
     _blocks[x][y].doAction();
   }
-  
-  public void handleMouseEvent(MouseEvent $event)
-  {
+
+  public void handleMouseEvent(MouseEvent $event) {
   }
+
+  /**
+   * Generates a new board. This will destroy the current board, if one is
+   * not present then that's okay
+   *
+   * @return void
+   */
+  public void generateBoard(int level) {
+    _blocks = new Block[_size_x][_size_y];
+
+    for(int y = 0; y < _size_y; y++) {
+      for(int x = 0; x < _size_x; x++) {
+        int[][] map = this.getLevel(level);
+        _blocks[x][y] = BlockFactory.create(new PVector(x * Block.SIZE, y * Block.SIZE), Block.Type.get(map[x][y]));
+      }
+    }
+  }
+
+  /**
+   * @return Gets the 2D integer array for the level provided
+   */
+  private static int[][] getLevel(int level) {
+    switch(level) {
+      case 0: return LEVEL_0;
+      case 1: return LEVEL_1;
+      case 2: return LEVEL_2;
+      case 3: return LEVEL_3;
+      case 4: return LEVEL_4;
+      case 5: return LEVEL_5;
+      case 6: return LEVEL_6;
+      case 7: return LEVEL_7;
+      case 8: return LEVEL_8;
+      case 9: return LEVEL_9;
+      default: return generateRandomLevel();
+    }
+  }
+
+  private static int[][] generateRandomLevel() {
+    int ret[][] = new int[10][10];
+
+    int treasure = 3;
+    int food = 8;
+
+    for(int y = 0; y < 10; y++) {
+      for(int x = 0; x < 10; x++) {
+        double r = Math.random();
+        if(r < 0.1) {
+          if(treasure > 0) {
+            ret[x][y] = Block.Type.TREASURE.value;
+            treasure--;
+          }
+        } else if ( r < 0.4 ) {
+          if(food > 0) {
+            ret[x][y] = Block.Type.FOOD.value;
+            food--;
+          }
+        } else {
+          ret[x][y] = Block.Type.EMPTY.value;
+        }
+      }
+    }
+
+    return ret;
+  }
+
+  public void nextLevel() {
+    this.generateBoard(++level);
+  }
+
+
+  // ###########################################################################
+  // The Static Levels
+  //
+  // @see Block.Type for more information on what the integer values mean.
+  // ###########################################################################
+  private static final int[][] LEVEL_0 =  { {0,0,0,0,0,0,0,0,0,1},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,1,1,0,0,0,0},
+                                            {0,0,0,0,2,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,2,0,0,0,0,0},
+                                            {1,0,0,0,0,0,0,0,0,1} };
+
+  private static final int[][] LEVEL_1 =  { {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,2,0,0,2,0,0,0},
+                                            {0,0,0,0,1,1,0,0,0,0},
+                                            {0,0,0,2,0,0,2,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0} };
+
+  private static final int[][] LEVEL_2 =  { {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0} };
+
+  private static final int[][] LEVEL_3 =  { {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0} };
+
+  private static final int[][] LEVEL_4 =  { {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0} };
+
+  private static final int[][] LEVEL_5 =  { {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0} };
+
+  private static final int[][] LEVEL_6 =  { {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0} };
+
+  private static final int[][] LEVEL_7 =  { {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0} };
+
+  private static final int[][] LEVEL_8 =  { {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0} };
+
+  private static final int[][] LEVEL_9 =  { {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0} };
+
 }
 
