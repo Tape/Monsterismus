@@ -20,8 +20,10 @@ public class Board implements Screen {
   private int _size_x, _size_y;
   private PVector _dims;
   private static Board _board;
-  private List<Drawable> _entities = new ArrayList<Drawable>();
+  private Player _player;
   private int level;
+  private Editor _editor;
+  private boolean _running = false;
 
   /**
    * Creates a new board instance
@@ -45,6 +47,21 @@ public class Board implements Screen {
 
     return _board;
   }
+  
+  public void setEditor(Editor $editor)
+  {
+    _editor = $editor;
+  }
+  
+  public void setRunning(boolean $running)
+  {
+    _running = $running;
+  }
+  
+  public void toggleRunning()
+  {
+    _running = !_running;
+  }
 
   public static Board getInstance(int $sx, int $sy)
   {
@@ -54,15 +71,35 @@ public class Board implements Screen {
     return _board;
   }
 
-  public void addEntity(Drawable $entity) {
-    _entities.add($entity);
+  public void setPlayer(Player $player) {
+    _player = $player;
   }
 
   public void update(final float $dt) {
-    //Update each entity associated with the board.
-    for(Drawable entity : _entities) {
-      entity.update($dt);
+    //If the activity is being run execute each statement.
+    StatementInstance instance = _editor.getStatement();
+    if(_running && instance != null || (instance != null && ! instance.isDone()))
+    {
+      if(instance.executed())
+      {
+        instance.reset();
+        if(_running)
+          instance = _editor.nextStatement();
+      }
+      else
+      {
+        instance.eval();
+        if( ! _running && instance.isDone())
+        {
+          instance.reset();
+          _editor.reset();
+          _player.reset();
+        }
+      }
     }
+    
+    //Update the player.
+    _player.update($dt);
   }
 
   public void draw(final PGraphics $graphics) {
@@ -75,10 +112,8 @@ public class Board implements Screen {
       }
     }
 
-    //Draw each entity associated with the board.
-    for(Drawable entity : _entities) {
-      entity.draw($graphics);
-    }
+    //Draw the player.
+    _player.draw($graphics);
   }
 
   public final PVector getDims() {
@@ -93,6 +128,11 @@ public class Board implements Screen {
   }
 
   public void handleMouseEvent(MouseEvent $event) {
+  }
+  
+  public Player getPlayer()
+  {
+    return _player;
   }
 
   /**
@@ -158,7 +198,7 @@ public class Board implements Screen {
 
     return ret;
   }
-
+  
   public void nextLevel() {
     this.generateBoard(++level);
   }

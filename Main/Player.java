@@ -14,10 +14,54 @@ public class Player implements Drawable {
   public static final int SIZE = 34;
 
   //Movement constants
-  public static final int MOVE_UP = 1;
-  public static final int MOVE_DOWN = 2;
-  public static final int MOVE_LEFT = 3;
-  public static final int MOVE_RIGHT = 4;
+  public enum Movement
+  {
+    UP(1, "Up"),
+    DOWN(2, "Down"),
+    LEFT(3, "Left"),
+    RIGHT(4, "Right");
+    
+    private int _dir;
+    private String _label;
+    
+    Movement(int $dir, String $label)
+    {
+      _dir = $dir;
+      _label = $label;
+    }
+    
+    public int getDirection()
+    {
+      return _dir;
+    }
+    
+    public String getLabel()
+    {
+      return _label;
+    }
+    
+    public float getMovement()
+    {
+      return ((_dir & 1) > 0) ? -1.0f : 1.0f;
+    }
+    
+    public Movement next()
+    {
+      return Movement.get(_dir % 4 + 1);
+    }
+    
+    public static Movement get(int $dir)
+    {
+      switch($dir)
+      {
+      case 1: return UP;
+      case 2: return DOWN;
+      case 3: return LEFT;
+      case 4: return RIGHT;
+      default: return UP;
+      }
+    }
+  }
 
   //Drawing constants.
   private static final int FILL_COLOR = 0xFF000000;
@@ -25,24 +69,25 @@ public class Player implements Drawable {
 
   //Instance variables.
   private boolean _is_moving = false;
-  private PVector _position, _prev_position;
-  private int _move_direction;
+  private PVector _start_position, _position, _prev_position;
+  private Movement _movement;
   private float _move_direction_modifier;
 
   public Player(final PVector $pos) {
-    _position = $pos;
+    _start_position = $pos;
+    _position = new PVector($pos.x, $pos.y);
   }
 
-  public void move(final int $direction) {
+  public void move(final Movement $movement) {
     //Prepare to validate the direction.
-    _move_direction = $direction;
-    _move_direction_modifier = ((_move_direction & 1) > 0) ? -1.0f : 1.0f;
+    _movement = $movement;
+    _move_direction_modifier = _movement.getMovement();
 
     //Validate the direction.
     PVector newpos = new PVector(_position.x, _position.y),
             boardDims = Board.getInstance().getDims();
 
-    if(_move_direction < 3)
+    if(_movement.getDirection() < 3)
       newpos.y += _move_direction_modifier * Block.SIZE;
     else
       newpos.x += _move_direction_modifier * Block.SIZE;
@@ -59,7 +104,7 @@ public class Player implements Drawable {
     if( ! _is_moving) return;
 
     //Calculate the distance that will be moved.
-    boolean vertical = _move_direction < 3;
+    boolean vertical = _movement.getDirection() < 3;
     float distance = ($dt * SIZE) * ANIM_SPEED * _move_direction_modifier;
 
     //UP/DOWN movements.
@@ -86,6 +131,11 @@ public class Player implements Drawable {
   public void draw(final PGraphics $graphics) {
     $graphics.fill(FILL_COLOR);
     $graphics.rect(_position.x, _position.y, SIZE, SIZE);
+  }
+  
+  public void reset()
+  {
+    _position = _start_position;
   }
 
   public boolean isMoving() {

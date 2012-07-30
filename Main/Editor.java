@@ -37,6 +37,9 @@ public class Editor implements Screen
   //List to contain all of our drawable elements.
   StatementInstance _instance;
   List<StatementInstance> _instances = new LinkedList<StatementInstance>();
+  
+  private boolean _running = false;
+  private int _position = 0;
 
   //Map containing our statements.
   private static final Map<Class, ProgrammingStatement> _statements;
@@ -46,6 +49,7 @@ public class Editor implements Screen
 
     //Insert our control structures.
     map.put(IfStatement.class, new IfStatement());
+    map.put(MoveStatement.class, new MoveStatement());
 
     //Make it final!
     _statements = Collections.unmodifiableMap(map);
@@ -66,6 +70,25 @@ public class Editor implements Screen
 
   public void update(final float $dt)
   {
+  }
+  
+  public void reset()
+  {
+    _position = 0;
+  }
+  
+  public StatementInstance getStatement()
+  {
+    if(_instances.size() == 0)
+      return null;
+    
+    return _instances.get(_position);
+  }
+  
+  public StatementInstance nextStatement()
+  {
+    _position = (_position + 1) % _instances.size();
+    return _instances.get(_position);
   }
 
   public void draw(final PGraphics $graphics)
@@ -152,6 +175,19 @@ public class Editor implements Screen
       }
       break;
     case MouseEvent.MOUSE_RELEASED:
+      //This means we never started dragging in the first place, so handle a click.
+      if(_dragstart)
+      {
+        for(StatementInstance instance : _instances)
+        {
+          StatementInstance under = instance.instanceUnder(_drag_start_x, _drag_start_y);
+
+          if(under != null)
+          {
+            under.handleClick();
+          }
+        }
+      }
       _dragstart = false;
 
       //If we are dropping a currently carried instance.

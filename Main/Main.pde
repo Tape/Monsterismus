@@ -18,7 +18,8 @@ void setup()
   _editor = new Editor(new PVector(_width, _height));
   int offset = (Block.SIZE - Player.SIZE) / 2;
   _player = new Player(new PVector(offset, offset));
-  _board.addEntity(_player);
+  _board.setPlayer(_player);
+  _board.setEditor(_editor);
 
   //Prep time calculations.
   _last_time = millis();
@@ -46,27 +47,26 @@ void mouseReleased() { _screen.handleMouseEvent(mouseEvent); }
 
 void keyPressed()
 {
-  if(key == CODED && _screen instanceof Board && ! _player.isMoving())
-  {
-    switch(keyCode)
-    {
-    case UP: _player.move(Player.MOVE_UP); return;
-    case DOWN: _player.move(Player.MOVE_DOWN); return;
-    case LEFT: _player.move(Player.MOVE_LEFT); return;
-    case RIGHT: _player.move(Player.MOVE_RIGHT); return;
-    }
-  }
-  else
+  if(key != CODED)
   {
     switch(key)
     {
     case 's':
     case 'S':
       if(_screen instanceof Board)
+      {
+        _board.setRunning(false);
         _screen = _editor;
+      }
       else
         _screen = _board;
       break;
+    case 'e':
+    case 'E':
+      if(_screen instanceof Board)
+      {
+        _board.toggleRunning();
+      }
     }
   }
 }

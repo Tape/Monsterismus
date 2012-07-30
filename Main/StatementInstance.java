@@ -30,5 +30,10 @@ public abstract class StatementInstance implements Drawable {
   public abstract boolean isChild();
   public abstract StatementInstance instanceUnder(int $x, int $y);
   public abstract int getHeight();
+  public abstract void handleClick();
+  public abstract void eval();
+  public abstract boolean isDone();
+  public abstract boolean executed();
+  public abstract void reset();
 }
 

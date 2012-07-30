@@ -12,7 +12,7 @@ public class IfStatement extends ProgrammingStatement
 {
   private static final int FILL_COLOR = 0xFFFF0000;
   private static final int BASE_WIDTH = 300;
-  private static final int BASE_HEIGHT = 40;
+  private static final int BASE_HEIGHT = 80;
 
   public int getColor()
   {
@@ -24,8 +24,12 @@ public class IfStatement extends ProgrammingStatement
     return new IfStatementInstance();
   }
 
-  private class IfStatementInstance extends StatementInstance
+  private class IfStatementInstance extends StatementInstance implements Nestable
   {
+    private StatementInstance conditional;
+    private StatementInstance consequent;
+    private StatementInstance alternative;
+    
     public void update(final float $dt) { }
 
     public void draw(final PGraphics $graphics)
@@ -55,6 +59,16 @@ public class IfStatement extends ProgrammingStatement
     {
       return false;
     }
+    
+    public void addChild(Nestable.Instance $instance, ProgrammingStatement $statement)
+    {
+    }
+    
+    public void handleClick() {}
+    public boolean isDone() { return true; }
+    public boolean executed() { return true; }
+    public void eval() { }
+    public void reset() { }
   }
 }
 
