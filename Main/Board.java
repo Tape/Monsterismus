@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import processing.core.PVector;
 import processing.core.PGraphics;
 
-import android.view.MotionEvent;
+//import android.view.MotionEvent;
+import java.awt.event.MouseEvent;
 
 /**
  *
@@ -127,8 +128,8 @@ public class Board implements Screen {
     _blocks[x][y].doAction(_player);
   }
 
-  public void handleMotionEvent(MotionEvent $event) {
-  }
+  //public void handleMotionEvent(MotionEvent $event) { }
+  public void handleMouseEvent(MouseEvent $event) { }
 
   public Player getPlayer()
   {

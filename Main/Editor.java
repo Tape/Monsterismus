@@ -7,7 +7,8 @@ import java.util.HashMap;
 import processing.core.PVector;
 import processing.core.PGraphics;
 
-import android.view.MotionEvent;
+//import android.view.MotionEvent;
+import java.awt.event.MouseEvent;
 
 /**
  *
@@ -117,19 +118,19 @@ public class Editor implements Screen
     }
   }
 
-  public void handleMotionEvent(MotionEvent $event)
+  public void handleMouseEvent(MouseEvent $event)
   {
     float x = $event.getX(),
           y = $event.getY();
 
-    switch($event.getActionMasked())
+    switch($event.getID())
     {
-    case MotionEvent.ACTION_DOWN:
+    case MouseEvent.MOUSE_PRESSED:
       _dragstart = true;
       _drag_start_x = x;
       _drag_start_y = y;
       break;
-    case MotionEvent.ACTION_MOVE:
+    case MouseEvent.MOUSE_DRAGGED:
       //If we are about to start dragging an item from the toolbar.
       if(_dragstart && _drag_start_x > _icon_offset && _drag_start_x < _icon_offset + _icon_size)
       {
@@ -174,8 +175,7 @@ public class Editor implements Screen
         _instance.setPos(x, y);
       }
       break;
-    case MotionEvent.ACTION_UP:
-    case MotionEvent.ACTION_CANCEL:
+    case MouseEvent.MOUSE_RELEASED:
       //This means we never started dragging in the first place, so handle a click.
       if(_dragstart)
       {
