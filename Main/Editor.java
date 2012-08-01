@@ -132,109 +132,112 @@ public class Editor implements Screen
     float x = $event.getX(),
           y = $event.getY();
 
-    switch($event.getID())
+    synchronized(_instances)
     {
-    case MouseEvent.MOUSE_PRESSED:
-      _dragstart = true;
-      _drag_start_x = x;
-      _drag_start_y = y;
-      break;
-    case MouseEvent.MOUSE_DRAGGED:
-      //If we are about to start dragging an item from the toolbar.
-      if(_dragstart && _drag_start_x > _icon_offset && _drag_start_x < _icon_offset + _icon_size)
+      switch($event.getID())
       {
-        //Stop dragging.
-        _dragstart = false;
-
-        //Helper values.
-        int index = (int)Math.floor(_drag_start_y / _icon_bounds),
-            pos = (int)Math.floor(_drag_start_y % _icon_bounds);
-
-        //Get an array of statement types on the toolbar.
-        Class _statement_types[] = _statements.keySet().toArray(new Class[0]);
-
-        if(index < _statement_types.length && pos > _icon_offset && pos < _icon_offset + _icon_size)
+      case MouseEvent.MOUSE_PRESSED:
+        _dragstart = true;
+        _drag_start_x = x;
+        _drag_start_y = y;
+        break;
+      case MouseEvent.MOUSE_DRAGGED:
+        //If we are about to start dragging an item from the toolbar.
+        if(_dragstart && _drag_start_x > _icon_offset && _drag_start_x < _icon_offset + _icon_size)
         {
-          _instance = _statements.get(_statement_types[index]).spawnInstance();
-          _instances.add(_instance);
-        }
-        else
-        {
-          _instance = null;
-        }
-      }
-      //Otherwise we're on the board, let's find exactly which element is hovered over.
-      else if(_dragstart)
-      {
-        for(StatementInstance instance : _instances)
-        {
-          StatementInstance under = instance.instanceUnder(_drag_start_x, _drag_start_y);
-
-          if(under != null)
+          //Stop dragging.
+          _dragstart = false;
+  
+          //Helper values.
+          int index = (int)Math.floor(_drag_start_y / _icon_bounds),
+              pos = (int)Math.floor(_drag_start_y % _icon_bounds);
+  
+          //Get an array of statement types on the toolbar.
+          Class _statement_types[] = _statements.keySet().toArray(new Class[0]);
+  
+          if(index < _statement_types.length && pos > _icon_offset && pos < _icon_offset + _icon_size)
           {
-            _instance = under;
-            break;
+            _instance = _statements.get(_statement_types[index]).spawnInstance();
+            _instances.add(_instance);
+          }
+          else
+          {
+            _instance = null;
           }
         }
-      }
-
-      //If we are dragging an item.
-      if(_instance != null)
-      {
-        _instance.setPos(x, y);
-      }
-      break;
-    case MouseEvent.MOUSE_RELEASED:
-      //This means we never started dragging in the first place, so handle a click.
-      if(_dragstart)
-      {
-        for(StatementInstance instance : _instances)
+        //Otherwise we're on the board, let's find exactly which element is hovered over.
+        else if(_dragstart)
         {
-          StatementInstance under = instance.instanceUnder(_drag_start_x, _drag_start_y);
-
-          if(under != null)
+          for(StatementInstance instance : _instances)
           {
-            under.handleClick();
-          }
-        }
-      }
-      _dragstart = false;
-
-      //If we are dropping a currently carried instance.
-      if(_instance != null)
-      {
-        //Check and see if the instance is over the toolbar (that means we want to delete it)
-        if(x < _toolbar.x)
-        {
-          _instances.remove(_instance);
-        }
-        else
-        {
-          int i, len;
-          //Remove the instance from the current list.
-          _instances.remove(_instance);
-
-          //Find where it belongs using it's y position.
-          for(i = 0, len = _instances.size(); i < len; i++)
-          {
-            if(_instances.get(i).getPos().y > y)
+            StatementInstance under = instance.instanceUnder(_drag_start_x, _drag_start_y);
+  
+            if(under != null)
             {
-              _instances.add(i, _instance);
+              _instance = under;
               break;
             }
           }
-
-          //This means we reached the end of the list.
-          if(i == len)
+        }
+  
+        //If we are dragging an item.
+        if(_instance != null)
+        {
+          _instance.setPos(x, y);
+        }
+        break;
+      case MouseEvent.MOUSE_RELEASED:
+        //This means we never started dragging in the first place, so handle a click.
+        if(_dragstart)
+        {
+          for(StatementInstance instance : _instances)
           {
-            _instances.add(_instance);
+            StatementInstance under = instance.instanceUnder(_drag_start_x, _drag_start_y);
+  
+            if(under != null)
+            {
+              under.handleClick();
+            }
           }
         }
-
-        reshuffle();
-        _instance = null;
+        _dragstart = false;
+  
+        //If we are dropping a currently carried instance.
+        if(_instance != null)
+        {
+          //Check and see if the instance is over the toolbar (that means we want to delete it)
+          if(x < _toolbar.x)
+          {
+            _instances.remove(_instance);
+          }
+          else
+          {
+            int i, len;
+            //Remove the instance from the current list.
+            _instances.remove(_instance);
+  
+            //Find where it belongs using it's y position.
+            for(i = 0, len = _instances.size(); i < len; i++)
+            {
+              if(_instances.get(i).getPos().y > y)
+              {
+                _instances.add(i, _instance);
+                break;
+              }
+            }
+  
+            //This means we reached the end of the list.
+            if(i == len)
+            {
+              _instances.add(_instance);
+            }
+          }
+  
+          reshuffle();
+          _instance = null;
+        }
+        break;
       }
-      break;
     }
   }
 
@@ -243,10 +246,13 @@ public class Editor implements Screen
     int offset_y = StatementInstance.SPACING,
         offset_x = (int)_toolbar.x + StatementInstance.SPACING;
 
-    for(StatementInstance instance : _instances)
+    synchronized(_instances)
     {
-      instance.setPos(offset_x, offset_y);
-      offset_y += StatementInstance.SPACING + instance.getHeight();
+      for(StatementInstance instance : _instances)
+      {
+        instance.setPos(offset_x, offset_y);
+        offset_y += StatementInstance.SPACING + instance.getHeight();
+      }
     }
   }
 }
