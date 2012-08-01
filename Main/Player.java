@@ -20,36 +20,36 @@ public class Player implements Drawable {
     DOWN(2, "Down"),
     LEFT(3, "Left"),
     RIGHT(4, "Right");
-    
+
     private int _dir;
     private String _label;
-    
+
     Movement(int $dir, String $label)
     {
       _dir = $dir;
       _label = $label;
     }
-    
+
     public int getDirection()
     {
       return _dir;
     }
-    
+
     public String getLabel()
     {
       return _label;
     }
-    
+
     public float getMovement()
     {
       return ((_dir & 1) > 0) ? -1.0f : 1.0f;
     }
-    
+
     public Movement next()
     {
       return Movement.get(_dir % 4 + 1);
     }
-    
+
     public static Movement get(int $dir)
     {
       switch($dir)
@@ -72,10 +72,16 @@ public class Player implements Drawable {
   private PVector _start_position, _position, _prev_position;
   private Movement _movement;
   private float _move_direction_modifier;
+  private int _score;
+  private int _food;
+  private int _treasure;
 
   public Player(final PVector $pos) {
     _start_position = $pos;
     _position = new PVector($pos.x, $pos.y);
+    _score = 0;
+    _food = 0;
+    _treasure = 0;
   }
 
   public void move(final Movement $movement) {
@@ -132,7 +138,7 @@ public class Player implements Drawable {
     $graphics.fill(FILL_COLOR);
     $graphics.rect(_position.x, _position.y, SIZE, SIZE);
   }
-  
+
   public void reset()
   {
     _position = _start_position;
@@ -140,6 +146,69 @@ public class Player implements Drawable {
 
   public boolean isMoving() {
     return _is_moving;
+  }
+
+  /**
+   * Get the player's treasure count
+   */
+  public int getTreasureCount() {
+    return _treasure;
+  }
+
+  /**
+   * Add's to the player's treasure count
+   */
+  public void addToTreasureCount(int val) {
+    _treasure += val;
+  }
+
+  /**
+   * Directly set the player's treasure count
+   */
+  public void setTreasureCount(int val) {
+    _treasure = val;
+  }
+
+  /**
+   * Get the player's score
+   */
+  public int getScore() {
+    return _score;
+  }
+
+  /**
+   * Add to the player's score
+   */
+  public void addToScore(int val) {
+    _score += val;
+  }
+
+  /**
+   * Set the player's score
+   */
+  public void setScore(int val) {
+    _score = val;
+  }
+
+  /**
+   * Get the player's food count
+   */
+  public int getFoodCount() {
+    return _food;
+  }
+
+  /**
+   * Add to the player's food count
+   */
+  public void addToFoodCount(int val) {
+    _food += val;
+  }
+
+  /**
+   * Set th player's food count
+   */
+  public void setFoodCount(int val) {
+    _food = val;
   }
 }
 
