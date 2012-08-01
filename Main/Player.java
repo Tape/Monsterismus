@@ -142,7 +142,7 @@ public class Player implements Drawable {
 
   public void reset()
   {
-    _position = _start_position;
+    _position = new PVector(_start_position.x, _start_position.y);
   }
 
   public boolean isMoving() {

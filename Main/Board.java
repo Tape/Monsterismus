@@ -24,7 +24,7 @@ public class Board implements Screen {
   private Player _player;
   private int level;
   private Editor _editor;
-  private boolean _running = false;
+  private boolean _running = false, _reset = true;
 
   /**
    * Creates a new board instance
@@ -62,6 +62,7 @@ public class Board implements Screen {
   public void toggleRunning()
   {
     _running = !_running;
+    _reset = false;
   }
 
   public static Board getInstance(int $sx, int $sy)
@@ -90,13 +91,14 @@ public class Board implements Screen {
       else
       {
         instance.eval();
-        if( ! _running && instance.isDone())
-        {
-          instance.reset();
-          _editor.reset();
-          _player.reset();
-        }
       }
+    }
+    else if( ! _reset)
+    {
+      _reset = true;
+      instance.reset();
+      _editor.reset();
+      _player.reset();
     }
 
     //Update the player.
