@@ -7,7 +7,7 @@ import java.util.HashMap;
 import processing.core.PVector;
 import processing.core.PGraphics;
 
-import java.awt.event.MouseEvent;
+import android.view.MotionEvent;
 
 /**
  *
@@ -26,7 +26,7 @@ public class Editor implements Screen
   private PVector _dims, _toolbar;
 
   //Cordinates where the mouse started dragging, in integer form.
-  private int _drag_start_x, _drag_start_y;
+  private float _drag_start_x, _drag_start_y;
 
   //For drawing each icon in the toolbar.
   private int _icon_bounds, _icon_size, _icon_offset;
@@ -117,19 +117,19 @@ public class Editor implements Screen
     }
   }
 
-  public void handleMouseEvent(MouseEvent $event)
+  public void handleMotionEvent(MotionEvent $event)
   {
-    int x = $event.getX(),
-        y = $event.getY();
+    float x = $event.getX(),
+          y = $event.getY();
 
-    switch($event.getID())
+    switch($event.getActionMasked())
     {
-    case MouseEvent.MOUSE_PRESSED:
+    case MotionEvent.ACTION_DOWN:
       _dragstart = true;
       _drag_start_x = x;
       _drag_start_y = y;
       break;
-    case MouseEvent.MOUSE_DRAGGED:
+    case MotionEvent.ACTION_MOVE:
       //If we are about to start dragging an item from the toolbar.
       if(_dragstart && _drag_start_x > _icon_offset && _drag_start_x < _icon_offset + _icon_size)
       {
@@ -137,8 +137,8 @@ public class Editor implements Screen
         _dragstart = false;
 
         //Helper values.
-        int index = _drag_start_y / _icon_bounds,
-            pos = _drag_start_y % _icon_bounds;
+        int index = (int)Math.floor(_drag_start_y / _icon_bounds),
+            pos = (int)Math.floor(_drag_start_y % _icon_bounds);
 
         //Get an array of statement types on the toolbar.
         Class _statement_types[] = _statements.keySet().toArray(new Class[0]);
@@ -174,7 +174,8 @@ public class Editor implements Screen
         _instance.setPos(x, y);
       }
       break;
-    case MouseEvent.MOUSE_RELEASED:
+    case MotionEvent.ACTION_UP:
+    case MotionEvent.ACTION_CANCEL:
       //This means we never started dragging in the first place, so handle a click.
       if(_dragstart)
       {

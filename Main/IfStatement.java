@@ -45,7 +45,7 @@ public class IfStatement extends ProgrammingStatement
       return BASE_HEIGHT;
     }
 
-    public StatementInstance instanceUnder(int $x, int $y)
+    public StatementInstance instanceUnder(final float $x, final float $y)
     {
       if($x > _pos.x && $y > _pos.y
         && $x < _pos.x + BASE_WIDTH && $y < _pos.y + BASE_HEIGHT)

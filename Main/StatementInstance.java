@@ -18,7 +18,7 @@ public abstract class StatementInstance implements Drawable {
     _pos = new PVector();
   }
 
-  public void setPos(int x, int y) {
+  public void setPos(float x, float y) {
     _pos.x = x;
     _pos.y = y;
   }
@@ -28,7 +28,7 @@ public abstract class StatementInstance implements Drawable {
   }
 
   public abstract boolean isChild();
-  public abstract StatementInstance instanceUnder(int $x, int $y);
+  public abstract StatementInstance instanceUnder(final float $x, final float $y);
   public abstract int getHeight();
   public abstract void handleClick();
   public abstract void eval();

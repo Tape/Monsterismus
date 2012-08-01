@@ -1,6 +1,6 @@
 import processing.core.PGraphics;
 
-import java.awt.event.MouseEvent;
+import android.view.MotionEvent;
 
 /**
  *
@@ -11,5 +11,5 @@ import java.awt.event.MouseEvent;
  * @author Carlos Martinez
  */
 public interface Screen extends Drawable {
-  public void handleMouseEvent(MouseEvent $event);
+  public void handleMotionEvent(MotionEvent $event);
 }
