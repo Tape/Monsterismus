@@ -14,8 +14,8 @@ void setup()
   size(_width, _height);
 
   //Build the board and player.
-  _board = Board.getInstance(sx, sy);
-  _screen = _editor = new Editor(new PVector(_width, _height));
+  _screen = _board = Board.getInstance(sx, sy);
+  _editor = new Editor(new PVector(_width, _height));
   int offset = (Block.SIZE - Player.SIZE) / 2;
   _player = new Player(new PVector(offset, offset));
   _board.setPlayer(_player);

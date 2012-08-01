@@ -56,13 +56,20 @@ public class Board implements Screen {
 
   public void setRunning(boolean $running)
   {
-    _running = $running;
+    if(_running)
+    {
+      _running = $running;
+      _reset = false;
+    }
+    else if(_reset)
+    {
+      _running = $running;
+    }
   }
 
   public void toggleRunning()
   {
-    _running = !_running;
-    _reset = false;
+    setRunning( ! _running);
   }
 
   public static Board getInstance(int $sx, int $sy)
@@ -93,7 +100,7 @@ public class Board implements Screen {
         instance.eval();
       }
     }
-    else if( ! _reset)
+    else if( ! _reset && instance != null)
     {
       _reset = true;
       instance.reset();
