@@ -87,7 +87,8 @@ public class Board implements Screen {
   public void update(final float $dt) {
     //If the activity is being run execute each statement.
     StatementInstance instance = _editor.getStatement();
-    if(_running && instance != null || (instance != null && ! instance.isDone()))
+    
+    if(_running && instance != null)
     {
       if(instance.executed())
       {

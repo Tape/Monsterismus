@@ -105,6 +105,11 @@ public class Player implements Drawable {
     _prev_position = new PVector(_position.x, _position.y);
     _is_moving = true;
   }
+  
+  public void stopMoving()
+  {
+    _is_moving = false;
+  }
 
   public void update(final float $dt) {
     if( ! _is_moving) return;

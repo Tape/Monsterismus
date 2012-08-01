@@ -73,6 +73,10 @@ public class MoveStatement extends ProgrammingStatement
     
     public void reset()
     {
+      if( ! _complete)
+      {
+        Board.getInstance().getPlayer().stopMoving();
+      }
       _complete = true;
       _executed = false;
     }

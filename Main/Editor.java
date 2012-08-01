@@ -37,7 +37,7 @@ public class Editor implements Screen
 
   //List to contain all of our drawable elements.
   StatementInstance _instance;
-  List<StatementInstance> _instances = new LinkedList<StatementInstance>();
+  List<StatementInstance> _instances = Collections.synchronizedList(new LinkedList<StatementInstance>());
   
   private boolean _running = false;
   private int _position = 0;
@@ -80,16 +80,22 @@ public class Editor implements Screen
   
   public StatementInstance getStatement()
   {
-    if(_instances.size() == 0)
-      return null;
-    
-    return _instances.get(_position);
+    synchronized(_instances)
+    {
+      if(_instances.size() == 0)
+        return null;
+      
+      return _instances.get(_position);
+    }
   }
   
   public StatementInstance nextStatement()
   {
-    _position = (_position + 1) % _instances.size();
-    return _instances.get(_position);
+    synchronized(_instances)
+    {
+      _position = (_position + 1) % _instances.size();
+      return _instances.get(_position);
+    }
   }
 
   public void draw(final PGraphics $graphics)
@@ -112,9 +118,12 @@ public class Editor implements Screen
       offset += _icon_bounds;
     }
 
-    for(Drawable instance : _instances)
+    synchronized(_instances)
     {
-      instance.draw($graphics);
+      for(Drawable instance : _instances)
+      {
+        instance.draw($graphics);
+      }
     }
   }
 
