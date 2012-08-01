@@ -130,6 +130,7 @@ public class Player implements Drawable {
 
       //Visit the block and stop moving.
       Board.getInstance().visitBlock(_position);
+      System.out.println("Score: " + _score + " Treasure: " + _treasure + " Food: " + _food);
       _is_moving = false;
     }
   }

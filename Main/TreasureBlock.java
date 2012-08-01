@@ -22,5 +22,8 @@ public class TreasureBlock extends Block {
     $graphics.rect(pos.x, pos.y, Block.SIZE, Block.SIZE);
   }
 
-  public void doAction() { }
+  public void doAction(Player p) {
+    p.addToTreasureCount(1);
+    p.addToScore(50);
+  }
 }

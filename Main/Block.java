@@ -53,6 +53,6 @@ public abstract class Block implements Drawable
     pos = $pos;
   }
 
-  public abstract void doAction();
+  public abstract void doAction(Player p);
 }
 

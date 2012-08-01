@@ -23,6 +23,6 @@ public class EmptyBlock extends Block {
     $graphics.rect(pos.x, pos.y, Block.SIZE, Block.SIZE);
   }
 
-  public void doAction() { }
+  public void doAction(Player p) { }
 }
 

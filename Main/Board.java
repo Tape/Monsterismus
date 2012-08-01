@@ -47,17 +47,17 @@ public class Board implements Screen {
 
     return _board;
   }
-  
+
   public void setEditor(Editor $editor)
   {
     _editor = $editor;
   }
-  
+
   public void setRunning(boolean $running)
   {
     _running = $running;
   }
-  
+
   public void toggleRunning()
   {
     _running = !_running;
@@ -97,7 +97,7 @@ public class Board implements Screen {
         }
       }
     }
-    
+
     //Update the player.
     _player.update($dt);
   }
@@ -124,12 +124,12 @@ public class Board implements Screen {
     int x = (int) Math.floor($position.x / Block.SIZE),
         y = (int) Math.floor($position.y / Block.SIZE);
 
-    _blocks[x][y].doAction();
+    _blocks[x][y].doAction(_player);
   }
 
   public void handleMotionEvent(MotionEvent $event) {
   }
-  
+
   public Player getPlayer()
   {
     return _player;
@@ -198,7 +198,7 @@ public class Board implements Screen {
 
     return ret;
   }
-  
+
   public void nextLevel() {
     this.generateBoard(++level);
   }

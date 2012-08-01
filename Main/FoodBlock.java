@@ -22,7 +22,9 @@ public class FoodBlock extends Block {
     $graphics.rect(pos.x, pos.y, Block.SIZE, Block.SIZE);
   }
 
-  public void doAction() {
+  public void doAction(Player p) {
+    p.addToFoodCount(1);
+    p.addToScore(10);
   }
 }
 
