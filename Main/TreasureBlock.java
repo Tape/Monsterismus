@@ -10,20 +10,30 @@ import processing.core.PGraphics;
  * @author Carlos Martinez
  */
 public class TreasureBlock extends Block {
+  private int amount;
+
   public TreasureBlock(final PVector $pos) {
     super($pos);
+    amount = 2;
   }
 
   public void update(final float $dt) {
   }
 
   public void draw(final PGraphics $graphics) {
-    $graphics.fill(255,255,0);
+    if(amount == 0)
+      $graphics.fill(255,255,255);
+    else
+      $graphics.fill(255,255,0);
+
     $graphics.rect(pos.x, pos.y, Block.SIZE, Block.SIZE);
   }
 
   public void doAction(Player p) {
-    p.addToTreasureCount(1);
-    p.addToScore(50);
+    if(amount > 0) {
+      p.addToFoodCount(amount);
+      p.addToScore(amount * 25);
+      amount = 0;
+    }
   }
 }
