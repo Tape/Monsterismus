@@ -45,6 +45,11 @@ public class MoveStatement extends ProgrammingStatement
     {
       return BASE_HEIGHT;
     }
+    
+    public int getWidth()
+    {
+      return BASE_WIDTH;
+    }
 
     public StatementInstance instanceUnder(final float $x, final float $y)
     {
@@ -54,11 +59,6 @@ public class MoveStatement extends ProgrammingStatement
         return this;
       }
       return null;
-    }
-
-    public boolean isChild()
-    {
-      return true;
     }
     
     public void handleClick()

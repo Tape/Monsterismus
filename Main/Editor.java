@@ -168,6 +168,8 @@ public class Editor implements Screen
         //Otherwise we're on the board, let's find exactly which element is hovered over.
         else if(_dragstart)
         {
+          _dragstart = false;
+          
           for(StatementInstance instance : _instances)
           {
             StatementInstance under = instance.instanceUnder(_drag_start_x, _drag_start_y);
@@ -219,7 +221,17 @@ public class Editor implements Screen
             //Find where it belongs using it's y position.
             for(i = 0, len = _instances.size(); i < len; i++)
             {
-              if(_instances.get(i).getPos().y > y)
+              StatementInstance instance = _instances.get(i);
+              PVector pos = instance.getPos();
+              if(instance.isNestable()
+                && pos.y < y && pos.y + instance.getHeight() > y
+                && pos.x < x && pos.x + instance.getWidth() > x)
+              {
+                Nestable nestable = (Nestable) instance;
+                nestable.addChild(_instance);
+                break;
+              }
+              else if(pos.y > y)
               {
                 _instances.add(i, _instance);
                 break;

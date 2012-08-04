@@ -8,28 +8,48 @@ import processing.core.PVector;
  * @author Trevor Vardeman
  * @author Carlos Martinez
  */
-public abstract class StatementInstance implements Drawable {
+public abstract class StatementInstance implements Drawable
+{
   public static int SPACING = 5;
 
   protected PVector _pos;
   protected boolean _locked = false;
+  private StatementInstance _parent;
 
-  public StatementInstance() {
+  public StatementInstance()
+  {
     _pos = new PVector();
   }
 
-  public void setPos(float x, float y) {
-    _pos.x = x;
-    _pos.y = y;
+  public void setPos(final float $x, final float $y)
+  {
+    _pos.x = $x;
+    _pos.y = $y;
   }
 
-  public PVector getPos() {
+  public PVector getPos()
+  {
     return _pos;
   }
+  
+  public boolean isNestable()
+  {
+    return this instanceof Nestable;
+  }
 
-  public abstract boolean isChild();
+  public boolean isChild()
+  {
+    return _parent == null;
+  }
+  
+  public void setParent(final StatementInstance $parent)
+  {
+    _parent = $parent;
+  }
+  
   public abstract StatementInstance instanceUnder(final float $x, final float $y);
   public abstract int getHeight();
+  public abstract int getWidth();
   public abstract void handleClick();
   public abstract void eval();
   public abstract boolean isDone();

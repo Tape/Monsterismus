@@ -1,4 +1,5 @@
 import processing.core.PGraphics;
+import processing.core.PVector;
 
 /**
  *
@@ -12,7 +13,7 @@ public class IfStatement extends ProgrammingStatement
 {
   private static final int FILL_COLOR = 0xFFFF0000;
   private static final int BASE_WIDTH = 300;
-  private static final int BASE_HEIGHT = 80;
+  private static final int BASE_HEIGHT = 25;
 
   public int getColor()
   {
@@ -26,42 +27,90 @@ public class IfStatement extends ProgrammingStatement
 
   private class IfStatementInstance extends StatementInstance implements Nestable
   {
-    private StatementInstance conditional;
-    private StatementInstance consequent;
-    private StatementInstance alternative;
+    private StatementInstance _conditional;
+    private StatementInstance _consequent;
+    private StatementInstance _alternative;
     
-    public void update(final float $dt) { }
+    public void update(final float $dt)
+    {
+    }
 
     public void draw(final PGraphics $graphics)
     {
+      int height = BASE_HEIGHT;
+      
+      if(_consequent != null)
+      {
+        height += _consequent.getHeight();
+      }
+      
       $graphics.fill(FILL_COLOR);
-      $graphics.rect(_pos.x, _pos.y, BASE_WIDTH, BASE_HEIGHT);
+      $graphics.rect(_pos.x, _pos.y, BASE_WIDTH, height);
       $graphics.fill(0xFFFFFFFF);
       $graphics.text(toString(), _pos.x + 3, _pos.y + 12);
+      
+      if(_consequent != null)
+      {
+        _consequent.draw($graphics);
+      }
+    }
+    
+    public void setPos(final float $x, final float $y)
+    {
+      super.setPos($x, $y);
+      if(_consequent != null)
+      {
+        _consequent.setPos(_pos.x + 5, _pos.y + 20);
+      }
     }
 
     public int getHeight()
     {
-      return BASE_HEIGHT;
+      int height = BASE_HEIGHT;
+      
+      if(_consequent != null)
+      {
+        height += _consequent.getHeight();
+      }
+      
+      return height;
+    }
+    
+    public int getWidth()
+    {
+      return BASE_WIDTH;
     }
 
     public StatementInstance instanceUnder(final float $x, final float $y)
     {
       if($x > _pos.x && $y > _pos.y
-        && $x < _pos.x + BASE_WIDTH && $y < _pos.y + BASE_HEIGHT)
+        && $x < _pos.x + BASE_WIDTH && $y < _pos.y + getHeight())
       {
-        return this;
+        StatementInstance under = this;
+        if(_consequent != null)
+        {
+          under = checkUnder(_consequent, $x, $y);
+        }
+        return under;
       }
       return null;
     }
-
-    public boolean isChild()
+    
+    private StatementInstance checkUnder(final StatementInstance $instance, final float $x, final float $y)
     {
-      return false;
+      PVector pos = $instance.getPos();
+      if(pos.x < $x && pos.x + $instance.getWidth() > $x
+        && pos.y < $y && pos.y + $instance.getHeight() > $y)
+      {
+        return $instance;
+      }
+      return this;
     }
     
-    public void addChild(Nestable.Instance $instance, ProgrammingStatement $statement)
+    public void addChild(StatementInstance $statement)
     {
+      $statement.setParent(this);
+      _consequent = $statement;
     }
     
     public void handleClick() {}
