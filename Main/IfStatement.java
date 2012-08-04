@@ -80,7 +80,12 @@ public class IfStatement extends ProgrammingStatement
     {
       return BASE_WIDTH;
     }
-
+    
+    public void removeAllInstances(final StatementInstance $instance)
+    {
+      if(_consequent == $instance) _consequent = null;
+    }
+    
     public StatementInstance instanceUnder(final float $x, final float $y)
     {
       if($x > _pos.x && $y > _pos.y
@@ -107,10 +112,10 @@ public class IfStatement extends ProgrammingStatement
       return this;
     }
     
-    public void addChild(StatementInstance $statement)
+    public void addChild(StatementInstance $instance)
     {
-      $statement.setParent(this);
-      _consequent = $statement;
+      $instance.setParent(this);
+      _consequent = $instance;
     }
     
     public void handleClick() {}

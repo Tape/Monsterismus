@@ -8,5 +8,6 @@
  */
 public interface Nestable
 {
-  public void addChild(StatementInstance $statement);
+  public void addChild(StatementInstance $instance);
+  public void removeAllInstances(StatementInstance $instance);
 }

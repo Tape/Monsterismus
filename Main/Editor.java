@@ -223,16 +223,18 @@ public class Editor implements Screen
             {
               StatementInstance instance = _instances.get(i);
               PVector pos = instance.getPos();
-              if(instance.isNestable()
-                && pos.y < y && pos.y + instance.getHeight() > y
-                && pos.x < x && pos.x + instance.getWidth() > x)
+              
+              StatementInstance nested = instance.instanceUnder(x, y);
+              if(nested != null && nested instanceof Nestable)
               {
-                Nestable nestable = (Nestable) instance;
+                Nestable nestable = (Nestable) nested;
                 nestable.addChild(_instance);
                 break;
               }
-              else if(pos.y > y)
+              
+              if(pos.y > y)
               {
+                _instance.setParent(null);
                 _instances.add(i, _instance);
                 break;
               }
@@ -241,6 +243,7 @@ public class Editor implements Screen
             //This means we reached the end of the list.
             if(i == len)
             {
+              _instance.setParent(null);
               _instances.add(_instance);
             }
           }

@@ -14,7 +14,7 @@ public abstract class StatementInstance implements Drawable
 
   protected PVector _pos;
   protected boolean _locked = false;
-  private StatementInstance _parent;
+  private Nestable _parent;
 
   public StatementInstance()
   {
@@ -42,9 +42,19 @@ public abstract class StatementInstance implements Drawable
     return _parent == null;
   }
   
-  public void setParent(final StatementInstance $parent)
+  public void setParent(final Nestable $parent)
   {
-    _parent = $parent;
+    if($parent != null)
+    {
+      _parent = $parent;
+      return;
+    }
+    
+    if(_parent != null)
+    {
+      _parent.removeAllInstances(this);
+      _parent = null;
+    }
   }
   
   public abstract StatementInstance instanceUnder(final float $x, final float $y);
