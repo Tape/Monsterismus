@@ -142,6 +142,12 @@ public class Editor implements Screen
         _drag_start_y = y;
         break;
       case MouseEvent.MOUSE_DRAGGED:
+        //Require at least a 7 pixel move (helps on the phone for clicks).
+        if(_dragstart && Math.abs(_drag_start_x - x) < 7 && Math.abs(_drag_start_y - y) < 7)
+        {
+          break;
+        }
+        
         //If we are about to start dragging an item from the toolbar.
         if(_dragstart && _drag_start_x > _icon_offset && _drag_start_x < _icon_offset + _icon_size)
         {
