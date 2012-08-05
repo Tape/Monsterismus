@@ -224,8 +224,9 @@ public class Editor implements Screen
               StatementInstance instance = _instances.get(i);
               PVector pos = instance.getPos();
               
+              //We are getting the instance under the cursor (which could just be the same element!)
               StatementInstance nested = instance.instanceUnder(x, y);
-              if(nested != null && nested instanceof Nestable)
+              if(nested != null && nested.isNestable())
               {
                 Nestable nestable = (Nestable) nested;
                 nestable.addChild(_instance);

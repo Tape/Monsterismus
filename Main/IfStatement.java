@@ -94,22 +94,11 @@ public class IfStatement extends ProgrammingStatement
         StatementInstance under = this;
         if(_consequent != null)
         {
-          under = checkUnder(_consequent, $x, $y);
+          under = _consequent.instanceUnder($x, $y);
         }
-        return under;
+        return under == null ? this : under;
       }
       return null;
-    }
-    
-    private StatementInstance checkUnder(final StatementInstance $instance, final float $x, final float $y)
-    {
-      PVector pos = $instance.getPos();
-      if(pos.x < $x && pos.x + $instance.getWidth() > $x
-        && pos.y < $y && pos.y + $instance.getHeight() > $y)
-      {
-        return $instance;
-      }
-      return this;
     }
     
     public void addChild(StatementInstance $instance)
