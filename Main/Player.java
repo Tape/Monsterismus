@@ -47,7 +47,7 @@ public class Player implements Drawable {
 
     public Movement next()
     {
-      return Movement.get(_dir % 5 + 1);
+      return Movement.get(_dir % 4 + 1);
     }
 
     public static Movement get(final int $dir)
