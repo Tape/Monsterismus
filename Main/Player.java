@@ -24,7 +24,7 @@ public class Player implements Drawable {
     private int _dir;
     private String _label;
 
-    Movement(int $dir, String $label)
+    Movement(final int $dir, final String $label)
     {
       _dir = $dir;
       _label = $label;
@@ -47,10 +47,10 @@ public class Player implements Drawable {
 
     public Movement next()
     {
-      return Movement.get(_dir % 4 + 1);
+      return Movement.get(_dir % 5 + 1);
     }
 
-    public static Movement get(int $dir)
+    public static Movement get(final int $dir)
     {
       switch($dir)
       {
@@ -104,6 +104,11 @@ public class Player implements Drawable {
     //Move is valid, store the previous position.
     _prev_position = new PVector(_position.x, _position.y);
     _is_moving = true;
+  }
+    
+  public PVector getPosition()
+  {
+    return _position;
   }
   
   public void stopMoving()

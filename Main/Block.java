@@ -42,7 +42,6 @@ public abstract class Block implements Drawable
         default: return EMPTY;
       }
     }
-
   }
 
   public static final int SIZE = 48;

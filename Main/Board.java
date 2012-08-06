@@ -48,6 +48,11 @@ public class Board implements Screen {
 
     return _board;
   }
+  
+  public Block[][] getBlocks()
+  {
+    return _blocks;
+  }
 
   public void setEditor(Editor $editor)
   {

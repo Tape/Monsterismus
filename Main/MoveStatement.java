@@ -24,7 +24,7 @@ public class MoveStatement extends ProgrammingStatement
     return new MoveStatementInstance();
   }
 
-  public class MoveStatementInstance extends StatementInstance
+  private class MoveStatementInstance extends StatementInstance
   {
     private Player.Movement _movement = Player.Movement.UP;
     private String _label = "Move Up";
