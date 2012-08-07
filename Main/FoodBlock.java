@@ -38,5 +38,9 @@ public class FoodBlock extends Block {
       amount = 0;
     }
   }
+  
+  public boolean claimed() {
+    return amount == 0;
+  }
 }
 

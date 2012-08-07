@@ -13,7 +13,7 @@ public class IfStatement extends ProgrammingStatement
 {
   private static final int FILL_COLOR = 0xFFFF0000;
   private static final int BASE_WIDTH = 300;
-  private static final int BASE_HEIGHT = 25;
+  private static final int BASE_HEIGHT = 60;
 
   public int getColor()
   {
@@ -30,6 +30,7 @@ public class IfStatement extends ProgrammingStatement
     private Conditional _conditional = Conditional.get(0);
     private StatementInstance _consequent;
     private StatementInstance _alternative;
+    private StatementInstance _evaluated;
     private String _label = "If " + _conditional.getLabel() + ", then ";
     private boolean _is_done = true, _is_executed = false;
     
@@ -39,31 +40,37 @@ public class IfStatement extends ProgrammingStatement
 
     public void draw(final PGraphics $graphics)
     {
-      int height = BASE_HEIGHT;
-      
-      if(_consequent != null)
-      {
-        height += _consequent.getHeight();
-      }
-      
       $graphics.fill(FILL_COLOR);
-      $graphics.rect(_pos.x, _pos.y, BASE_WIDTH, height);
+      $graphics.rect(_pos.x, _pos.y, BASE_WIDTH, getHeight());
       $graphics.fill(0xFFFFFFFF);
       $graphics.text(_label, _pos.x + 3, _pos.y + 12);
       
       if(_consequent != null)
       {
+        $graphics.text("else", _pos.x + 3, _pos.y + _consequent.getHeight() + 35);
         _consequent.draw($graphics);
+      }
+      else
+        $graphics.text("else", _pos.x + 3, _pos.y + 40);
+      
+      if(_alternative != null)
+      {
+        _alternative.draw($graphics);
       }
     }
     
     public void setPos(final float $x, final float $y)
     {
       super.setPos($x, $y);
+      
       if(_consequent != null)
-      {
         _consequent.setPos(_pos.x + 5, _pos.y + 20);
-      }
+      
+      if(_alternative != null)
+        if(_consequent != null)
+          _alternative.setPos(_pos.x + 5, _pos.y + _consequent.getHeight() + 40);
+        else
+          _alternative.setPos(_pos.x + 5, _pos.y + 45);
     }
 
     public int getHeight()
@@ -72,7 +79,12 @@ public class IfStatement extends ProgrammingStatement
       
       if(_consequent != null)
       {
-        height += _consequent.getHeight();
+        height += _consequent.getHeight() - 5;
+      }
+      
+      if(_alternative != null)
+      {
+        height += _alternative.getHeight() - 10;
       }
       
       return height;
@@ -86,6 +98,7 @@ public class IfStatement extends ProgrammingStatement
     public void removeAllInstances(final StatementInstance $instance)
     {
       if(_consequent == $instance) _consequent = null;
+      else if(_alternative == $instance) _alternative = null;
     }
     
     public StatementInstance instanceUnder(final float $x, final float $y)
@@ -93,11 +106,12 @@ public class IfStatement extends ProgrammingStatement
       if($x > _pos.x && $y > _pos.y
         && $x < _pos.x + BASE_WIDTH && $y < _pos.y + getHeight())
       {
-        StatementInstance under = this;
+        StatementInstance under = null;
         if(_consequent != null)
-        {
           under = _consequent.instanceUnder($x, $y);
-        }
+        if(under == null && _alternative != null)
+          under = _alternative.instanceUnder($x, $y);
+        
         return under == null ? this : under;
       }
       return null;
@@ -106,7 +120,12 @@ public class IfStatement extends ProgrammingStatement
     public void addChild(StatementInstance $instance)
     {
       $instance.setParent(this);
-      _consequent = $instance;
+      int offset = _consequent != null ? _consequent.getHeight() : 10;
+      
+      if($instance.getPos().y - _pos.y > offset + 30)
+        _alternative = $instance;
+      else
+        _consequent = $instance;
     }
     
     public void handleClick()
@@ -131,22 +150,25 @@ public class IfStatement extends ProgrammingStatement
     
     public void eval()
     {
+      //Evaluate until action is complete.
       if( ! _is_done)
       {
-        if(_consequent.isDone())
+        //Action finished? reset.
+        if(_evaluated.isDone())
         {
+          _evaluated.reset();
           _is_done = _is_executed = true;
-          _consequent.reset();
         }
         else
-          _consequent.eval();
+          _evaluated.eval();
       }
       else
       {
-        if(_conditional.evaluate() && _consequent != null)
+        _evaluated = _conditional.evaluate() ? _consequent : _alternative;
+        if(_evaluated != null)
         {
           _is_done = false;
-          _consequent.eval();
+          _evaluated.eval();
         }
         else
           _is_done = _is_executed = true;
@@ -193,24 +215,21 @@ public class IfStatement extends ProgrammingStatement
             
             //Prepare the player position.
             int x = (int)Math.floor(pos.x / Block.SIZE),
-                y = (int)Math.floor(pos.y / Block.SIZE);
+                y = (int)Math.floor(pos.y / Block.SIZE),
+                dir = $value == 0 || $value == 2 ? -1 : 1;
             
             if($value < 2)
             {
-              for(; y >= 0 && y < blocks[x].length; y += $value == 0 ? -1 : 1)
-              {
-                if(blocks[x][y] instanceof FoodBlock)
+              for(y += dir; y >= 0 && y < blocks[x].length; y += dir)
+                if(blocks[x][y] instanceof FoodBlock && ! blocks[x][y].claimed())
                   return true;
-              }
               return false;
             }
             else
             {
-              for(; x >= 0 && x < blocks.length; x += $value == 2 ? -1 : 1)
-              {
-                if(blocks[x][y] instanceof FoodBlock)
+              for(x += dir; x >= 0 && x < blocks.length; x += dir)
+                if(blocks[x][y] instanceof FoodBlock && ! blocks[x][y].claimed())
                   return true;
-              }
               return false;
             }
           }

@@ -213,6 +213,9 @@ public class Editor implements Screen
         //If we are dropping a currently carried instance.
         if(_instance != null)
         {
+          //Always remove the parent.
+          _instance.setParent(null);
+          
           //Check and see if the instance is over the toolbar (that means we want to delete it)
           if(x < _toolbar.x)
           {
