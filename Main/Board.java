@@ -92,22 +92,20 @@ public class Board implements Screen {
   public void update(final float $dt) {
     //If the activity is being run execute each statement.
     StatementInstance instance = _editor.getStatement();
+    
+    if(checkForCompletion()) {
+      _reset = true;
+    }
 
-    if(_running && instance != null)
-    {
-      if(instance.executed())
-      {
+    if(_running && instance != null) {
+      if(instance.executed()) {
         instance.reset();
         if(_running)
           instance = _editor.nextStatement();
-      }
-      else
-      {
+      } else{
         instance.eval();
       }
-    }
-    else if( ! _reset && instance != null)
-    {
+    } else if( ! _reset && instance != null) {
       _reset = true;
       instance.reset();
       _editor.reset();
@@ -136,7 +134,7 @@ public class Board implements Screen {
     $graphics.translate(0,440);
  
     $graphics.fill(255,255,255);
-    $graphics.rect(0,0,250,25);
+    $graphics.rect(0,0,300,25);
     $graphics.fill(0,0,0);
     $graphics.text("Treasure: " + _player.getTreasureCount(), 5, 18);
     $graphics.text("Food: " + _player.getFoodCount(), 100, 18);
@@ -241,6 +239,17 @@ public class Board implements Screen {
 
     return ret;
   }
+  
+  public boolean checkForCompletion() {
+    int count = 100;
+    for(int y = 0; y < 10; y++) {
+      for(int x = 0; x < 10; x++) {
+        if(!_blocks[y][x].claimed())
+          count--;
+      } 
+    }
+    return count == 0;
+  }
 
   public void nextLevel() {
     this.generateBoard(++level);
@@ -258,16 +267,16 @@ public class Board implements Screen {
   //
   // @see Block.Type for more information on what the integer values mean.
   // ###########################################################################
-  private static final int[][] LEVEL_0 =  { {0,0,0,0,0,0,0,0,0,1},
+  private static final int[][] LEVEL_0 =  { {0,1,1,1,1,1,1,1,1,1},
                                             {0,0,0,0,0,0,0,0,0,0},
                                             {0,0,0,0,0,0,0,0,0,0},
                                             {0,0,0,0,0,0,0,0,0,0},
-                                            {0,0,0,0,1,1,0,0,0,0},
-                                            {0,0,0,0,2,0,0,0,0,0},
                                             {0,0,0,0,0,0,0,0,0,0},
                                             {0,0,0,0,0,0,0,0,0,0},
-                                            {0,0,0,0,2,0,0,0,0,0},
-                                            {1,0,0,0,0,0,0,0,0,1} };
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0},
+                                            {0,0,0,0,0,0,0,0,0,0} };
 
   private static final int[][] LEVEL_1 =  { {0,0,0,0,0,0,0,0,0,0},
                                             {0,0,0,0,0,0,0,0,0,0},
