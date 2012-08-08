@@ -23,6 +23,9 @@ void setup()
 
   //Prep time calculations.
   _last_time = millis();
+  
+  FoodBlock.img = loadImage("food.gif");
+  TreasureBlock.img = loadImage("treasure.gif");
 }
 
 void draw()
