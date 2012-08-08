@@ -15,6 +15,7 @@ public class FoodBlock extends Block {
 
   public FoodBlock(final PVector $pos) {
     super($pos);
+    reset();
   }
 
   public void update(final float $dt) {

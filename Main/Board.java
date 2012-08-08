@@ -113,15 +113,7 @@ public class Board implements Screen {
       instance.reset();
       _editor.reset();
       _player.reset();
-<<<<<<< HEAD
-      
-      //Reset the entire board.
-      for(int y = 0; y < _size_y; y++)
-        for(int x = 0; x < _size_x; x++)
-          _blocks[x][y].reset();
-=======
       this.reset();
->>>>>>> 16bba81f51382051a1d986896107487be2e63862
     }
 
     //Update the player.

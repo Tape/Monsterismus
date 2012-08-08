@@ -14,6 +14,7 @@ public class TreasureBlock extends Block {
 
   public TreasureBlock(final PVector $pos) {
     super($pos);
+    reset();
   }
 
   public void update(final float $dt) {
@@ -30,7 +31,7 @@ public class TreasureBlock extends Block {
 
   public void doAction(Player p) {
     if(amount > 0) {
-      p.addToFoodCount(amount);
+      p.addToTreasureCount(amount);
       p.addToScore(amount * 25);
       amount = 0;
     }
