@@ -50,9 +50,11 @@ public abstract class Block implements Drawable
   public Block(final PVector $pos)
   {
     pos = $pos;
+    reset();
   }
 
   public abstract void doAction(Player p);
   public abstract boolean claimed();
+  public abstract void reset();
 }
 

@@ -48,7 +48,7 @@ public class Board implements Screen {
 
     return _board;
   }
-  
+
   public Block[][] getBlocks()
   {
     return _blocks;
@@ -92,7 +92,7 @@ public class Board implements Screen {
   public void update(final float $dt) {
     //If the activity is being run execute each statement.
     StatementInstance instance = _editor.getStatement();
-    
+
     if(_running && instance != null)
     {
       if(instance.executed())
@@ -112,6 +112,7 @@ public class Board implements Screen {
       instance.reset();
       _editor.reset();
       _player.reset();
+      this.reset();
     }
 
     //Update the player.
@@ -217,6 +218,12 @@ public class Board implements Screen {
 
   public void nextLevel() {
     this.generateBoard(++level);
+  }
+
+  public void reset() {
+    for(int y=0; y<10; y++)
+      for(int x=0; x<10; x++)
+        _blocks[y][x].reset();
   }
 
 

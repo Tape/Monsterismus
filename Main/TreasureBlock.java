@@ -14,7 +14,6 @@ public class TreasureBlock extends Block {
 
   public TreasureBlock(final PVector $pos) {
     super($pos);
-    amount = 2;
   }
 
   public void update(final float $dt) {
@@ -39,5 +38,9 @@ public class TreasureBlock extends Block {
   
   public boolean claimed() {
     return amount == 0;
+  }
+  
+  public void reset() {
+    amount = 2;
   }
 }
