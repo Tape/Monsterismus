@@ -25,11 +25,10 @@ public class TreasureBlock extends Block {
   public void draw(final PGraphics $graphics) {
     $graphics.pushMatrix();
     $graphics.translate(pos.x, pos.y);
+    $graphics.fill(255,255,255);
     $graphics.rect(0, 0, Block.SIZE, Block.SIZE);
     
-    if(amount == 0){
-      $graphics.fill(255,255,255);
-    } else{
+    if(amount > 0) {
       $graphics.image(img, 10, 8);
     }
     $graphics.popMatrix();

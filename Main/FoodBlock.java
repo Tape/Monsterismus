@@ -32,11 +32,10 @@ public class FoodBlock extends Block {
     $graphics.pushMatrix();
     $graphics.translate(pos.x, pos.y);
     $graphics.rect(0, 0, Block.SIZE, Block.SIZE);
+    $graphics.fill(255,255,255);
     
     // If they've already picked it up. Hide the block
-    if(amount == 0) {
-      $graphics.fill(255,255,255);
-    } else {
+    if(amount > 0) {
       $graphics.image(img, 0, 0);
     }
     
