@@ -11,7 +11,7 @@ void setup()
   int sx = 10, sy = 10;
   _width = sx * Block.SIZE;
   _height = sy * Block.SIZE;
-  size(_width, _height);
+  size(_width, _height + 40);
 
   //Build the board and player.
   _screen = _board = Board.getInstance(sx, sy);
