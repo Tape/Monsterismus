@@ -134,11 +134,7 @@ public class Board implements Screen {
     $graphics.translate(0,480);
  
     $graphics.fill(255,255,255);
-<<<<<<< HEAD
-    $graphics.rect(0,0,300,25);
-=======
     $graphics.rect(0,0,_dims.x,50);
->>>>>>> 8ecd46a94c7969c4dce58f2c1484f0af42a7e741
     $graphics.fill(0,0,0);
     $graphics.text("Treasure: " + _player.getTreasureCount(), 5, 18);
     $graphics.text("Food: " + _player.getFoodCount(), 100, 18);
