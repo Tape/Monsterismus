@@ -92,10 +92,6 @@ public class Board implements Screen {
   public void update(final float $dt) {
     //If the activity is being run execute each statement.
     StatementInstance instance = _editor.getStatement();
-    
-    if(checkForCompletion()) {
-      _reset = true;
-    }
 
     if(_running && instance != null) {
       if(instance.executed()) {
@@ -238,17 +234,6 @@ public class Board implements Screen {
     }
 
     return ret;
-  }
-  
-  public boolean checkForCompletion() {
-    int count = 100;
-    for(int y = 0; y < 10; y++) {
-      for(int x = 0; x < 10; x++) {
-        if(!_blocks[y][x].claimed())
-          count--;
-      } 
-    }
-    return count == 0;
   }
 
   public void nextLevel() {
