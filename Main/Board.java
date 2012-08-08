@@ -143,7 +143,6 @@ public class Board implements Screen {
 
     _blocks[x][y].doAction(_player);
 
-    System.out.println(_player.getFoodCount() + " " + _foodcount);
     if(_player.getFoodCount() == _foodcount)
     {
       _foodcount = 0;
