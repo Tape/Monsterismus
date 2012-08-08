@@ -24,7 +24,7 @@ public class EmptyBlock extends Block {
   }
 
   public void doAction(Player p) { }
-  public boolean claimed() { return false; };
+  public boolean claimed() { return false; }
   public void reset() { }
 }
 
