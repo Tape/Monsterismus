@@ -37,7 +37,7 @@ public class Editor implements Screen
 
   //List to contain all of our drawable elements.
   StatementInstance _instance;
-  List<StatementInstance> _instances = Collections.synchronizedList(new LinkedList<StatementInstance>());
+  List<StatementInstance> _instances;
   
   private boolean _running = false;
   private int _position = 0;
@@ -67,6 +67,7 @@ public class Editor implements Screen
     _icon_offset = (int)(_icon_bounds * 0.1f);
     //The size is the size of the rectangle to draw.
     _icon_size = _icon_bounds - _icon_offset * 2;
+    clear();
   }
 
   public void update(final float $dt)
@@ -76,6 +77,11 @@ public class Editor implements Screen
   public void reset()
   {
     _position = 0;
+  }
+  
+  public void clear()
+  {
+    _instances = Collections.synchronizedList(new LinkedList<StatementInstance>());
   }
   
   public StatementInstance getStatement()

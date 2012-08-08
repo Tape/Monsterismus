@@ -22,7 +22,7 @@ public class Board implements Screen {
   private PVector _dims;
   private static Board _board;
   private Player _player;
-  private int level;
+  private int level, _foodcount;
   private Editor _editor;
   private boolean _running = false, _reset = true;
 
@@ -109,9 +109,15 @@ public class Board implements Screen {
     else if( ! _reset && instance != null)
     {
       _reset = true;
+      _foodcount = 0;
       instance.reset();
       _editor.reset();
       _player.reset();
+      
+      //Reset the entire board.
+      for(int y = 0; y < _size_y; y++)
+        for(int x = 0; x < _size_x; x++)
+          _blocks[x][y].reset();
     }
 
     //Update the player.
@@ -141,6 +147,16 @@ public class Board implements Screen {
         y = (int) Math.floor($position.y / Block.SIZE);
 
     _blocks[x][y].doAction(_player);
+
+    System.out.println(_player.getFoodCount() + " " + _foodcount);
+    if(_player.getFoodCount() == _foodcount)
+    {
+      _player.reset(true);
+      _foodcount = 0;
+      generateBoard(++level);
+      _editor.reset();
+      _editor.clear();
+    }
   }
 
   //public void handleMotionEvent(MotionEvent $event) { }
@@ -163,7 +179,13 @@ public class Board implements Screen {
     
     for(int y = 0; y < _size_y; y++) {
       for(int x = 0; x < _size_x; x++) {
-        _blocks[x][y] = BlockFactory.create(new PVector(x * Block.SIZE, y * Block.SIZE), Block.Type.get(map[x][y]));
+        Block.Type blockType = Block.Type.get(map[x][y]);
+        _blocks[x][y] = BlockFactory.create(new PVector(x * Block.SIZE, y * Block.SIZE), blockType);
+        
+        if(blockType == Block.Type.FOOD)
+        {
+          _foodcount += 2;
+        }
       }
     }
   }

@@ -151,7 +151,18 @@ public class Player implements Drawable {
 
   public void reset()
   {
+    reset(false);
+  }
+  
+  public void reset(boolean $completed)
+  {
     _position = new PVector(_start_position.x, _start_position.y);
+    
+    //Decrement the score back to original if the level wasn't completed.
+    if( ! $completed)
+      _score -= _food * 5 + _treasure * 25;
+    
+    _food = _treasure = 0;
   }
 
   public boolean isMoving() {

@@ -42,5 +42,10 @@ public class FoodBlock extends Block {
   public boolean claimed() {
     return amount == 0;
   }
+  
+  public void reset()
+  {
+    amount = 2;
+  }
 }
 

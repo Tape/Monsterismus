@@ -31,7 +31,7 @@ public class TreasureBlock extends Block {
 
   public void doAction(Player p) {
     if(amount > 0) {
-      p.addToFoodCount(amount);
+      p.addToTreasureCount(amount);
       p.addToScore(amount * 25);
       amount = 0;
     }
@@ -39,5 +39,10 @@ public class TreasureBlock extends Block {
   
   public boolean claimed() {
     return amount == 0;
+  }
+  
+  public void reset()
+  {
+    amount = 2;
   }
 }
