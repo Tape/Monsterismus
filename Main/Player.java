@@ -162,7 +162,7 @@ public class Player implements Drawable {
     if( ! $completed)
       _score -= _food * 5 + _treasure * 25;
     
-    _food = _treasure = 0;
+    _food = _treasure = _score = 0;
   }
 
   public boolean isMoving() {

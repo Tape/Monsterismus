@@ -131,6 +131,17 @@ public class Board implements Screen {
 
     //Draw the player.
     _player.draw($graphics);
+    
+    $graphics.pushMatrix();
+    $graphics.translate(0,440);
+ 
+    $graphics.fill(255,255,255);
+    $graphics.rect(0,0,250,25);
+    $graphics.fill(0,0,0);
+    $graphics.text("Treasure: " + _player.getTreasureCount(), 5, 18);
+    $graphics.text("Food: " + _player.getFoodCount(), 100, 18);
+    $graphics.text("Score: " + _player.getScore(), 175, 18);
+    $graphics.popMatrix();
   }
 
   public final PVector getDims() {
