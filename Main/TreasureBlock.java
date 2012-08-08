@@ -1,5 +1,6 @@
 import processing.core.PVector;
 import processing.core.PGraphics;
+import processing.core.PImage;
 
 /**
  *
@@ -11,6 +12,7 @@ import processing.core.PGraphics;
  */
 public class TreasureBlock extends Block {
   private int amount;
+  public static PImage img;
 
   public TreasureBlock(final PVector $pos) {
     super($pos);
@@ -21,12 +23,16 @@ public class TreasureBlock extends Block {
   }
 
   public void draw(final PGraphics $graphics) {
-    if(amount == 0)
+    $graphics.pushMatrix();
+    $graphics.translate(pos.x, pos.y);
+    $graphics.rect(0, 0, Block.SIZE, Block.SIZE);
+    
+    if(amount == 0){
       $graphics.fill(255,255,255);
-    else
-      $graphics.fill(255,255,0);
-
-    $graphics.rect(pos.x, pos.y, Block.SIZE, Block.SIZE);
+    } else{
+      $graphics.image(img, 10, 8);
+    }
+    $graphics.popMatrix();
   }
 
   public void doAction(Player p) {

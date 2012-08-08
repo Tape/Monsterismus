@@ -1,5 +1,11 @@
+import java.io.*;
+import javax.imageio.*;
+import java.awt.image.*;
+
 import processing.core.PVector;
 import processing.core.PGraphics;
+import processing.core.PImage;
+import processing.core.PApplet;
 
 /**
  *
@@ -12,6 +18,7 @@ import processing.core.PGraphics;
 public class FoodBlock extends Block {
 
   private int amount;
+  public static PImage img;
 
   public FoodBlock(final PVector $pos) {
     super($pos);
@@ -22,13 +29,18 @@ public class FoodBlock extends Block {
   }
 
   public void draw(final PGraphics $graphics) {
+    $graphics.pushMatrix();
+    $graphics.translate(pos.x, pos.y);
+    $graphics.rect(0, 0, Block.SIZE, Block.SIZE);
+    
     // If they've already picked it up. Hide the block
-    if(amount == 0)
+    if(amount == 0) {
       $graphics.fill(255,255,255);
-    else
-      $graphics.fill(255,0,0);
-
-    $graphics.rect(pos.x, pos.y, Block.SIZE, Block.SIZE);
+    } else {
+      $graphics.image(img, 0, 0);
+    }
+    
+    $graphics.popMatrix();
   }
 
   public void doAction(Player p) {
@@ -38,11 +50,11 @@ public class FoodBlock extends Block {
       amount = 0;
     }
   }
-  
+
   public boolean claimed() {
     return amount == 0;
   }
-  
+
   public void reset() {
     amount = 2;
   }
