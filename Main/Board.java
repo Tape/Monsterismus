@@ -109,7 +109,6 @@ public class Board implements Screen {
     else if( ! _reset && instance != null)
     {
       _reset = true;
-      _foodcount = 0;
       instance.reset();
       _editor.reset();
       _player.reset();
@@ -144,11 +143,11 @@ public class Board implements Screen {
 
     _blocks[x][y].doAction(_player);
 
+    System.out.println(_player.getFoodCount() + " " + _foodcount);
     if(_player.getFoodCount() == _foodcount)
     {
-      _reset = true;
-      _player.reset(true);
       _foodcount = 0;
+      _player.reset(true);
       generateBoard(++level);
       _editor.reset();
       _editor.clear();
