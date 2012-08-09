@@ -55,6 +55,7 @@ void keyPressed()
   {
     switch(key)
     {
+      // Remove these and add the button functionality
     case 's':
     case 'S':
       if(_screen instanceof Board)
