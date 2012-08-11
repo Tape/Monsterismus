@@ -140,7 +140,7 @@ public class Player implements Drawable {
   public void draw(final PGraphics $graphics) {
     $graphics.pushMatrix();
     $graphics.translate(_position.x, _position.y);
-    $graphics.image(imgs[_movement.dir], -4.5f, 0);
+    $graphics.image(imgs[_movement.dir], 4.5f, 0);
     $graphics.popMatrix();
   }
 
