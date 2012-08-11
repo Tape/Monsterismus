@@ -16,7 +16,7 @@ void setup()
 
   FoodBlock.img = loadImage("sprites/food.gif");
   TreasureBlock.img = loadImage("sprites/treasure.gif");
-  EmptyBlock.img = loadImage("sprites/Grass.png");
+//  EmptyBlock.img = loadImage("sprites/Grass.png");
 
   Player.imgs = new PImage[5];
   Player.imgs[Player.Movement.UP.dir]    = loadImage("sprites/Up.png");
