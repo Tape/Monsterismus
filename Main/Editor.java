@@ -72,12 +72,12 @@ public class Editor implements Screen
         $graphics.pushMatrix();
         $graphics.translate(this.x, this.y);
         if (this.clicked)
-          $graphics.fill(128,128,128);
+          $graphics.fill(200,176,232);
          else
           $graphics.fill(255,255,255);
-        $graphics.rect(0,0,50,50);
-        $graphics.fill(0,0,0);
-        $graphics.text("Board", 5, 18);
+        $graphics.noStroke();
+        $graphics.rect(0,0,this.w,this.h);
+        $graphics.image(Button.swap, 0, 0);
         $graphics.popMatrix();
       }
     };
@@ -118,6 +118,7 @@ public class Editor implements Screen
   public void draw(final PGraphics $graphics) {
     $graphics.fill(255,255,255);
     $graphics.rect(0, 0, Game.WIDTH, Game.HEIGHT);
+    $graphics.stroke(0);
 
     //Draw the editor toolbar.
     $graphics.rect(0, 0, _toolbar.x, _toolbar.y);

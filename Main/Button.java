@@ -1,7 +1,9 @@
-
+import processing.core.PImage;
 import processing.core.PGraphics;
 
 public abstract class Button {
+  public static PImage execute, leveldown, levelup, reset, swap;
+  
   public int x, y, w, h;
   public boolean clicked;
   public Runnable run;
