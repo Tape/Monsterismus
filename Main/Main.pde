@@ -22,7 +22,12 @@ void setup()
   Player.imgs[Player.Movement.DOWN.dir]  = loadImage("sprites/Down.png");
   Player.imgs[Player.Movement.LEFT.dir]  = loadImage("sprites/Left.png");
   Player.imgs[Player.Movement.RIGHT.dir] = loadImage("sprites/Right.png");
-
+  
+  Button.swap = loadImage("sprites/Switch.png");
+  Button.execute = loadImage("sprites/Execute.png");
+  Button.levelup = loadImage("sprites/LevelUp.png");
+  Button.leveldown = loadImage("sprites/LevelDown.png");
+  Button.reset = loadImage("sprites/Reset.png");
 }
 
 void draw()

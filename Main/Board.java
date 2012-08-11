@@ -53,12 +53,12 @@ public class Board implements Screen {
         $graphics.pushMatrix();
         $graphics.translate(this.x, this.y);
         if (this.clicked)
-          $graphics.fill(128,128,128);
+          $graphics.fill(200,176,232);
          else
           $graphics.fill(255,255,255);
+        $graphics.noStroke();
         $graphics.rect(0,0,this.w,this.h);
-        $graphics.fill(0,0,0);
-        $graphics.text("Editor", 5, 18);
+        $graphics.image(Button.swap, 0, 0);
         $graphics.popMatrix();
       }
     };
@@ -75,12 +75,12 @@ public class Board implements Screen {
         $graphics.pushMatrix();
         $graphics.translate(this.x, this.y);
         if (this.clicked)
-          $graphics.fill(128,128,128);
+          $graphics.fill(111,214,237);
          else
           $graphics.fill(255,255,255);
+        $graphics.noStroke();
         $graphics.rect(0,0,this.w,this.h);
-        $graphics.fill(0,0,0);
-        $graphics.text("+", 5, 18);
+        $graphics.image(Button.levelup, 0,0);
         $graphics.popMatrix();
       }
     };
@@ -95,12 +95,12 @@ public class Board implements Screen {
         $graphics.pushMatrix();
         $graphics.translate(this.x, this.y);
         if (this.clicked)
-          $graphics.fill(128,128,128);
+          $graphics.fill(111,214,237);
          else
           $graphics.fill(255,255,255);
+        $graphics.noStroke();
         $graphics.rect(0,0,this.w,this.h);
-        $graphics.fill(0,0,0);
-        $graphics.text("-", 5, 18);
+        $graphics.image(Button.leveldown,0,0);
         $graphics.popMatrix();
       }
     };
@@ -116,12 +116,12 @@ public class Board implements Screen {
         $graphics.pushMatrix();
         $graphics.translate(this.x, this.y);
         if (this.clicked)
-          $graphics.fill(128,128,128);
+          $graphics.fill(89,209,75);
          else
           $graphics.fill(255,255,255);
+        $graphics.noStroke();
         $graphics.rect(0,0,this.w,this.h);
-        $graphics.fill(0,0,0);
-        $graphics.text("Exec", 5, 18);
+        $graphics.image(Button.execute, 0,0);
         $graphics.popMatrix();
       }
     };
@@ -137,12 +137,12 @@ public class Board implements Screen {
         $graphics.pushMatrix();
         $graphics.translate(this.x, this.y);
         if (this.clicked)
-          $graphics.fill(128,128,128);
+          $graphics.fill(240,79,79);
          else
           $graphics.fill(255,255,255);
+        $graphics.noStroke();
         $graphics.rect(0,0,this.w,this.h);
-        $graphics.fill(0,0,0);
-        $graphics.text("Reset", 5, 18);
+        $graphics.image(Button.reset, 0,0);
         $graphics.popMatrix();
       }
     };
@@ -223,6 +223,7 @@ public class Board implements Screen {
     //Set up the graphics mode to correcty draw the blocks
     //and draw each block.
     $graphics.rectMode(PGraphics.CORNER);
+    $graphics.stroke(0);
     synchronized(_blocks) {
       for(int y = 0; y < _size_y; y++) {
         for(int x = 0; x < _size_x; x++) {
