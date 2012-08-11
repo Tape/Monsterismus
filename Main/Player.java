@@ -1,5 +1,6 @@
 import processing.core.PVector;
 import processing.core.PGraphics;
+import processing.core.PImage;
 
 /**
  *
@@ -12,6 +13,7 @@ import processing.core.PGraphics;
 public class Player implements Drawable {
   //Size constants.
   public static final int SIZE = 34;
+  public static PImage img;
 
   //Movement constants
   public enum Movement
