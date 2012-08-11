@@ -31,7 +31,7 @@ public abstract class StatementInstance implements Drawable
   {
     return _pos;
   }
-  
+
   public boolean isNestable()
   {
     return this instanceof Nestable;
@@ -41,7 +41,7 @@ public abstract class StatementInstance implements Drawable
   {
     return _parent == null;
   }
-  
+
   public void setParent(final Nestable $parent)
   {
     if($parent != null)
@@ -49,14 +49,14 @@ public abstract class StatementInstance implements Drawable
       _parent = $parent;
       return;
     }
-    
+
     if(_parent != null)
     {
       _parent.removeAllInstances(this);
       _parent = null;
     }
   }
-  
+
   public abstract StatementInstance instanceUnder(final float $x, final float $y);
   public abstract int getHeight();
   public abstract int getWidth();

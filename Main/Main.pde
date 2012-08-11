@@ -17,6 +17,12 @@ void setup()
   FoodBlock.img = loadImage("sprites/food.gif");
   TreasureBlock.img = loadImage("sprites/treasure.gif");
 
+  Player.imgs = new PImage[5];
+  Player.imgs[Player.Movement.UP.dir]    = loadImage("sprites/Up.png");
+  Player.imgs[Player.Movement.DOWN.dir]  = loadImage("sprites/Down.png");
+  Player.imgs[Player.Movement.LEFT.dir]  = loadImage("sprites/Left.png");
+  Player.imgs[Player.Movement.RIGHT.dir] = loadImage("sprites/Right.png");
+
 }
 
 void draw()

@@ -5,7 +5,7 @@ public abstract class Button {
   public int x, y, w, h;
   public boolean clicked;
   public Runnable run;
-  
+
   public Button(int x, int y, int w, int h) {
     this.x = x;
     this.y = y;
