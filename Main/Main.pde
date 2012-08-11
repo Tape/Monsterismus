@@ -4,15 +4,11 @@ float _last_time, _dt;
 
 void setup()
 {
-  //Prep the board size.
-  int sx = 10, sy = 10;
-  _width = sx * Block.SIZE;
-  _height = sy * Block.SIZE;
-  size(_width, _height + 100);
+  size(Game.WIDTH, Game.HEIGHT);
 
   //Build the board and player.
-  Game.board  = new Board(sx,sy);
-  Game.editor = new Editor(new PVector(_width, _height));
+  Game.board  = new Board(Game.BOARD_SIZE,Game.BOARD_SIZE);
+  Game.editor = new Editor(new PVector(Game.WIDTH, Game.HEIGHT));
   Game.screen = Game.board;
 
   //Prep time calculations.
@@ -20,7 +16,7 @@ void setup()
 
   FoodBlock.img = loadImage("sprites/food.gif");
   TreasureBlock.img = loadImage("sprites/treasure.gif");
-  
+
 }
 
 void draw()

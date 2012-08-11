@@ -4,6 +4,10 @@ public class Game {
   public static final int BOARD = 1;
   public static final int EDITOR = 2;
 
+  public static final int BOARD_SIZE = 10;
+  public static final int WIDTH = BOARD_SIZE * Block.SIZE;
+  public static final int HEIGHT = BOARD_SIZE * Block.SIZE + 100;
+
   public static Screen screen;
   public static Board board;
   public static Editor editor;
@@ -29,7 +33,7 @@ public class Game {
     if(screen instanceof Board)
       board.previousLevel();
   }
-  
+
   public static void handleMouseEvent(MouseEvent e) {
     if(screen instanceof Board)
       board.handleMouseEvent(e);

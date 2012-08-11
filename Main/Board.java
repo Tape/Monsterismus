@@ -43,41 +43,12 @@ public class Board implements Screen {
     _size_y = $sy;
     _dims = new PVector($sx * Block.SIZE, $sy * Block.SIZE);
     level = 0;
-    
+
     int offset = (Block.SIZE - Player.SIZE) / 2;
     _player = new Player(new PVector(offset, offset));
 
-    nextLevelButton = new Button(10,520,50,50) {
-      public void draw(final PGraphics $graphics) {
-        $graphics.pushMatrix();
-        $graphics.translate(this.x, this.y);
-        if (this.clicked)
-          $graphics.fill(128,128,128);
-         else
-          $graphics.fill(255,255,255);
-        $graphics.rect(0,0,50,50);
-        $graphics.fill(0,0,0);
-        $graphics.text("+", 5, 18);
-        $graphics.popMatrix();
-      }
-    };
 
-    previousLevelButton = new Button(70,520,50,50) {
-      public void draw(final PGraphics $graphics) {
-        $graphics.pushMatrix();
-        $graphics.translate(this.x, this.y);
-        if (this.clicked)
-          $graphics.fill(128,128,128);
-         else
-          $graphics.fill(255,255,255);
-        $graphics.rect(0,0,50,50);
-        $graphics.fill(0,0,0);
-        $graphics.text("-", 5, 18);
-        $graphics.popMatrix();
-      }
-    };
-
-    editorButton = new Button(130,520,50,50) {
+    editorButton = new Button(10,520,50,50) {
       public void draw(final PGraphics $graphics) {
         $graphics.pushMatrix();
         $graphics.translate(this.x, this.y);
@@ -98,6 +69,51 @@ public class Board implements Screen {
         Game.switchScreen(Game.EDITOR);
       }
     });
+
+    nextLevelButton = new Button(70,520,50,50) {
+      public void draw(final PGraphics $graphics) {
+        $graphics.pushMatrix();
+        $graphics.translate(this.x, this.y);
+        if (this.clicked)
+          $graphics.fill(128,128,128);
+         else
+          $graphics.fill(255,255,255);
+        $graphics.rect(0,0,50,50);
+        $graphics.fill(0,0,0);
+        $graphics.text("+", 5, 18);
+        $graphics.popMatrix();
+      }
+    };
+    nextLevelButton.event(new Runnable() {
+      public void run() {
+        setRunning(false);
+        reset();
+        nextLevel();
+      }
+    });
+
+    previousLevelButton = new Button(130,520,50,50) {
+      public void draw(final PGraphics $graphics) {
+        $graphics.pushMatrix();
+        $graphics.translate(this.x, this.y);
+        if (this.clicked)
+          $graphics.fill(128,128,128);
+         else
+          $graphics.fill(255,255,255);
+        $graphics.rect(0,0,50,50);
+        $graphics.fill(0,0,0);
+        $graphics.text("-", 5, 18);
+        $graphics.popMatrix();
+      }
+    };
+    previousLevelButton.event(new Runnable() {
+      public void run() {
+        setRunning(false);
+        reset();
+        previousLevel();
+      }
+    });
+
 
     execButton = new Button(190,520,50,50) {
       public void draw(final PGraphics $graphics) {
@@ -146,10 +162,7 @@ public class Board implements Screen {
 
   public static Board getInstance()
   {
-    if(_board == null)
-      throw new RuntimeException("Board has not been created yet");
-
-    return _board;
+    return Game.board;
   }
 
   public Block[][] getBlocks()
@@ -209,6 +222,8 @@ public class Board implements Screen {
   }
 
   public void draw(final PGraphics $graphics) {
+    $graphics.fill(255,255,255);
+    $graphics.rect(0, 0, Game.WIDTH, Game.HEIGHT);
     //Set up the graphics mode to correcty draw the blocks
     //and draw each block.
     $graphics.rectMode(PGraphics.CORNER);
@@ -491,79 +506,3 @@ public class Board implements Screen {
                                             {0,0,0,0,0,0,0,0,0,0} };
 
 }
-
-// public class NextLevelButton extends Button {
-//   public NextLevelButton(int x, int y) {
-//     super(x,y,50,50);
-//   }
-//   public void draw(final PGraphics $graphics) {
-    // $graphics.pushMatrix();
-    // $graphics.translate(this.x, this.y);
-    // $graphics.fill(255,255,255);
-    // $graphics.rect(0,0,50,50);
-    // $graphics.fill(0,0,0);
-    // $graphics.text("+", 5, 18);
-//    $graphics.popMatrix();
-//   }
-// }
-
-// public class PreviousLevelButton extends Button {
-//   public PreviousLevelButton(int x, int y) {
-//     super(x,y,50,50);
-//   }
-//   public void draw(final PGraphics $graphics) {
-//     $graphics.pushMatrix();
-//     $graphics.translate(this.x, this.y);
-//     $graphics.fill(255,255,255);
-//     $graphics.rect(0,0,50,50);
-//     $graphics.fill(0,0,0);
-//     $graphics.text("-", 5, 18);
-//     $graphics.popMatrix();
-//   }
-// }
-
-// public class ExecButton extends Button {
-//   public ExecButton(int x, int y) {
-//     super(x,y,50,50);
-//   }
-//   public void draw(final PGraphics $graphics) {
-//     $graphics.pushMatrix();
-//     $graphics.translate(this.x, this.y);
-//     $graphics.fill(255,255,255);
-//     $graphics.rect(0,0,50,50);
-//     $graphics.fill(0,0,0);
-//     $graphics.text("Exec", 5, 18);
-//     $graphics.popMatrix();
-//   }
-// }
-
-// public class ResetButton extends Button {
-//   public ExecButton(int x, int y) {
-//     super(x,y,50,50);
-//   }
-//   public void draw(final PGraphics $graphics) {
-//     $graphics.pushMatrix();
-//     $graphics.translate(this.x, this.y);
-//     $graphics.fill(255,255,255);
-//     $graphics.rect(0,0,50,50);
-//     $graphics.fill(0,0,0);
-//     $graphics.text("Reset", 5, 18);
-//     $graphics.popMatrix();
-//   }
-// }
-
-
-// public class EditorButton extends Button {
-//   public EditorButton(int x, int y) {
-//     super(x,y,50,50);
-//   }
-//   public void draw(final PGraphics $graphics) {
-//     $graphics.pushMatrix();
-//     $graphics.translate(this.x, this.y);
-//     $graphics.fill(255,255,255);
-//     $graphics.rect(0,0,50,50);
-//     $graphics.fill(0,0,0);
-//     $graphics.text("Editor", 5, 18);
-//     $graphics.popMatrix();
-//   }
-// }

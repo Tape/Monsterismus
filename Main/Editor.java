@@ -77,7 +77,7 @@ public class Editor implements Screen
           $graphics.fill(255,255,255);
         $graphics.rect(0,0,50,50);
         $graphics.fill(0,0,0);
-        $graphics.text("Editor", 5, 18);
+        $graphics.text("Board", 5, 18);
         $graphics.popMatrix();
       }
     };
@@ -116,9 +116,8 @@ public class Editor implements Screen
   }
 
   public void draw(final PGraphics $graphics) {
-    //Draw the core screen.
-    $graphics.fill(FILL_COLOR);
-    $graphics.rect(0, 0, _dims.x, _dims.y);
+    $graphics.fill(255,255,255);
+    $graphics.rect(0, 0, Game.WIDTH, Game.HEIGHT);
 
     //Draw the editor toolbar.
     $graphics.rect(0, 0, _toolbar.x, _toolbar.y);
@@ -145,8 +144,6 @@ public class Editor implements Screen
     float x = $event.getX(),
           y = $event.getY();
 
-    if(boardButton.isClicked(x,y))
-      return;
 
     synchronized(_instances) {
       switch($event.getID()) {
@@ -154,6 +151,8 @@ public class Editor implements Screen
         _dragstart = true;
         _drag_start_x = x;
         _drag_start_y = y;
+        if(boardButton.isClicked((int)x,(int)y))
+          return;
         break;
       case MouseEvent.MOUSE_DRAGGED:
         //Require at least a 7 pixel move (helps on the phone for clicks).
@@ -199,6 +198,7 @@ public class Editor implements Screen
         }
         break;
       case MouseEvent.MOUSE_RELEASED:
+        boardButton.release();
         //This means we never started dragging in the first place, so handle a click.
         if(_dragstart) {
           for(StatementInstance instance : _instances) {
