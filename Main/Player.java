@@ -13,54 +13,46 @@ import processing.core.PImage;
 public class Player implements Drawable {
   //Size constants.
   public static final int SIZE = 34;
-  public static PImage img;
+  public static PImage imgs[];
 
   //Movement constants
-  public enum Movement
-  {
+  public enum Movement {
     UP(1, "Up"),
     DOWN(2, "Down"),
     LEFT(3, "Left"),
     RIGHT(4, "Right");
 
-    private int _dir;
-    private String _label;
+    public int dir;
+    private String label;
 
-    Movement(final int $dir, final String $label)
-    {
-      _dir = $dir;
-      _label = $label;
+    Movement(int dir, String label) {
+      this.dir = dir;
+      this.label = label;
     }
 
-    public int getDirection()
-    {
-      return _dir;
+    public int getDirection() {
+      return dir;
     }
 
-    public String getLabel()
-    {
-      return _label;
+    public String getLabel() {
+      return label;
     }
 
-    public float getMovement()
-    {
-      return ((_dir & 1) > 0) ? -1.0f : 1.0f;
+    public float getMovement() {
+      return ((dir & 1) > 0) ? -1.0f : 1.0f;
     }
 
-    public Movement next()
-    {
-      return Movement.get(_dir % 4 + 1);
+    public Movement next() {
+      return Movement.get(dir % 4 + 1);
     }
 
-    public static Movement get(final int $dir)
-    {
-      switch($dir)
-      {
-      case 1: return UP;
-      case 2: return DOWN;
-      case 3: return LEFT;
-      case 4: return RIGHT;
-      default: return UP;
+    public static Movement get(int dir) {
+      switch(dir) {
+        case 1: return UP;
+        case 2: return DOWN;
+        case 3: return LEFT;
+        case 4: return RIGHT;
+        default: return UP;
       }
     }
   }
@@ -84,6 +76,7 @@ public class Player implements Drawable {
     _score = 0;
     _food = 0;
     _treasure = 0;
+    _movement = Movement.DOWN;
   }
 
   public void move(final Movement $movement) {
@@ -107,14 +100,12 @@ public class Player implements Drawable {
     _prev_position = new PVector(_position.x, _position.y);
     _is_moving = true;
   }
-    
-  public PVector getPosition()
-  {
+
+  public PVector getPosition() {
     return _position;
   }
-  
-  public void stopMoving()
-  {
+
+  public void stopMoving() {
     _is_moving = false;
   }
 
@@ -147,23 +138,23 @@ public class Player implements Drawable {
   }
 
   public void draw(final PGraphics $graphics) {
-    $graphics.fill(FILL_COLOR);
-    $graphics.rect(_position.x, _position.y, SIZE, SIZE);
+    $graphics.pushMatrix();
+    $graphics.translate(_position.x, _position.y);
+    $graphics.image(imgs[_movement.dir], -4.5f, 0);
+    $graphics.popMatrix();
   }
 
-  public void reset()
-  {
+  public void reset() {
     reset(false);
   }
-  
-  public void reset(boolean $completed)
-  {
+
+  public void reset(boolean $completed) {
     _position = new PVector(_start_position.x, _start_position.y);
-    
+
     //Decrement the score back to original if the level wasn't completed.
     if( ! $completed)
       _score -= _food * 5 + _treasure * 25;
-    
+
     _food = _treasure = _score = 0;
   }
 

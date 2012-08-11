@@ -56,7 +56,7 @@ public class Board implements Screen {
           $graphics.fill(128,128,128);
          else
           $graphics.fill(255,255,255);
-        $graphics.rect(0,0,50,50);
+        $graphics.rect(0,0,this.w,this.h);
         $graphics.fill(0,0,0);
         $graphics.text("Editor", 5, 18);
         $graphics.popMatrix();
@@ -78,7 +78,7 @@ public class Board implements Screen {
           $graphics.fill(128,128,128);
          else
           $graphics.fill(255,255,255);
-        $graphics.rect(0,0,50,50);
+        $graphics.rect(0,0,this.w,this.h);
         $graphics.fill(0,0,0);
         $graphics.text("+", 5, 18);
         $graphics.popMatrix();
@@ -98,7 +98,7 @@ public class Board implements Screen {
           $graphics.fill(128,128,128);
          else
           $graphics.fill(255,255,255);
-        $graphics.rect(0,0,50,50);
+        $graphics.rect(0,0,this.w,this.h);
         $graphics.fill(0,0,0);
         $graphics.text("-", 5, 18);
         $graphics.popMatrix();
@@ -111,7 +111,7 @@ public class Board implements Screen {
     });
 
 
-    execButton = new Button(190,520,50,50) {
+    execButton = new Button(190,520,135,50) {
       public void draw(final PGraphics $graphics) {
         $graphics.pushMatrix();
         $graphics.translate(this.x, this.y);
@@ -119,7 +119,7 @@ public class Board implements Screen {
           $graphics.fill(128,128,128);
          else
           $graphics.fill(255,255,255);
-        $graphics.rect(0,0,50,50);
+        $graphics.rect(0,0,this.w,this.h);
         $graphics.fill(0,0,0);
         $graphics.text("Exec", 5, 18);
         $graphics.popMatrix();
@@ -132,7 +132,7 @@ public class Board implements Screen {
       }
     });
 
-    resetButton = new Button(250,520,50,50) {
+    resetButton = new Button(335,520,135,50) {
       public void draw(final PGraphics $graphics) {
         $graphics.pushMatrix();
         $graphics.translate(this.x, this.y);
@@ -140,7 +140,7 @@ public class Board implements Screen {
           $graphics.fill(128,128,128);
          else
           $graphics.fill(255,255,255);
-        $graphics.rect(0,0,50,50);
+        $graphics.rect(0,0,this.w,this.h);
         $graphics.fill(0,0,0);
         $graphics.text("Reset", 5, 18);
         $graphics.popMatrix();
