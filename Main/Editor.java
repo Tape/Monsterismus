@@ -44,8 +44,7 @@ public class Editor implements Screen
 
   //Map containing our statements.
   private static final Map<Class, ProgrammingStatement> _statements;
-  static
-  {
+  static {
     Map<Class, ProgrammingStatement> map = new HashMap<Class, ProgrammingStatement>();
 
     //Insert our control structures.
@@ -56,8 +55,7 @@ public class Editor implements Screen
     _statements = Collections.unmodifiableMap(map);
   }
 
-  public Editor(final PVector $dims)
-  {
+  public Editor(final PVector $dims) {
     _dims = $dims;
     _toolbar = new PVector($dims.x * 0.15f, $dims.y);
 
@@ -70,24 +68,19 @@ public class Editor implements Screen
     clear();
   }
 
-  public void update(final float $dt)
-  {
+  public void update(final float $dt) {
   }
   
-  public void reset()
-  {
+  public void reset() {
     _position = 0;
   }
   
-  public void clear()
-  {
+  public void clear() {
     _instances = Collections.synchronizedList(new LinkedList<StatementInstance>());
   }
   
-  public StatementInstance getStatement()
-  {
-    synchronized(_instances)
-    {
+  public StatementInstance getStatement() {
+    synchronized(_instances) {
       if(_instances.size() == 0)
         return null;
       
@@ -95,17 +88,14 @@ public class Editor implements Screen
     }
   }
   
-  public StatementInstance nextStatement()
-  {
-    synchronized(_instances)
-    {
+  public StatementInstance nextStatement() {
+    synchronized(_instances) {
       _position = (_position + 1) % _instances.size();
       return _instances.get(_position);
     }
   }
 
-  public void draw(final PGraphics $graphics)
-  {
+  public void draw(final PGraphics $graphics) {
     //Draw the core screen.
     $graphics.fill(FILL_COLOR);
     $graphics.rect(0, 0, _dims.x, _dims.y);
@@ -115,8 +105,7 @@ public class Editor implements Screen
 
     //Draw each statement icon.
     int offset = 0;
-    for(Class statement : _statements.keySet())
-    {
+    for(Class statement : _statements.keySet()) {
       ProgrammingStatement ps = _statements.get(statement);
       $graphics.fill(ps.getColor());
       $graphics.rect(_icon_offset, offset + _icon_offset, _icon_size, _icon_size);
@@ -124,24 +113,19 @@ public class Editor implements Screen
       offset += _icon_bounds;
     }
 
-    synchronized(_instances)
-    {
-      for(Drawable instance : _instances)
-      {
+    synchronized(_instances) {
+      for(Drawable instance : _instances) {
         instance.draw($graphics);
       }
     }
   }
 
-  public void handleMouseEvent(MouseEvent $event)
-  {
+  public void handleMouseEvent(MouseEvent $event) {
     float x = $event.getX(),
           y = $event.getY();
 
-    synchronized(_instances)
-    {
-      switch($event.getID())
-      {
+    synchronized(_instances) {
+      switch($event.getID()) {
       case MouseEvent.MOUSE_PRESSED:
         _dragstart = true;
         _drag_start_x = x;
@@ -149,14 +133,12 @@ public class Editor implements Screen
         break;
       case MouseEvent.MOUSE_DRAGGED:
         //Require at least a 7 pixel move (helps on the phone for clicks).
-        if(_dragstart && Math.abs(_drag_start_x - x) < 7 && Math.abs(_drag_start_y - y) < 7)
-        {
+        if(_dragstart && Math.abs(_drag_start_x - x) < 7 && Math.abs(_drag_start_y - y) < 7) {
           break;
         }
         
         //If we are about to start dragging an item from the toolbar.
-        if(_dragstart && _drag_start_x > _icon_offset && _drag_start_x < _icon_offset + _icon_size)
-        {
+        if(_dragstart && _drag_start_x > _icon_offset && _drag_start_x < _icon_offset + _icon_size) {
           //Stop dragging.
           _dragstart = false;
   
@@ -167,27 +149,20 @@ public class Editor implements Screen
           //Get an array of statement types on the toolbar.
           Class _statement_types[] = _statements.keySet().toArray(new Class[0]);
   
-          if(index < _statement_types.length && pos > _icon_offset && pos < _icon_offset + _icon_size)
-          {
+          if(index < _statement_types.length && pos > _icon_offset && pos < _icon_offset + _icon_size) {
             _instance = _statements.get(_statement_types[index]).spawnInstance();
             _instances.add(_instance);
-          }
-          else
-          {
+          } else {
             _instance = null;
           }
-        }
-        //Otherwise we're on the board, let's find exactly which element is hovered over.
-        else if(_dragstart)
-        {
+        } else if(_dragstart) {
+          //Otherwise we're on the board, let's find exactly which element is hovered over.
           _dragstart = false;
           
-          for(StatementInstance instance : _instances)
-          {
+          for(StatementInstance instance : _instances) {
             StatementInstance under = instance.instanceUnder(_drag_start_x, _drag_start_y);
   
-            if(under != null)
-            {
+            if(under != null) {
               _instance = under;
               break;
             }
@@ -195,21 +170,17 @@ public class Editor implements Screen
         }
   
         //If we are dragging an item.
-        if(_instance != null)
-        {
+        if(_instance != null) {
           _instance.setPos(x, y);
         }
         break;
       case MouseEvent.MOUSE_RELEASED:
         //This means we never started dragging in the first place, so handle a click.
-        if(_dragstart)
-        {
-          for(StatementInstance instance : _instances)
-          {
+        if(_dragstart) {
+          for(StatementInstance instance : _instances) {
             StatementInstance under = instance.instanceUnder(_drag_start_x, _drag_start_y);
   
-            if(under != null)
-            {
+            if(under != null) {
               under.handleClick();
             }
           }
@@ -217,39 +188,32 @@ public class Editor implements Screen
         _dragstart = false;
   
         //If we are dropping a currently carried instance.
-        if(_instance != null)
-        {
+        if(_instance != null) {
           //Always remove the parent.
           _instance.setParent(null);
           
           //Check and see if the instance is over the toolbar (that means we want to delete it)
-          if(x < _toolbar.x)
-          {
+          if(x < _toolbar.x) {
             _instances.remove(_instance);
-          }
-          else
-          {
+          } else {
             int i, len;
             //Remove the instance from the current list.
             _instances.remove(_instance);
   
             //Find where it belongs using it's y position.
-            for(i = 0, len = _instances.size(); i < len; i++)
-            {
+            for(i = 0, len = _instances.size(); i < len; i++) {
               StatementInstance instance = _instances.get(i);
               PVector pos = instance.getPos();
               
               //We are getting the instance under the cursor (which could just be the same element!)
               StatementInstance nested = instance.instanceUnder(x, y);
-              if(nested != null && nested.isNestable())
-              {
+              if(nested != null && nested.isNestable()) {
                 Nestable nestable = (Nestable) nested;
                 nestable.addChild(_instance);
                 break;
               }
               
-              if(pos.y > y)
-              {
+              if(pos.y > y) {
                 _instance.setParent(null);
                 _instances.add(i, _instance);
                 break;
@@ -257,8 +221,7 @@ public class Editor implements Screen
             }
   
             //This means we reached the end of the list.
-            if(i == len)
-            {
+            if(i == len) {
               _instance.setParent(null);
               _instances.add(_instance);
             }
@@ -272,15 +235,12 @@ public class Editor implements Screen
     }
   }
 
-  private void reshuffle()
-  {
+  private void reshuffle() {
     int offset_y = StatementInstance.SPACING,
         offset_x = (int)_toolbar.x + StatementInstance.SPACING;
 
-    synchronized(_instances)
-    {
-      for(StatementInstance instance : _instances)
-      {
+    synchronized(_instances) {
+      for(StatementInstance instance : _instances) {
         instance.setPos(offset_x, offset_y);
         offset_y += StatementInstance.SPACING + instance.getHeight();
       }

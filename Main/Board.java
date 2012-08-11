@@ -175,12 +175,12 @@ public class Board implements Screen {
   public void generateBoard(int level) {
     _blocks = new Block[_size_x][_size_y];
     int[][] map = this.getLevel(level);
-    
+
     for(int y = 0; y < _size_y; y++) {
       for(int x = 0; x < _size_x; x++) {
         Block.Type blockType = Block.Type.get(map[x][y]);
         _blocks[x][y] = BlockFactory.create(new PVector(x * Block.SIZE, y * Block.SIZE), blockType);
-        
+
         if(blockType == Block.Type.FOOD)
         {
           _foodcount += 2;

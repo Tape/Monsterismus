@@ -11,7 +11,7 @@ void setup()
   int sx = 10, sy = 10;
   _width = sx * Block.SIZE;
   _height = sy * Block.SIZE;
-  size(_width, _height + 40);
+  size(_width, _height + 100);
 
   //Build the board and player.
   _screen = _board = Board.getInstance(sx, sy);
@@ -43,33 +43,27 @@ void draw()
   _screen.draw(g);
 }
 
-void mouseDragged(MouseEvent $event) { _screen.handleMouseEvent($event); }
-void mouseMoved(MouseEvent $event) { _screen.handleMouseEvent($event); }
-void mousePressed(MouseEvent $event) { _screen.handleMouseEvent($event); }
+void mouseDragged(MouseEvent $event)  { _screen.handleMouseEvent($event); }
+void mouseMoved(MouseEvent $event)    { _screen.handleMouseEvent($event); }
+void mousePressed(MouseEvent $event)  { _screen.handleMouseEvent($event); }
 void mouseReleased(MouseEvent $event) { _screen.handleMouseEvent($event); }
-//boolean surfaceTouchEvent(MotionEvent $event) { _screen.handleMotionEvent($event); return true; }
 
-void keyPressed()
-{
-  if(key != CODED)
-  {
-    switch(key)
-    {
+void keyPressed() {
+  if(key != CODED) {
+    switch(key) {
       // Remove these and add the button functionality
     case 's':
     case 'S':
-      if(_screen instanceof Board)
-      {
+      if(_screen instanceof Board) {
         _board.setRunning(false);
         _screen = _editor;
-      }
-      else
+      } else {
         _screen = _board;
+      }
       break;
     case 'e':
     case 'E':
-      if(_screen instanceof Board)
-      {
+      if(_screen instanceof Board) {
         _board.toggleRunning();
       }
     }
