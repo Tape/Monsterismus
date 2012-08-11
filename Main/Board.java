@@ -86,8 +86,6 @@ public class Board implements Screen {
     };
     nextLevelButton.event(new Runnable() {
       public void run() {
-        setRunning(false);
-        reset();
         nextLevel();
       }
     });
@@ -108,8 +106,6 @@ public class Board implements Screen {
     };
     previousLevelButton.event(new Runnable() {
       public void run() {
-        setRunning(false);
-        reset();
         previousLevel();
       }
     });
@@ -227,9 +223,11 @@ public class Board implements Screen {
     //Set up the graphics mode to correcty draw the blocks
     //and draw each block.
     $graphics.rectMode(PGraphics.CORNER);
-    for(int y = 0; y < _size_y; y++) {
-      for(int x = 0; x < _size_x; x++) {
-        _blocks[x][y].draw($graphics);
+    synchronized(_blocks) {
+      for(int y = 0; y < _size_y; y++) {
+        for(int x = 0; x < _size_x; x++) {
+          _blocks[x][y].draw($graphics);
+        }
       }
     }
 
@@ -305,7 +303,7 @@ public class Board implements Screen {
    *
    * @return void
    */
-  public void generateBoard(int level) {
+  public synchronized void generateBoard(int level) {
     _blocks = new Block[_size_x][_size_y];
     int[][] map = this.getLevel(level);
 
@@ -320,6 +318,7 @@ public class Board implements Screen {
         }
       }
     }
+    
   }
 
   /**
@@ -341,7 +340,7 @@ public class Board implements Screen {
     }
   }
 
-  private static int[][] generateRandomLevel() {
+  private synchronized static int[][] generateRandomLevel() {
     int ret[][] = new int[10][10];
 
     int treasure = 3;
@@ -370,11 +369,20 @@ public class Board implements Screen {
   }
 
   public void nextLevel() {
-    this.generateBoard(++level);
+    setRunning(false);
+    reset();
+    if(++level > 10)
+      level = 10;
+    this.generateBoard(level);
   }
 
   public void previousLevel() {
-    this.generateBoard(--level);
+    setRunning(false);
+    reset();
+    if(--level < 0)
+      level = 0;
+    else
+      this.generateBoard(level);
   }
 
   public void reset() {
@@ -383,10 +391,12 @@ public class Board implements Screen {
       Game.editor.getStatement().reset();
     Game.editor.reset();
     _player.reset();
-
-    for(int y=0; y<10; y++)
-      for(int x=0; x<10; x++)
-        _blocks[y][x].reset();
+    
+    synchronized(_blocks) {
+      for(int y=0; y<10; y++)
+        for(int x=0; x<10; x++)
+          _blocks[y][x].reset();
+    }
   }
 
 
