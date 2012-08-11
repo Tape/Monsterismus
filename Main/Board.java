@@ -318,7 +318,7 @@ public class Board implements Screen {
         }
       }
     }
-    
+
   }
 
   /**
@@ -391,7 +391,7 @@ public class Board implements Screen {
       Game.editor.getStatement().reset();
     Game.editor.reset();
     _player.reset();
-    
+
     synchronized(_blocks) {
       for(int y=0; y<10; y++)
         for(int x=0; x<10; x++)

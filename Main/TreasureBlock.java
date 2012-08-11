@@ -27,7 +27,7 @@ public class TreasureBlock extends Block {
     $graphics.translate(pos.x, pos.y);
     $graphics.fill(255,255,255);
     $graphics.rect(0, 0, Block.SIZE, Block.SIZE);
-    
+
     if(amount > 0) {
       $graphics.image(img, 10, 8);
     }
@@ -41,11 +41,11 @@ public class TreasureBlock extends Block {
       amount = 0;
     }
   }
-  
+
   public boolean claimed() {
     return amount == 0;
   }
-  
+
   public void reset() {
     amount = 2;
   }

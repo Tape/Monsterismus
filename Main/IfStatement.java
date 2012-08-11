@@ -26,14 +26,14 @@ public class IfStatement extends ProgrammingStatement
   }
 
   private class IfStatementInstance extends StatementInstance implements Nestable
-  { 
+  {
     private Conditional _conditional = Conditional.get(0);
     private StatementInstance _consequent;
     private StatementInstance _alternative;
     private StatementInstance _evaluated;
     private String _label = "If " + _conditional.getLabel() + ", then ";
     private boolean _is_done = true, _is_executed = false;
-    
+
     public void update(final float $dt)
     {
     }
@@ -44,7 +44,7 @@ public class IfStatement extends ProgrammingStatement
       $graphics.rect(_pos.x, _pos.y, BASE_WIDTH, getHeight());
       $graphics.fill(0xFFFFFFFF);
       $graphics.text(_label, _pos.x + 3, _pos.y + 12);
-      
+
       if(_consequent != null)
       {
         $graphics.text("else", _pos.x + 3, _pos.y + _consequent.getHeight() + 35);
@@ -52,20 +52,20 @@ public class IfStatement extends ProgrammingStatement
       }
       else
         $graphics.text("else", _pos.x + 3, _pos.y + 40);
-      
+
       if(_alternative != null)
       {
         _alternative.draw($graphics);
       }
     }
-    
+
     public void setPos(final float $x, final float $y)
     {
       super.setPos($x, $y);
-      
+
       if(_consequent != null)
         _consequent.setPos(_pos.x + 5, _pos.y + 20);
-      
+
       if(_alternative != null)
         if(_consequent != null)
           _alternative.setPos(_pos.x + 5, _pos.y + _consequent.getHeight() + 40);
@@ -76,31 +76,31 @@ public class IfStatement extends ProgrammingStatement
     public int getHeight()
     {
       int height = BASE_HEIGHT;
-      
+
       if(_consequent != null)
       {
         height += _consequent.getHeight() - 5;
       }
-      
+
       if(_alternative != null)
       {
         height += _alternative.getHeight() - 10;
       }
-      
+
       return height;
     }
-    
+
     public int getWidth()
     {
       return BASE_WIDTH;
     }
-    
+
     public void removeAllInstances(final StatementInstance $instance)
     {
       if(_consequent == $instance) _consequent = null;
       else if(_alternative == $instance) _alternative = null;
     }
-    
+
     public StatementInstance instanceUnder(final float $x, final float $y)
     {
       if($x > _pos.x && $y > _pos.y
@@ -111,43 +111,43 @@ public class IfStatement extends ProgrammingStatement
           under = _consequent.instanceUnder($x, $y);
         if(under == null && _alternative != null)
           under = _alternative.instanceUnder($x, $y);
-        
+
         return under == null ? this : under;
       }
       return null;
     }
-    
+
     public void addChild(StatementInstance $instance)
     {
       $instance.setParent(this);
       int offset = _consequent != null ? _consequent.getHeight() : 10;
-      
+
       if($instance.getPos().y - _pos.y > offset + 30)
         _alternative = $instance;
       else
         _consequent = $instance;
     }
-    
+
     public void handleClick()
     {
       //Increment the conditional.
       _conditional = _conditional.next();
-      
+
       //Update the label.
       _label = "If ";
       _label += _conditional.getLabel() + ", then";
     }
-    
+
     public boolean isDone()
     {
       return _is_done;
     }
-    
+
     public boolean executed()
     {
       return _is_executed;
     }
-    
+
     public void eval()
     {
       //Evaluate until action is complete.
@@ -174,33 +174,33 @@ public class IfStatement extends ProgrammingStatement
           _is_done = _is_executed = true;
       }
     }
-    
+
     public void reset()
     {
       _is_done = true;
       _is_executed = false;
-      
+
       if(_consequent != null)
         _consequent.reset();
     }
   }
-  
+
   private enum Conditional
   {
     FOOD_ABOVE(0, "food above"),
     FOOD_BELOW(1, "food below"),
     FOOD_LEFT(2, "food left"),
     FOOD_RIGHT(3, "food right");
-    
+
     private int _value;
     private String _label;
     private Evaluator _eval;
-    
+
     Conditional(final int $value, final String $label)
     {
       _value = $value;
       _label = $label;
-      
+
       switch($value)
       {
       //Case 0 - 4, search for food.
@@ -212,12 +212,12 @@ public class IfStatement extends ProgrammingStatement
             Board board = Board.getInstance();
             PVector pos = board.getPlayer().getPosition();
             Block[][] blocks = board.getBlocks();
-            
+
             //Prepare the player position.
             int x = (int)Math.floor(pos.x / Block.SIZE),
                 y = (int)Math.floor(pos.y / Block.SIZE),
                 dir = $value == 0 || $value == 2 ? -1 : 1;
-            
+
             if($value < 2)
             {
               for(y += dir; y >= 0 && y < blocks[x].length; y += dir)
@@ -237,7 +237,7 @@ public class IfStatement extends ProgrammingStatement
         break;
       }
     }
-    
+
     private static Conditional get(final int $value)
     {
       switch($value)
@@ -249,23 +249,23 @@ public class IfStatement extends ProgrammingStatement
       default: return FOOD_ABOVE;
       }
     }
-    
+
     public String getLabel()
     {
       return _label;
     }
-    
+
     public boolean evaluate()
     {
       return _eval.eval();
     }
-    
+
     public Conditional next()
     {
       return get((_value + 1) % 4);
     }
   }
-  
+
   private interface Evaluator
   {
     public boolean eval();
