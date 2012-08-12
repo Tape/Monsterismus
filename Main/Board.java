@@ -269,7 +269,7 @@ public class Board implements Screen {
       _player.reset(true);
       generateBoard(++level);
       Game.editor.reset();
-      Game.editor.clear();
+      setRunning(false);
     }
   }
 
