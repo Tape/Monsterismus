@@ -24,8 +24,8 @@ public class Monsterismus extends PApplet
     //Prep time calculations.
     _last_time = millis();
 
-    Block.img = loadImage("sprites/Grass.png");
-    FoodBlock.img = loadImage("sprites/Food.png");
+    Block.img         = loadImage("sprites/Grass.png");
+    FoodBlock.img     = loadImage("sprites/Food.png");
     TreasureBlock.img = loadImage("sprites/Treasure.png");
 
     Player.imgs = new PImage[5];
