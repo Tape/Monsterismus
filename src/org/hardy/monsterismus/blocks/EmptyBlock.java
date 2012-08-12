@@ -26,11 +26,8 @@ public class EmptyBlock extends Block {
   }
 
   public void draw(final PGraphics $graphics) {
-    $graphics.pushMatrix();
-    $graphics.translate(pos.x, pos.y);
-    $graphics.stroke(0, 90);
-    $graphics.fill(108,207,81);
-    $graphics.rect(0, 0, Block.SIZE, Block.SIZE);
+    super.draw($graphics);
+
     $graphics.popMatrix();
   }
 

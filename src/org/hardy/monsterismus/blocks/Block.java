@@ -3,6 +3,8 @@ package org.hardy.monsterismus.blocks;
 import org.hardy.monsterismus.Player;
 import org.hardy.monsterismus.api.Drawable;
 
+import processing.core.PGraphics;
+import processing.core.PImage;
 import processing.core.PVector;
 
 /**
@@ -49,12 +51,20 @@ public abstract class Block implements Drawable
   }
 
   public static final int SIZE = 48;
+  public static PImage img;
   protected PVector pos;
 
   public Block(final PVector $pos)
   {
     pos = $pos;
     reset();
+  }
+  
+  public void draw(final PGraphics $graphics)
+  {
+    $graphics.pushMatrix();
+    $graphics.translate(pos.x, pos.y);
+    $graphics.image(img, 0, 0);
   }
 
   public abstract void doAction(Player p);
