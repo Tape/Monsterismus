@@ -42,7 +42,7 @@ public class Game {
   }
 
   public static void handleMouseEvent(MouseEvent e) {
-    screen.handleMouseEvent(e);
+    if(screen != null)
+      screen.handleMouseEvent(e);
   }
-
 }
