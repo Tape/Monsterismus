@@ -1,11 +1,12 @@
 package org.hardy.monsterismus;
 
-import processing.core.PImage;
-import processing.core.PGraphics;
+import org.hardy.monsterismus.api.Drawable;
 
-public abstract class Button {
+import processing.core.PImage;
+
+public abstract class Button implements Drawable {
   public static PImage execute, leveldown, levelup, reset, swap;
-  
+
   public int x, y, w, h;
   public boolean clicked;
   public Runnable run;
@@ -16,6 +17,7 @@ public abstract class Button {
     this.w = w;
     this.h = h;
   }
+
   public boolean isClicked(int x, int y) {
     clicked = (x < this.w + this.x && x > this.x && y < this.h + this.y && y > this.y);
     if(clicked && run != null){
@@ -23,11 +25,14 @@ public abstract class Button {
     }
     return clicked;
   }
+
   public void release() {
     clicked = false;
   }
+
   public void event(Runnable r) {
     this.run = r;
   }
-  public void draw(final PGraphics $graphics) {}
+
+  public void update(final float $dt) { }
 }
