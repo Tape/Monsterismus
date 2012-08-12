@@ -72,7 +72,7 @@ public class Editor implements Screen
     _icon_bounds = (int)_toolbar.x;
     _icon_offset = (int)(_icon_bounds * 0.1f);
     _icon_size   = _icon_bounds - _icon_offset * 2;
-    clear();
+    _instances = Collections.synchronizedList(new LinkedList<StatementInstance>());
 
     boardButton = new Button(10,520,50,50) {
       public void draw(final PGraphics $graphics) {
