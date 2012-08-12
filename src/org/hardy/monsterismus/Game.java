@@ -42,10 +42,7 @@ public class Game {
   }
 
   public static void handleMouseEvent(MouseEvent e) {
-    if(screen instanceof Board)
-      board.handleMouseEvent(e);
-    else
-      editor.handleMouseEvent(e);
+    screen.handleMouseEvent(e);
   }
 
 }
