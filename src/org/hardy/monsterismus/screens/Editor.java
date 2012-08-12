@@ -102,10 +102,6 @@ public class Editor implements Screen
     _position = 0;
   }
 
-  public void clear() {
-    _instances = Collections.synchronizedList(new LinkedList<StatementInstance>());
-  }
-
   public StatementInstance getStatement() {
     synchronized(_instances) {
       if(_instances.size() == 0)
