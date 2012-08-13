@@ -10,6 +10,10 @@ package org.hardy.monsterismus.statements;
  */
 public abstract class ProgrammingStatement {
   public abstract int getColor();
+  /**
+   * Spawns an instance of the statement type.
+   * @return the spawned instance.
+   */
   public abstract StatementInstance spawnInstance();
 }
 

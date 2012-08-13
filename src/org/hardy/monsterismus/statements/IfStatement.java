@@ -1,8 +1,7 @@
 package org.hardy.monsterismus.statements;
 
 import org.hardy.monsterismus.api.Nestable;
-import org.hardy.monsterismus.statements.conditionals.CheckFood;
-import org.hardy.monsterismus.statements.conditionals.CheckWall;
+import org.hardy.monsterismus.statements.conditionals.Conditional;
 
 import processing.core.PGraphics;
 
@@ -32,7 +31,7 @@ public class IfStatement extends ProgrammingStatement
 
   private class IfStatementInstance extends StatementInstance implements Nestable
   {
-    private Conditional _conditional = Conditional.get(0);
+    private Conditional _conditional = Conditional.FOOD_ABOVE;
     private StatementInstance _consequent;
     private StatementInstance _alternative;
     private StatementInstance _evaluated;
@@ -137,10 +136,7 @@ public class IfStatement extends ProgrammingStatement
     {
       //Increment the conditional.
       _conditional = _conditional.next();
-
-      //Update the label.
-      _label = "If ";
-      _label += _conditional.getLabel() + ", then";
+      _label = "If " + _conditional.getLabel() + ", then";
     }
 
     public boolean isDone()
@@ -155,8 +151,24 @@ public class IfStatement extends ProgrammingStatement
 
     public void eval()
     {
-      //Evaluate until action is complete.
-      if( ! _is_done)
+      //If the action is done, that means we are just now executing it
+      //for the first time.
+      if(_is_done)
+      {
+        //Evaluate the conditional.
+        _evaluated = _conditional.evaluate() ? _consequent : _alternative;
+        
+        //If the action exists, then begin to execute.
+        if(_evaluated != null)
+        {
+          _is_done = false;
+          _evaluated.eval();
+        }
+        //Otherwise notify that the execution is complete.
+        else
+          _is_done = _is_executed = true;
+      }
+      else
       {
         //Action finished? reset.
         if(_evaluated.isDone())
@@ -164,19 +176,9 @@ public class IfStatement extends ProgrammingStatement
           _evaluated.reset();
           _is_done = _is_executed = true;
         }
+        //Otherwise continue to evaluate.
         else
           _evaluated.eval();
-      }
-      else
-      {
-        _evaluated = _conditional.evaluate() ? _consequent : _alternative;
-        if(_evaluated != null)
-        {
-          _is_done = false;
-          _evaluated.eval();
-        }
-        else
-          _is_done = _is_executed = true;
       }
     }
 
@@ -188,79 +190,5 @@ public class IfStatement extends ProgrammingStatement
       if(_consequent != null)
         _consequent.reset();
     }
-  }
-
-  private enum Conditional
-  {
-    FOOD_ABOVE(0, "food above", new Evaluator() {
-      public boolean eval() { return CheckFood.checkY(-1); }
-    }),
-    FOOD_BELOW(1, "food below", new Evaluator() {
-      public boolean eval() { return CheckFood.checkY(1); }
-    }),
-    FOOD_LEFT(2, "food left", new Evaluator() {
-      public boolean eval() { return CheckFood.checkX(-1); }
-    }),
-    FOOD_RIGHT(3, "food right", new Evaluator() {
-      public boolean eval() { return CheckFood.checkX(1); }
-    }),
-    WALL_ABOVE(4, "wall above", new Evaluator() {
-      public boolean eval() { return CheckWall.checkY(-1); }
-    }),
-    WALL_BELOW(5, "wall below", new Evaluator() {
-      public boolean eval() { return CheckWall.checkY(1); }
-    }),
-    WALL_LEFT(6, "wall left", new Evaluator() {
-      public boolean eval() { return CheckWall.checkX(-1); }
-    }),
-    WALL_RIGHT(7, "wall right", new Evaluator() {
-      public boolean eval() { return CheckWall.checkX(1); }
-    });
-
-    private int _value;
-    private String _label;
-    private Evaluator _eval;
-
-    Conditional(final int $value, final String $label, final Evaluator $eval)
-    {
-      _value = $value;
-      _label = $label;
-      _eval = $eval;
-    }
-
-    private static Conditional get(final int $value)
-    {
-      switch($value)
-      {
-      case 0: return FOOD_ABOVE;
-      case 1: return FOOD_BELOW;
-      case 2: return FOOD_LEFT;
-      case 3: return FOOD_RIGHT;
-      case 4: return WALL_ABOVE;
-      case 5: return WALL_BELOW;
-      case 6: return WALL_LEFT;
-      case 7: return WALL_RIGHT;
-      default: return FOOD_ABOVE;
-      }
-    }
-
-    public String getLabel()
-    {
-      return _label;
-    }
-
-    public boolean evaluate()
-    {
-      return _eval.eval();
-    }
-
-    public Conditional next()
-    {
-      return get((_value + 1) % 8);
-    }
-  }
-  
-  private interface Evaluator {
-    public boolean eval();
   }
 }
