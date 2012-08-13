@@ -20,7 +20,6 @@ public abstract class StatementInstance implements Drawable {
     public static int SPACING = 5;
 
     protected PVector _pos;
-    protected boolean _locked = false;
     private Nestable _parent;
 
     /**
