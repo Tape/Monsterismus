@@ -197,7 +197,11 @@ public class IfStatement extends ProgrammingStatement
     FOOD_ABOVE(0, "food above"),
     FOOD_BELOW(1, "food below"),
     FOOD_LEFT(2, "food left"),
-    FOOD_RIGHT(3, "food right");
+    FOOD_RIGHT(3, "food right"),
+    WALL_ABOVE(4, "wall above"),
+    WALL_BELOW(5, "wall below"),
+    WALL_LEFT(6, "wall left"),
+    WALL_RIGHT(7, "wall right");
 
     private int _value;
     private String _label;
@@ -242,6 +246,33 @@ public class IfStatement extends ProgrammingStatement
           }
         };
         break;
+      case 4: case 5: case 6: case 7:
+        _eval = new Evaluator() {
+          public boolean eval()
+          {
+            //Load up the board and the player position.
+            Board board = Board.getInstance();
+            PVector pos = board.getPlayer().getPosition();
+            Block[][] blocks = board.getBlocks();
+
+            //Prepare the player position.
+            int x = (int)Math.floor(pos.x / Block.SIZE),
+                y = (int)Math.floor(pos.y / Block.SIZE),
+                dir = $value == 4 || $value == 6 ? -1 : 1;
+
+            if($value < 6)
+            {
+              y += dir;
+              return y < 0 || y >= blocks[x].length;
+            }
+            else
+            {
+              x += dir;
+              return x < 0 || x >= blocks.length;
+            }
+          }
+        };
+        break;
       }
     }
 
@@ -253,6 +284,10 @@ public class IfStatement extends ProgrammingStatement
       case 1: return FOOD_BELOW;
       case 2: return FOOD_LEFT;
       case 3: return FOOD_RIGHT;
+      case 4: return WALL_ABOVE;
+      case 5: return WALL_BELOW;
+      case 6: return WALL_LEFT;
+      case 7: return WALL_RIGHT;
       default: return FOOD_ABOVE;
       }
     }
@@ -269,7 +304,7 @@ public class IfStatement extends ProgrammingStatement
 
     public Conditional next()
     {
-      return get((_value + 1) % 4);
+      return get((_value + 1) % 8);
     }
   }
 
