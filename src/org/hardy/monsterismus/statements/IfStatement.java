@@ -1,12 +1,10 @@
 package org.hardy.monsterismus.statements;
 
 import org.hardy.monsterismus.api.Nestable;
-import org.hardy.monsterismus.blocks.Block;
-import org.hardy.monsterismus.blocks.FoodBlock;
-import org.hardy.monsterismus.screens.Board;
+import org.hardy.monsterismus.statements.conditionals.CheckFood;
+import org.hardy.monsterismus.statements.conditionals.CheckWall;
 
 import processing.core.PGraphics;
-import processing.core.PVector;
 
 /**
  *
@@ -194,86 +192,40 @@ public class IfStatement extends ProgrammingStatement
 
   private enum Conditional
   {
-    FOOD_ABOVE(0, "food above"),
-    FOOD_BELOW(1, "food below"),
-    FOOD_LEFT(2, "food left"),
-    FOOD_RIGHT(3, "food right"),
-    WALL_ABOVE(4, "wall above"),
-    WALL_BELOW(5, "wall below"),
-    WALL_LEFT(6, "wall left"),
-    WALL_RIGHT(7, "wall right");
+    FOOD_ABOVE(0, "food above", new Evaluator() {
+      public boolean eval() { return CheckFood.checkY(-1); }
+    }),
+    FOOD_BELOW(1, "food below", new Evaluator() {
+      public boolean eval() { return CheckFood.checkY(1); }
+    }),
+    FOOD_LEFT(2, "food left", new Evaluator() {
+      public boolean eval() { return CheckFood.checkX(-1); }
+    }),
+    FOOD_RIGHT(3, "food right", new Evaluator() {
+      public boolean eval() { return CheckFood.checkX(1); }
+    }),
+    WALL_ABOVE(4, "wall above", new Evaluator() {
+      public boolean eval() { return CheckWall.checkY(-1); }
+    }),
+    WALL_BELOW(5, "wall below", new Evaluator() {
+      public boolean eval() { return CheckWall.checkY(1); }
+    }),
+    WALL_LEFT(6, "wall left", new Evaluator() {
+      public boolean eval() { return CheckWall.checkX(-1); }
+    }),
+    WALL_RIGHT(7, "wall right", new Evaluator() {
+      public boolean eval() { return CheckWall.checkX(1); }
+    });
 
     private int _value;
     private String _label;
     private Evaluator _eval;
 
-    Conditional(final int $value, final String $label)
+    Conditional(final int $value, final String $label, final Evaluator $eval)
     {
       _value = $value;
       _label = $label;
-
-      switch($value)
-      {
-      //Case 0 - 4, search for food.
-      case 0: case 1: case 2: case 3:
-        _eval = new Evaluator() {
-          public boolean eval()
-          {
-            //Load up the board and the player position.
-            Board board = Board.getInstance();
-            PVector pos = board.getPlayer().getPosition();
-            Block[][] blocks = board.getBlocks();
-
-            //Prepare the player position.
-            int x = (int)Math.floor(pos.x / Block.SIZE),
-                y = (int)Math.floor(pos.y / Block.SIZE),
-                dir = $value == 0 || $value == 2 ? -1 : 1;
-
-            if($value < 2)
-            {
-              for(y += dir; y >= 0 && y < blocks[x].length; y += dir)
-                if(blocks[x][y] instanceof FoodBlock && ! blocks[x][y].claimed())
-                  return true;
-              return false;
-            }
-            else
-            {
-              for(x += dir; x >= 0 && x < blocks.length; x += dir)
-                if(blocks[x][y] instanceof FoodBlock && ! blocks[x][y].claimed())
-                  return true;
-              return false;
-            }
-          }
-        };
-        break;
-      case 4: case 5: case 6: case 7:
-        _eval = new Evaluator() {
-          public boolean eval()
-          {
-            //Load up the board and the player position.
-            Board board = Board.getInstance();
-            PVector pos = board.getPlayer().getPosition();
-            Block[][] blocks = board.getBlocks();
-
-            //Prepare the player position.
-            int x = (int)Math.floor(pos.x / Block.SIZE),
-                y = (int)Math.floor(pos.y / Block.SIZE),
-                dir = $value == 4 || $value == 6 ? -1 : 1;
-
-            if($value < 6)
-            {
-              y += dir;
-              return y < 0 || y >= blocks[x].length;
-            }
-            else
-            {
-              x += dir;
-              return x < 0 || x >= blocks.length;
-            }
-          }
-        };
-        break;
-      }
+      _eval = $eval;
     }
 
     private static Conditional get(final int $value)
@@ -307,10 +259,8 @@ public class IfStatement extends ProgrammingStatement
       return get((_value + 1) % 8);
     }
   }
-
-  private interface Evaluator
-  {
+  
+  private interface Evaluator {
     public boolean eval();
   }
 }
-
