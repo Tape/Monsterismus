@@ -7,6 +7,14 @@ import org.hardy.monsterismus.blocks.Block;
 import org.hardy.monsterismus.screens.Board;
 import org.hardy.monsterismus.screens.Editor;
 
+/**
+*
+* @author David Kosub
+* @author Jeffery Wooldridge
+* @author Matthew A. Johnston
+* @author Trevor Vardeman
+* @author Carlos Martinez
+*/
 public class Game {
   public static final int BOARD = 1;
   public static final int EDITOR = 2;
