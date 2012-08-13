@@ -1,5 +1,14 @@
 package org.hardy.monsterismus.statements.conditionals;
 
+/**
+ * Conditional logic enumerator to help simplify if statement conditionals.
+ * 
+ * @author David Kosub
+ * @author Jeffery Wooldridge
+ * @author Matthew A. Johnston
+ * @author Trevor Vardeman
+ * @author Carlos Martinez
+ */
 public enum Conditional {
     FOOD_ABOVE(0, "food above", new Evaluator() {
         public boolean eval() {
@@ -39,12 +48,29 @@ public enum Conditional {
     private String _label;
     private Evaluator _eval;
 
+    /**
+     * Creates a new conditional enumeration.
+     * 
+     * @param $value
+     *            The value of the conditional.
+     * @param $label
+     *            The label that can be applied to the conditional.
+     * @param $eval
+     *            The statement that can be evaluated to a boolean result.
+     */
     Conditional(final int $value, final String $label, final Evaluator $eval) {
         _value = $value;
         _label = $label;
         _eval = $eval;
     }
 
+    /**
+     * Gets the enumeration provided the given value.
+     * 
+     * @param $value
+     *            The value of the conditional to get.
+     * @return the conditional enumeration from the provided value.
+     */
     private static Conditional get(final int $value) {
         switch ($value) {
         case 0:
@@ -68,14 +94,29 @@ public enum Conditional {
         }
     }
 
+    /**
+     * Gets the label of the conditional.
+     * 
+     * @return the label.
+     */
     public String getLabel() {
         return _label;
     }
 
+    /**
+     * Evaluates the conditional.
+     * 
+     * @return true if the conditional is true, false otherwise.
+     */
     public boolean evaluate() {
         return _eval.eval();
     }
 
+    /**
+     * Gets the next conditional, which is used for iteration.
+     * 
+     * @return the next conditional.
+     */
     public Conditional next() {
         return get((_value + 1) % 8);
     }
