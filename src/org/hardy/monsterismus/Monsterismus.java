@@ -25,8 +25,8 @@ public class Monsterismus extends PApplet
     _last_time = millis();
 
     Block.img         = loadImage("sprites/Grass.png");
-    FoodBlock.img     = loadImage("sprites/Food.png");
-    TreasureBlock.img = loadImage("sprites/Treasure.png");
+    FoodBlock.img     = loadImage("sprites/food.gif");
+    TreasureBlock.img = loadImage("sprites/treasure.gif");
 
     Player.imgs = new PImage[5];
     Player.imgs[Player.Movement.UP.dir]    = loadImage("sprites/Up.png");

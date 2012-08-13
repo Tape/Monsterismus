@@ -77,7 +77,7 @@ public class Board implements Screen {
       }
     });
 
-    nextLevelButton = new Button(70,520,50,50) {
+    nextLevelButton = new Button(130,520,50,50) {
       public void draw(final PGraphics $graphics) {
         $graphics.pushMatrix();
         $graphics.translate(this.x, this.y);
@@ -97,7 +97,7 @@ public class Board implements Screen {
       }
     });
 
-    previousLevelButton = new Button(130,520,50,50) {
+    previousLevelButton = new Button(70,520,50,50) {
       public void draw(final PGraphics $graphics) {
         $graphics.pushMatrix();
         $graphics.translate(this.x, this.y);
