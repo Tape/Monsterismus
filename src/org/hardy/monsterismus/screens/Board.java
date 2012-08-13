@@ -134,8 +134,7 @@ public class Board implements Screen {
     };
     execButton.event(new Runnable() {
       public void run() {
-        reset();
-        setRunning(true);
+        toggleRunning();
       }
     });
 
@@ -274,9 +273,7 @@ public class Board implements Screen {
     {
       _foodcount = 0;
       _player.reset(true);
-      generateBoard(++level);
-      Game.editor.reset();
-      setRunning(false);
+      nextLevel();
     }
   }
 
