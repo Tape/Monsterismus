@@ -289,8 +289,6 @@ public class Board implements Screen {
     /**
      * Generates a new board. This will destroy the current board, if one is not present then that's
      * okay
-     * 
-     * @return void
      */
     public synchronized void generateBoard(int level) {
         _blocks = new Block[_size_x][_size_y];
