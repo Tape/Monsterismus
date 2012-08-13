@@ -146,7 +146,7 @@ public class Player implements Drawable {
         _position.x = _prev_position.x + _move_direction_modifier * Block.SIZE;
 
       //Visit the block and stop moving.
-      Board.getInstance().visitBlock(_position);
+      Board.getInstance().visitBlock(getPoint());
       _is_moving = false;
     }
   }

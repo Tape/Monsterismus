@@ -3,6 +3,7 @@ package org.hardy.monsterismus.screens;
 import processing.core.PVector;
 import processing.core.PGraphics;
 
+import java.awt.Point;
 //import android.view.MotionEvent;
 import java.awt.event.MouseEvent;
 
@@ -263,11 +264,9 @@ public class Board implements Screen {
     return new PVector(_dims.x, _dims.y);
   }
 
-  public void visitBlock(final PVector $position) {
-    int x = (int) Math.floor($position.x / Block.SIZE),
-        y = (int) Math.floor($position.y / Block.SIZE);
+  public void visitBlock(final Point $position) {
 
-    _blocks[x][y].doAction(_player);
+    _blocks[$position.x][$position.y].doAction(_player);
 
     if(_player.getFoodCount() == _foodcount)
     {
