@@ -257,7 +257,7 @@ public class Board implements Screen {
 
         if (_player.getFoodCount() == _foodcount) {
             _foodcount = 0;
-            _player.reset(true);
+            _player.reset();
             nextLevel();
         }
     }
