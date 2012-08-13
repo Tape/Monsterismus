@@ -26,7 +26,7 @@ public class IfStatement extends ProgrammingStatement {
         return new IfStatementInstance();
     }
 
-    private class IfStatementInstance extends StatementInstance implements Nestable {
+    protected class IfStatementInstance extends StatementInstance implements Nestable {
         private Conditional _conditional = Conditional.FOOD_ABOVE;
         private StatementInstance _consequent;
         private StatementInstance _alternative;

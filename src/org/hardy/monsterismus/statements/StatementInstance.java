@@ -19,6 +19,9 @@ public abstract class StatementInstance implements Drawable {
      */
     public static int SPACING = 5;
 
+    /**
+     * The absolute position of the instance.
+     */
     protected PVector _pos;
     private Nestable _parent;
 
