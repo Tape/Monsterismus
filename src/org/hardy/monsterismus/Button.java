@@ -4,6 +4,14 @@ import org.hardy.monsterismus.api.Drawable;
 
 import processing.core.PImage;
 
+/**
+*
+* @author David Kosub
+* @author Jeffery Wooldridge
+* @author Matthew A. Johnston
+* @author Trevor Vardeman
+* @author Carlos Martinez
+*/
 public abstract class Button implements Drawable {
   public static PImage execute, leveldown, levelup, reset, swap;
 
