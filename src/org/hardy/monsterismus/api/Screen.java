@@ -4,7 +4,7 @@ package org.hardy.monsterismus.api;
 import java.awt.event.MouseEvent;
 
 /**
- *
+ * 
  * @author David Kosub
  * @author Jeffery Wooldridge
  * @author Matthew A. Johnston
@@ -12,6 +12,6 @@ import java.awt.event.MouseEvent;
  * @author Carlos Martinez
  */
 public interface Screen extends Drawable {
-  //public void handleMotionEvent(MotionEvent $event);
-  public void handleMouseEvent(MouseEvent $event);
+    // public void handleMotionEvent(MotionEvent $event);
+    public void handleMouseEvent(MouseEvent $event);
 }

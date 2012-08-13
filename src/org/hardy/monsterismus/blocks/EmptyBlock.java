@@ -7,7 +7,7 @@ import processing.core.PGraphics;
 import processing.core.PImage;
 
 /**
- *
+ * 
  * @author David Kosub
  * @author Jeffery Wooldridge
  * @author Matthew A. Johnston
@@ -15,24 +15,28 @@ import processing.core.PImage;
  * @author Carlos Martinez
  */
 public class EmptyBlock extends Block {
-  
-  public static PImage img;
+    public static PImage img;
 
-  public EmptyBlock(final PVector $pos) {
-    super($pos);
-  }
+    public EmptyBlock(final PVector $pos) {
+        super($pos);
+    }
 
-  public void update(final float $dt) {
-  }
+    public void update(final float $dt) {
+    }
 
-  public void draw(final PGraphics $graphics) {
-    super.draw($graphics);
+    public void draw(final PGraphics $graphics) {
+        super.draw($graphics);
 
-    $graphics.popMatrix();
-  }
+        $graphics.popMatrix();
+    }
 
-  public void doAction(Player p) { }
-  public boolean claimed() { return false; }
-  public void reset() { }
+    public void doAction(Player p) {
+    }
+
+    public boolean claimed() {
+        return false;
+    }
+
+    public void reset() {
+    }
 }
-
