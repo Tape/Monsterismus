@@ -8,6 +8,7 @@ import processing.core.PImage;
 import processing.core.PVector;
 
 /**
+ * The basic structure for a block on the playing field.
  * 
  * @author David Kosub
  * @author Jeffery Wooldridge

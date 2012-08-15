@@ -7,6 +7,7 @@ import processing.core.PGraphics;
 import processing.core.PImage;
 
 /**
+ * The blank block, it holds nothing
  * 
  * @author David Kosub
  * @author Jeffery Wooldridge
