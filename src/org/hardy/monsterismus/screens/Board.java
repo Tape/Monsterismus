@@ -52,6 +52,11 @@ public class Board implements Screen {
         int offset = (Block.SIZE - Player.SIZE) / 2;
         _player = new Player(new PVector(offset, offset));
 
+        /*
+         * Rather than create a new button class for each individual action,
+         * it made more sense to just build anonymous like classes where they
+         * will be defined here.
+         */
         editorButton = new Button(10, 520, 50, 50) {
             public void draw(final PGraphics $graphics) {
                 $graphics.pushMatrix();
@@ -66,6 +71,7 @@ public class Board implements Screen {
                 $graphics.popMatrix();
             }
         };
+        // Bind an event to be triggered when clicked
         editorButton.event(new Runnable() {
             public void run() {
                 reset();
@@ -88,6 +94,7 @@ public class Board implements Screen {
                 $graphics.popMatrix();
             }
         };
+        // Bind an event to be triggered when clicked
         nextLevelButton.event(new Runnable() {
             public void run() {
                 nextLevel();
@@ -108,6 +115,7 @@ public class Board implements Screen {
                 $graphics.popMatrix();
             }
         };
+        // Bind an event to be triggered when clicked
         previousLevelButton.event(new Runnable() {
             public void run() {
                 previousLevel();
@@ -128,6 +136,7 @@ public class Board implements Screen {
                 $graphics.popMatrix();
             }
         };
+        // Bind an event to be triggered when clicked
         execButton.event(new Runnable() {
             public void run() {
                 toggleRunning();
@@ -148,6 +157,7 @@ public class Board implements Screen {
                 $graphics.popMatrix();
             }
         };
+        // Bind an event to be triggered when clicked
         resetButton.event(new Runnable() {
             public void run() {
                 setRunning(false);
@@ -273,6 +283,8 @@ public class Board implements Screen {
             resetButton.isClicked(x, y);
             break;
         case MouseEvent.MOUSE_RELEASED:
+            // When the mouse is released, all of the buttons should be
+            // released as well
             nextLevelButton.release();
             previousLevelButton.release();
             editorButton.release();
