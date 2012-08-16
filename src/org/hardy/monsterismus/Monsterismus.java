@@ -48,8 +48,8 @@ public class Monsterismus extends PApplet {
 
         Button.swap = loadImage(org.hardy.monsterismus.R.drawable.switchbtn);
         Button.execute = loadImage(org.hardy.monsterismus.R.drawable.execute);
-        Button.levelup = loadImage(org.hardy.monsterismus.R.drawable.levelup);
-        Button.leveldown = loadImage(org.hardy.monsterismus.R.drawable.leveldown);
+        Button.levelup = loadImage(org.hardy.monsterismus.R.drawable.nextbtn);
+        Button.leveldown = loadImage(org.hardy.monsterismus.R.drawable.lastbtn);
         Button.reset = loadImage(org.hardy.monsterismus.R.drawable.reset);
         Button.play = loadImage(org.hardy.monsterismus.R.drawable.startbtn);
         Button.tutorial = loadImage(org.hardy.monsterismus.R.drawable.tutorialbtn);
