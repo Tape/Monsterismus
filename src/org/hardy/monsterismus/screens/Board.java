@@ -95,6 +95,7 @@ public class Board implements Screen {
         // Bind an event to be triggered when clicked
         nextLevelButton.event(new Runnable() {
             public void run() {
+            	hardReset();
                 nextLevel();
             }
         });
@@ -116,6 +117,7 @@ public class Board implements Screen {
         // Bind an event to be triggered when clicked
         previousLevelButton.event(new Runnable() {
             public void run() {
+                hardReset();
                 previousLevel();
             }
         });
@@ -264,10 +266,14 @@ public class Board implements Screen {
         _blocks[$position.x][$position.y].doAction(_player);
 
         if (_player.getFoodCount() == _foodcount) {
-            _foodcount = 0;
-            _player.reset();
+        	hardReset();
             nextLevel();
         }
+    }
+
+    public void hardReset() {
+        _foodcount = 0;
+        _player.reset();
     }
 
     public void handleMotionEvent(MotionEvent $event) {
@@ -380,8 +386,8 @@ public class Board implements Screen {
     public void nextLevel() {
         setRunning(false);
         reset();
-        if (++level > 10)
-            level = 10;
+        if (++level > 9)
+            level = 9;
         this.generateBoard(level);
     }
 
@@ -390,8 +396,7 @@ public class Board implements Screen {
         reset();
         if (--level < 0)
             level = 0;
-        else
-            this.generateBoard(level);
+        this.generateBoard(level);
     }
 
     public void reset() {

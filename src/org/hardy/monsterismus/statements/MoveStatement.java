@@ -16,7 +16,7 @@ import processing.core.PGraphics;
 public class MoveStatement extends ProgrammingStatement {
     private static final int FILL_COLOR = 0xFF00FF00;
     private static final int BASE_WIDTH = 100;
-    private static final int BASE_HEIGHT = 20;
+    private static final int BASE_HEIGHT = 40;
 
     public int getColor() {
         return FILL_COLOR;
@@ -39,7 +39,7 @@ public class MoveStatement extends ProgrammingStatement {
             $graphics.fill(FILL_COLOR);
             $graphics.rect(_pos.x, _pos.y, BASE_WIDTH, BASE_HEIGHT);
             $graphics.fill(0xFF000000);
-            $graphics.text(_label, _pos.x + 3, _pos.y + 15);
+            $graphics.text(_label, _pos.x + 3, _pos.y + 22);
         }
 
         public int getHeight() {
