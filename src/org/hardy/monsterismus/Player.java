@@ -1,10 +1,11 @@
 package org.hardy.monsterismus;
 
-import java.awt.Point;
-
 import org.hardy.monsterismus.api.Drawable;
 import org.hardy.monsterismus.blocks.Block;
 import org.hardy.monsterismus.screens.Board;
+
+import android.graphics.Point;
+import android.util.FloatMath;
 
 import processing.core.PVector;
 import processing.core.PGraphics;
@@ -116,8 +117,8 @@ public class Player implements Drawable {
     }
 
     public Point getPoint() {
-        return new Point((int) Math.floor(_position.x / Block.SIZE), (int) Math.floor(_position.y
-                / Block.SIZE));
+        return new Point((int) FloatMath.floor(_position.x / Block.SIZE),
+                (int) FloatMath.floor(_position.y / Block.SIZE));
     }
 
     public void stopMoving() {

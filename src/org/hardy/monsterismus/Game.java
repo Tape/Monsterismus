@@ -1,11 +1,11 @@
 package org.hardy.monsterismus;
 
-import java.awt.event.MouseEvent;
-
 import org.hardy.monsterismus.api.Screen;
 import org.hardy.monsterismus.blocks.Block;
 import org.hardy.monsterismus.screens.Board;
 import org.hardy.monsterismus.screens.Editor;
+
+import android.view.MotionEvent;
 
 /**
  * 
@@ -49,8 +49,8 @@ public class Game {
             board.previousLevel();
     }
 
-    public static void handleMouseEvent(MouseEvent e) {
+    public static void handleMotionEvent(MotionEvent e) {
         if (screen != null)
-            screen.handleMouseEvent(e);
+            screen.handleMotionEvent(e);
     }
 }

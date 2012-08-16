@@ -1,9 +1,9 @@
 package org.hardy.monsterismus.statements.conditionals;
 
-import java.awt.Point;
-
 import org.hardy.monsterismus.blocks.Block;
 import org.hardy.monsterismus.screens.Board;
+
+import android.graphics.Point;
 
 /**
  * Helper class to determine if there is a wall near the player.

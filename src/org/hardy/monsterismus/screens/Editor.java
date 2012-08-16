@@ -9,8 +9,8 @@ import java.util.HashMap;
 import processing.core.PVector;
 import processing.core.PGraphics;
 
-//import android.view.MotionEvent;
-import java.awt.event.MouseEvent;
+import android.util.FloatMath;
+import android.view.MotionEvent;
 
 import org.hardy.monsterismus.Button;
 import org.hardy.monsterismus.Game;
@@ -142,19 +142,19 @@ public class Editor implements Screen {
         boardButton.draw($graphics);
     }
 
-    public void handleMouseEvent(MouseEvent $event) {
+    public void handleMotionEvent(MotionEvent $event) {
         float x = $event.getX(), y = $event.getY();
 
         synchronized (_instances) {
-            switch ($event.getID()) {
-            case MouseEvent.MOUSE_PRESSED:
+            switch ($event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
                 _dragstart = true;
                 _drag_start_x = x;
                 _drag_start_y = y;
                 if (boardButton.isClicked((int) x, (int) y))
                     return;
                 break;
-            case MouseEvent.MOUSE_DRAGGED:
+            case MotionEvent.ACTION_MOVE:
                 // Require at least a 7 pixel move (helps on the phone for clicks).
                 if (_dragstart && Math.abs(_drag_start_x - x) < 7
                         && Math.abs(_drag_start_y - y) < 7) {
@@ -168,7 +168,7 @@ public class Editor implements Screen {
                     _dragstart = false;
 
                     // Helper values.
-                    int index = (int) Math.floor(_drag_start_y / _icon_bounds), pos = (int) Math
+                    int index = (int) FloatMath.floor(_drag_start_y / _icon_bounds), pos = (int) FloatMath
                             .floor(_drag_start_y % _icon_bounds);
 
                     // Get an array of statement types on the toolbar.
@@ -202,7 +202,8 @@ public class Editor implements Screen {
                     _instance.setPos(x, y);
                 }
                 break;
-            case MouseEvent.MOUSE_RELEASED:
+            case MotionEvent.ACTION_CANCEL:
+            case MotionEvent.ACTION_UP:
                 boardButton.release();
                 // This means we never started dragging in the first place, so handle a click.
                 if (_dragstart) {

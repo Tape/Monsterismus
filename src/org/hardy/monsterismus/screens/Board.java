@@ -3,9 +3,8 @@ package org.hardy.monsterismus.screens;
 import processing.core.PVector;
 import processing.core.PGraphics;
 
-import java.awt.Point;
-//import android.view.MotionEvent;
-import java.awt.event.MouseEvent;
+import android.graphics.Point;
+import android.view.MotionEvent;
 
 import org.hardy.monsterismus.Button;
 import org.hardy.monsterismus.Game;
@@ -53,9 +52,8 @@ public class Board implements Screen {
         _player = new Player(new PVector(offset, offset));
 
         /*
-         * Rather than create a new button class for each individual action,
-         * it made more sense to just build anonymous like classes where they
-         * will be defined here.
+         * Rather than create a new button class for each individual action, it made more sense to
+         * just build anonymous like classes where they will be defined here.
          */
         editorButton = new Button(10, 520, 50, 50) {
             public void draw(final PGraphics $graphics) {
@@ -272,17 +270,18 @@ public class Board implements Screen {
         }
     }
 
-    public void handleMouseEvent(MouseEvent $event) {
+    public void handleMotionEvent(MotionEvent $event) {
         int x = (int) $event.getX(), y = (int) $event.getY();
-        switch ($event.getID()) {
-        case MouseEvent.MOUSE_PRESSED:
+        switch ($event.getAction()) {
+        case MotionEvent.ACTION_DOWN:
             nextLevelButton.isClicked(x, y);
             previousLevelButton.isClicked(x, y);
             editorButton.isClicked(x, y);
             execButton.isClicked(x, y);
             resetButton.isClicked(x, y);
             break;
-        case MouseEvent.MOUSE_RELEASED:
+        case MotionEvent.ACTION_CANCEL:
+        case MotionEvent.ACTION_UP:
             // When the mouse is released, all of the buttons should be
             // released as well
             nextLevelButton.release();

@@ -52,7 +52,8 @@ public abstract class Button implements Drawable {
     /**
      * Bind an event to the Button, so that when clicked, it will be run.
      * 
-     * @param r the runnable class or instance that you want to have execute
+     * @param r
+     *            the runnable class or instance that you want to have execute
      */
     public void event(Runnable r) {
         this.run = r;

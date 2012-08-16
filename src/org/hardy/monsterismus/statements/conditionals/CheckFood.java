@@ -1,10 +1,10 @@
 package org.hardy.monsterismus.statements.conditionals;
 
-import java.awt.Point;
-
 import org.hardy.monsterismus.blocks.Block;
 import org.hardy.monsterismus.blocks.FoodBlock;
 import org.hardy.monsterismus.screens.Board;
+
+import android.graphics.Point;
 
 /**
  * Helper class to determine if there is food in a specific direction relative to the player.

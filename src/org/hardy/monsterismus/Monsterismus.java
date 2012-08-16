@@ -1,9 +1,11 @@
 package org.hardy.monsterismus;
 
-import java.awt.event.MouseEvent;
-
 import org.hardy.monsterismus.blocks.*;
 import org.hardy.monsterismus.screens.*;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.view.MotionEvent;
 
 import processing.core.*;
 
@@ -16,35 +18,45 @@ import processing.core.*;
  * @author Carlos Martinez
  */
 public class Monsterismus extends PApplet {
-    private static final long serialVersionUID = 8109739361644347432L;
     private float _last_time, _dt;
+    private BitmapFactory.Options _options;
 
     public void setup() {
-        size(Game.WIDTH, Game.HEIGHT);
+        // Configure the bitmap factory sizing...
+        _options = new BitmapFactory.Options();
+        _options.inScaled = false;
 
         // Build the board and player.
         Game.board = new Board(Game.BOARD_SIZE, Game.BOARD_SIZE);
         Game.editor = new Editor(new PVector(Game.WIDTH, Game.HEIGHT));
-        Game.screen = Game.board;
+        Game.screen = Game.editor;
 
         // Prep time calculations.
         _last_time = millis();
 
-        Block.img = loadImage("sprites/Grass.png");
-        FoodBlock.img = loadImage("sprites/food.gif");
-        TreasureBlock.img = loadImage("sprites/treasure.gif");
+        Block.img = loadImage(org.hardy.monsterismus.R.drawable.grass);
+        FoodBlock.img = loadImage(org.hardy.monsterismus.R.drawable.food);
+        TreasureBlock.img = loadImage(org.hardy.monsterismus.R.drawable.treasure);
 
         Player.imgs = new PImage[5];
-        Player.imgs[Player.Movement.UP.dir] = loadImage("sprites/Up.png");
-        Player.imgs[Player.Movement.DOWN.dir] = loadImage("sprites/Down.png");
-        Player.imgs[Player.Movement.LEFT.dir] = loadImage("sprites/Left.png");
-        Player.imgs[Player.Movement.RIGHT.dir] = loadImage("sprites/Right.png");
+        Player.imgs[Player.Movement.UP.dir] = loadImage(org.hardy.monsterismus.R.drawable.up);
+        Player.imgs[Player.Movement.DOWN.dir] = loadImage(org.hardy.monsterismus.R.drawable.down);
+        Player.imgs[Player.Movement.LEFT.dir] = loadImage(org.hardy.monsterismus.R.drawable.left);
+        Player.imgs[Player.Movement.RIGHT.dir] = loadImage(org.hardy.monsterismus.R.drawable.right);
 
-        Button.swap = loadImage("sprites/Switch.png");
-        Button.execute = loadImage("sprites/Execute.png");
-        Button.levelup = loadImage("sprites/LevelUp.png");
-        Button.leveldown = loadImage("sprites/LevelDown.png");
-        Button.reset = loadImage("sprites/Reset.png");
+        Button.swap = loadImage(org.hardy.monsterismus.R.drawable.switchbtn);
+        Button.execute = loadImage(org.hardy.monsterismus.R.drawable.execute);
+        Button.levelup = loadImage(org.hardy.monsterismus.R.drawable.levelup);
+        Button.leveldown = loadImage(org.hardy.monsterismus.R.drawable.leveldown);
+        Button.reset = loadImage(org.hardy.monsterismus.R.drawable.reset);
+    }
+
+    public int sketchWidth() {
+        return Game.WIDTH;
+    }
+
+    public int sketchHeight() {
+        return Game.HEIGHT;
     }
 
     public void draw() {
@@ -61,23 +73,13 @@ public class Monsterismus extends PApplet {
         Game.screen.draw(g);
     }
 
-    public void mouseDragged(MouseEvent $event) {
-        Game.handleMouseEvent($event);
+    public boolean surfaceTouchEvent(MotionEvent $event) {
+        Game.handleMotionEvent($event);
+        return super.surfaceTouchEvent($event);
     }
 
-    public void mouseMoved(MouseEvent $event) {
-        Game.handleMouseEvent($event);
-    }
-
-    public void mousePressed(MouseEvent $event) {
-        Game.handleMouseEvent($event);
-    }
-
-    public void mouseReleased(MouseEvent $event) {
-        Game.handleMouseEvent($event);
-    }
-
-    public static void main(String[] args) {
-        PApplet.main(new String[] { "--present", Monsterismus.class.getName() });
+    public PImage loadImage(final int $resourceID) {
+        Bitmap image = BitmapFactory.decodeResource(getResources(), $resourceID, _options);
+        return new PImage(image);
     }
 }
