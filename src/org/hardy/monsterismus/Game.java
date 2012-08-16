@@ -18,12 +18,14 @@ import android.view.MotionEvent;
 public class Game {
     public static final int BOARD = 1;
     public static final int EDITOR = 2;
+    public static final int TUTORIAL = 3;
+    public static final int SPLASH = 4;
 
     public static final int BOARD_SIZE = 10;
     public static final int WIDTH = BOARD_SIZE * Block.SIZE;
     public static final int HEIGHT = BOARD_SIZE * Block.SIZE + 100;
 
-    public static Screen screen;
+    public static Screen screen, splash;
     public static Board board;
     public static Editor editor;
 
@@ -31,6 +33,8 @@ public class Game {
         switch (s) {
         case EDITOR:
             screen = editor;
+            break;
+        case TUTORIAL:
             break;
         default:
             screen = board;

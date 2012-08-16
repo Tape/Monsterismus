@@ -29,10 +29,12 @@ public class Monsterismus extends PApplet {
         // Build the board and player.
         Game.board = new Board(Game.BOARD_SIZE, Game.BOARD_SIZE);
         Game.editor = new Editor(new PVector(Game.WIDTH, Game.HEIGHT));
-        Game.screen = Game.board;
+        Game.screen = Game.splash = new SplashScreen();
 
         // Prep time calculations.
         _last_time = millis();
+
+        SplashScreen.logo = loadImage(org.hardy.monsterismus.R.drawable.logo);
 
         Block.img = loadImage(org.hardy.monsterismus.R.drawable.grass);
         FoodBlock.img = loadImage(org.hardy.monsterismus.R.drawable.food);
@@ -49,6 +51,8 @@ public class Monsterismus extends PApplet {
         Button.levelup = loadImage(org.hardy.monsterismus.R.drawable.levelup);
         Button.leveldown = loadImage(org.hardy.monsterismus.R.drawable.leveldown);
         Button.reset = loadImage(org.hardy.monsterismus.R.drawable.reset);
+        Button.play = loadImage(org.hardy.monsterismus.R.drawable.startbtn);
+        Button.tutorial = loadImage(org.hardy.monsterismus.R.drawable.tutorialbtn);
     }
 
     public int sketchWidth() {

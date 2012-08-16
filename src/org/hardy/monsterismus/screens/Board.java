@@ -95,7 +95,7 @@ public class Board implements Screen {
         // Bind an event to be triggered when clicked
         nextLevelButton.event(new Runnable() {
             public void run() {
-            	hardReset();
+                hardReset();
                 nextLevel();
             }
         });
@@ -266,7 +266,7 @@ public class Board implements Screen {
         _blocks[$position.x][$position.y].doAction(_player);
 
         if (_player.getFoodCount() == _foodcount) {
-        	hardReset();
+            hardReset();
             nextLevel();
         }
     }

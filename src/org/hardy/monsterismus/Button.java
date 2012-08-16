@@ -14,7 +14,7 @@ import processing.core.PImage;
  * @author Carlos Martinez
  */
 public abstract class Button implements Drawable {
-    public static PImage execute, leveldown, levelup, reset, swap;
+    public static PImage execute, leveldown, levelup, reset, swap, play, tutorial;
 
     public int x, y, w, h;
     public boolean clicked;
