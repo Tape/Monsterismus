@@ -29,7 +29,7 @@ public class Monsterismus extends PApplet {
         // Build the board and player.
         Game.board = new Board(Game.BOARD_SIZE, Game.BOARD_SIZE);
         Game.editor = new Editor(new PVector(Game.WIDTH, Game.HEIGHT));
-        Game.screen = Game.editor;
+        Game.screen = Game.board;
 
         // Prep time calculations.
         _last_time = millis();
