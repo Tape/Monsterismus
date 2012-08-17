@@ -16,7 +16,7 @@ import processing.core.PGraphics;
 public class IfStatement extends ProgrammingStatement {
     private static final int FILL_COLOR = 0xFFFF0000;
     private static final int BASE_WIDTH = 300;
-    private static final int BASE_HEIGHT = 60;
+    private static final int BASE_HEIGHT = 90;
 
     public int getColor() {
         return FILL_COLOR;
@@ -41,13 +41,13 @@ public class IfStatement extends ProgrammingStatement {
             $graphics.fill(FILL_COLOR);
             $graphics.rect(_pos.x, _pos.y, BASE_WIDTH, getHeight());
             $graphics.fill(0xFFFFFFFF);
-            $graphics.text(_label, _pos.x + 3, _pos.y + 12);
+            $graphics.text(_label, _pos.x + 10, _pos.y + 16);
 
             if (_consequent != null) {
-                $graphics.text("else", _pos.x + 3, _pos.y + _consequent.getHeight() + 35);
+                $graphics.text("else", _pos.x + 10, _pos.y + _consequent.getHeight() + 45);
                 _consequent.draw($graphics);
             } else
-                $graphics.text("else", _pos.x + 3, _pos.y + 40);
+                $graphics.text("else", _pos.x + 10, _pos.y + 60);
 
             if (_alternative != null) {
                 _alternative.draw($graphics);
@@ -58,25 +58,24 @@ public class IfStatement extends ProgrammingStatement {
             super.setPos($x, $y);
 
             if (_consequent != null)
-                _consequent.setPos(_pos.x + 5, _pos.y + 20);
+                _consequent.setPos(_pos.x + 5, _pos.y + 25);
 
             if (_alternative != null)
                 if (_consequent != null)
-                    _alternative.setPos(_pos.x + 5, _pos.y + _consequent.getHeight() + 40);
+                    _alternative.setPos(_pos.x + 5, _pos.y + _consequent.getHeight() + 55);
                 else
-                    _alternative.setPos(_pos.x + 5, _pos.y + 45);
+                    _alternative.setPos(_pos.x + 5, _pos.y + 70);
         }
 
         public int getHeight() {
             int height = BASE_HEIGHT;
 
             if (_consequent != null) {
-                height += _consequent.getHeight() - 5;
+                height += _consequent.getHeight();
             }
 
-            if (_alternative != null) {
-                height += _alternative.getHeight() - 10;
-            }
+            if (_alternative != null)
+                height += _alternative.getHeight() - (_consequent != null ? 27 : 12);
 
             return height;
         }
@@ -107,9 +106,9 @@ public class IfStatement extends ProgrammingStatement {
 
         public void addChild(StatementInstance $instance) {
             $instance.setParent(this);
-            int offset = _consequent != null ? _consequent.getHeight() : 10;
+            int offset = 50 + (_consequent != null ? _consequent.getHeight() - 5 : 0);
 
-            if ($instance.getPos().y - _pos.y > offset + 30)
+            if ($instance.getPos().y - _pos.y > offset)
                 _alternative = $instance;
             else
                 _consequent = $instance;

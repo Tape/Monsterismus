@@ -246,9 +246,9 @@ public class Board implements Screen {
         $graphics.rect(0, 0, _dims.x, 30);
         $graphics.fill(0, 0, 0);
         $graphics.textFont(Game.font);
-        $graphics.text("Treasure: " + _player.getTreasureCount(), 5, 18);
-        $graphics.text("Food: " + _player.getFoodCount(), 100, 18);
-        $graphics.text("Score: " + _player.getScore(), 175, 18);
+        $graphics.text("Treasure: " + _player.getTreasureCount(), 5, 22);
+        $graphics.text("Food: " + _player.getFoodCount(), 100, 22);
+        $graphics.text("Score: " + _player.getScore(), 175, 22);
         $graphics.popMatrix();
 
         nextLevelButton.draw($graphics);

@@ -17,7 +17,7 @@ public abstract class StatementInstance implements Drawable {
     /**
      * The spacing between each StatementInstance.
      */
-    public static int SPACING = 5;
+    public static int SPACING = 10;
 
     /**
      * The absolute position of the instance.

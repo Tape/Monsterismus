@@ -39,7 +39,7 @@ public class MoveStatement extends ProgrammingStatement {
             $graphics.fill(FILL_COLOR);
             $graphics.rect(_pos.x, _pos.y, BASE_WIDTH, BASE_HEIGHT);
             $graphics.fill(0xFF000000);
-            $graphics.text(_label, _pos.x + 3, _pos.y + 22);
+            $graphics.text(_label, _pos.x + 8, _pos.y + 25);
         }
 
         public int getHeight() {

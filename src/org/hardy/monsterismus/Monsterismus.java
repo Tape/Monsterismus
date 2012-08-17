@@ -30,7 +30,7 @@ public class Monsterismus extends PApplet {
         Game.board = new Board(Game.BOARD_SIZE, Game.BOARD_SIZE);
         Game.editor = new Editor(new PVector(Game.WIDTH, Game.HEIGHT));
         Game.screen = Game.splash = new SplashScreen();
-        Game.font = createDefaultFont(14);
+        Game.font = createDefaultFont(16);
 
         // Prep time calculations.
         _last_time = millis();
