@@ -72,7 +72,7 @@ public class Editor implements Screen {
         _icon_size = _icon_bounds - _icon_offset * 2;
         _instances = Collections.synchronizedList(new LinkedList<StatementInstance>());
 
-        boardButton = new Button(10, 520, 50, 50) {
+        boardButton = new Button(10, 720, 50, 50) {
             public void draw(final PGraphics $graphics) {
                 $graphics.pushMatrix();
                 $graphics.translate(this.x, this.y);
@@ -242,7 +242,7 @@ public class Editor implements Screen {
                             StatementInstance nested = instance.instanceUnder(x, y);
                             if (nested != null) {
                                 // Check if this is a child node; we care more about the parent.
-                                if (nested.isChild() && ! nested.isNestable()) {
+                                if (nested.isChild() && !nested.isNestable()) {
                                     nested = (StatementInstance) nested.getParent();
                                 }
 

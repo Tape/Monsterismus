@@ -15,7 +15,7 @@ public class SplashScreen implements Screen {
     public static PImage logo;
 
     public SplashScreen() {
-        _tutorial_button = new Button(72, 400, 336, 77) {
+        _tutorial_button = new Button(72, 600, 336, 77) {
             public void draw(PGraphics $graphics) {
                 $graphics.pushMatrix();
                 $graphics.translate(this.x, this.y);
@@ -29,7 +29,7 @@ public class SplashScreen implements Screen {
             }
         });
 
-        _play_button = new Button(100, 500, 279, 77) {
+        _play_button = new Button(100, 700, 279, 77) {
             public void draw(PGraphics $graphics) {
                 $graphics.pushMatrix();
                 $graphics.translate(this.x, this.y);
@@ -57,15 +57,15 @@ public class SplashScreen implements Screen {
         // Draw credits.
         $graphics.fill(0xFFFFFFFF);
         $graphics.textFont(font);
-        $graphics.text("Concept by", 50, 175);
-        $graphics.text("Developed by", 50, 250);
+        $graphics.text("Concept by", 50, 195);
+        $graphics.text("Developed by", 50, 300);
         $graphics.fill(0xFFAAAAAA);
-        $graphics.text("Matthew Berland", 75, 210);
-        $graphics.text("David Kosub", 75, 285);
-        $graphics.text("Jeff Wooldridge", 75, 315);
-        $graphics.text("Trevor Vardeman", 75, 345);
-        $graphics.text("Matthew Johnston", 260, 285);
-        $graphics.text("Carlos Martinez", 260, 315);
+        $graphics.text("Matthew Berland", 75, 240);
+        $graphics.text("David Kosub", 75, 345);
+        $graphics.text("Jeff Wooldridge", 75, 385);
+        $graphics.text("Trevor Vardeman", 75, 425);
+        $graphics.text("Matthew Johnston", 75, 465);
+        $graphics.text("Carlos Martinez", 75, 505);
 
         // Draw buttons.
         _tutorial_button.draw($graphics);

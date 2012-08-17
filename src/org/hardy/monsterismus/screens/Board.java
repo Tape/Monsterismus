@@ -55,7 +55,7 @@ public class Board implements Screen {
          * Rather than create a new button class for each individual action, it made more sense to
          * just build anonymous like classes where they will be defined here.
          */
-        editorButton = new Button(10, 520, 50, 50) {
+        editorButton = new Button(10, 720, 50, 50) {
             public void draw(final PGraphics $graphics) {
                 $graphics.pushMatrix();
                 $graphics.translate(this.x, this.y);
@@ -78,7 +78,7 @@ public class Board implements Screen {
             }
         });
 
-        nextLevelButton = new Button(130, 520, 50, 50) {
+        nextLevelButton = new Button(130, 720, 50, 50) {
             public void draw(final PGraphics $graphics) {
                 $graphics.pushMatrix();
                 $graphics.translate(this.x, this.y);
@@ -100,7 +100,7 @@ public class Board implements Screen {
             }
         });
 
-        previousLevelButton = new Button(70, 520, 50, 50) {
+        previousLevelButton = new Button(70, 720, 50, 50) {
             public void draw(final PGraphics $graphics) {
                 $graphics.pushMatrix();
                 $graphics.translate(this.x, this.y);
@@ -122,7 +122,7 @@ public class Board implements Screen {
             }
         });
 
-        execButton = new Button(190, 520, 135, 50) {
+        execButton = new Button(190, 720, 135, 50) {
             public void draw(final PGraphics $graphics) {
                 $graphics.pushMatrix();
                 $graphics.translate(this.x, this.y);
@@ -143,7 +143,7 @@ public class Board implements Screen {
             }
         });
 
-        resetButton = new Button(335, 520, 135, 50) {
+        resetButton = new Button(335, 720, 135, 50) {
             public void draw(final PGraphics $graphics) {
                 $graphics.pushMatrix();
                 $graphics.translate(this.x, this.y);
@@ -222,8 +222,11 @@ public class Board implements Screen {
     }
 
     public void draw(final PGraphics $graphics) {
-        $graphics.fill(255, 255, 255);
+        $graphics.fill(0xFF000000);
         $graphics.rect(0, 0, Game.WIDTH, Game.HEIGHT);
+
+        $graphics.pushMatrix();
+        $graphics.translate(0, 140);
         // Set up the graphics mode to correcty draw the blocks
         // and draw each block.
         $graphics.rectMode(PGraphics.CORNER);
@@ -239,18 +242,20 @@ public class Board implements Screen {
         // Draw the player.
         _player.draw($graphics);
 
-        $graphics.pushMatrix();
+        // Draw the HUD text.
         $graphics.translate(0, 480);
-
-        $graphics.fill(255, 255, 255);
-        $graphics.rect(0, 0, _dims.x, 30);
-        $graphics.fill(0, 0, 0);
         $graphics.textFont(Game.font);
+        $graphics.fill(0xFFFFFFFF);
         $graphics.text("Treasure: " + _player.getTreasureCount(), 5, 22);
         $graphics.text("Food: " + _player.getFoodCount(), 100, 22);
         $graphics.text("Score: " + _player.getScore(), 175, 22);
+
+        // Draw the button panel.
+        $graphics.translate(0, 90);
+        $graphics.rect(0, 0, Game.WIDTH, 70);
         $graphics.popMatrix();
 
+        // Draw the buttons.
         nextLevelButton.draw($graphics);
         previousLevelButton.draw($graphics);
         editorButton.draw($graphics);

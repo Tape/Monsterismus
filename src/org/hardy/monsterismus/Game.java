@@ -25,7 +25,7 @@ public class Game {
 
     public static final int BOARD_SIZE = 10;
     public static final int WIDTH = BOARD_SIZE * Block.SIZE;
-    public static final int HEIGHT = BOARD_SIZE * Block.SIZE + 100;
+    public static final int HEIGHT = BOARD_SIZE * Block.SIZE + 300;
 
     public static Screen screen, splash;
     public static Board board;
