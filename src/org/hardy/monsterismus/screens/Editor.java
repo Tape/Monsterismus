@@ -240,10 +240,17 @@ public class Editor implements Screen {
                             // We are getting the instance under the cursor (which could just be the
                             // same element!)
                             StatementInstance nested = instance.instanceUnder(x, y);
-                            if (nested != null && nested.isNestable()) {
-                                Nestable nestable = (Nestable) nested;
-                                nestable.addChild(_instance);
-                                break;
+                            if (nested != null) {
+                                // Check if this is a child node; we care more about the parent.
+                                if (nested.isChild() && ! nested.isNestable()) {
+                                    nested = (StatementInstance) nested.getParent();
+                                }
+
+                                if (nested.isNestable()) {
+                                    Nestable nestable = (Nestable) nested;
+                                    nestable.addChild(_instance);
+                                    break;
+                                }
                             }
 
                             if (pos.y > y) {

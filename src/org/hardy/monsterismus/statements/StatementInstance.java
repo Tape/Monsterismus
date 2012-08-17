@@ -69,7 +69,16 @@ public abstract class StatementInstance implements Drawable {
      * @return true if no parent exists, false otherwise.
      */
     public boolean isChild() {
-        return _parent == null;
+        return _parent != null;
+    }
+
+    /**
+     * Gets the parent of this instance.
+     * 
+     * @return the parent.
+     */
+    public Nestable getParent() {
+        return _parent;
     }
 
     /**
