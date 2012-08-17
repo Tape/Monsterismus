@@ -5,6 +5,8 @@ import org.hardy.monsterismus.blocks.Block;
 import org.hardy.monsterismus.screens.Board;
 import org.hardy.monsterismus.screens.Editor;
 
+import processing.core.PFont;
+
 import android.view.MotionEvent;
 
 /**
@@ -28,6 +30,7 @@ public class Game {
     public static Screen screen, splash;
     public static Board board;
     public static Editor editor;
+    public static PFont font;
 
     public static void switchScreen(int s) {
         switch (s) {
