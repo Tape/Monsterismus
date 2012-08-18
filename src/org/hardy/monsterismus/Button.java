@@ -1,7 +1,6 @@
 package org.hardy.monsterismus;
 
 import org.hardy.monsterismus.api.Drawable;
-
 import processing.core.PImage;
 
 /**
@@ -15,7 +14,7 @@ import processing.core.PImage;
  */
 public abstract class Button implements Drawable {
     public static PImage execute, leveldown, levelup, reset, swap, play, tutorial;
-
+    
     public int x, y, w, h;
     public boolean clicked;
     public Runnable run;
