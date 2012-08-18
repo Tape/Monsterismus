@@ -28,6 +28,5 @@ public final class R {
         public static final int treasure=0x7f02000e;
         public static final int tutorialbtn=0x7f02000f;
         public static final int up=0x7f020010;
-        public static final int waterhole=0x7f020011;
     }
 }
