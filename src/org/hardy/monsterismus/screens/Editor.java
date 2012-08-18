@@ -65,10 +65,10 @@ public class Editor implements Screen {
     private Button boardButton;
 
     public Editor(final PVector $dims) {
-        _toolbar = new PVector($dims.x * 0.15f, $dims.y);
+        _toolbar = new PVector(89, $dims.y);
 
         _icon_bounds = (int) _toolbar.x;
-        _icon_offset = (int) (_icon_bounds * 0.1f);
+        _icon_offset = 7;
         _icon_size = _icon_bounds - _icon_offset * 2;
         _instances = Collections.synchronizedList(new LinkedList<StatementInstance>());
 
@@ -128,8 +128,7 @@ public class Editor implements Screen {
         int offset = 0;
         for (String statement : _statements.keySet()) {
             ProgrammingStatement ps = _statements.get(statement);
-            $graphics.fill(ps.getColor());
-            $graphics.rect(_icon_offset, offset + _icon_offset, _icon_size, _icon_size);
+            $graphics.image(ps.getImage(), _icon_offset, offset + _icon_offset);
 
             offset += _icon_bounds;
         }

@@ -20,8 +20,8 @@ public class MoveStatement extends ProgrammingStatement {
     private static final int BASE_HEIGHT = 40;
     public static PImage image;
 
-    public int getColor() {
-        return FILL_COLOR;
+    public PImage getImage() {
+        return image;
     }
 
     public StatementInstance spawnInstance() {

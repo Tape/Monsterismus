@@ -21,14 +21,14 @@ public class IfStatement extends ProgrammingStatement {
     private static final int BASE_WIDTH = 300;
     private static final int BASE_HEIGHT = 90;
     public static PImage image;
-    private static final String STATEMENT ="Statement";
+    private static final String STATEMENT = "Statement";
 
-    public int getColor() {
-        return FILL_COLOR;
+    public PImage getImage() {
+        return image;
     }
 
     public StatementInstance spawnInstance() {
-    	Log.i(STATEMENT, "new if else statement");
+        Log.i(STATEMENT, "new if else statement");
         return new IfStatementInstance();
     }
 

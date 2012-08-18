@@ -3,6 +3,7 @@ package org.hardy.monsterismus;
 import org.hardy.monsterismus.blocks.*;
 import org.hardy.monsterismus.screens.*;
 import org.hardy.monsterismus.statements.IfStatement;
+import org.hardy.monsterismus.statements.MoveStatement;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -42,6 +43,8 @@ public class Monsterismus extends PApplet {
         Block.img = loadImage(org.hardy.monsterismus.R.drawable.grass);
         FoodBlock.img = loadImage(org.hardy.monsterismus.R.drawable.food);
         TreasureBlock.img = loadImage(org.hardy.monsterismus.R.drawable.treasure);
+        IfStatement.image = loadImage(org.hardy.monsterismus.R.drawable.ifbtn);
+        MoveStatement.image = loadImage(org.hardy.monsterismus.R.drawable.dobtn);
 
         Player.imgs = new PImage[5];
         Player.imgs[Player.Movement.UP.dir] = loadImage(org.hardy.monsterismus.R.drawable.up);

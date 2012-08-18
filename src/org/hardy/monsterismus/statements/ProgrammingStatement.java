@@ -1,5 +1,7 @@
 package org.hardy.monsterismus.statements;
 
+import processing.core.PImage;
+
 /**
  * 
  * @author David Kosub
@@ -9,7 +11,6 @@ package org.hardy.monsterismus.statements;
  * @author Carlos Martinez
  */
 public abstract class ProgrammingStatement {
-    public abstract int getColor();
 
     /**
      * Spawns an instance of the statement type.
@@ -17,4 +18,6 @@ public abstract class ProgrammingStatement {
      * @return the spawned instance.
      */
     public abstract StatementInstance spawnInstance();
+
+    public abstract PImage getImage();
 }
