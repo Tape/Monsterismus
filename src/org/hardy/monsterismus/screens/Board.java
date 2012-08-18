@@ -4,6 +4,7 @@ import processing.core.PVector;
 import processing.core.PGraphics;
 
 import android.graphics.Point;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import org.hardy.monsterismus.Button;
@@ -31,6 +32,7 @@ public class Board implements Screen {
     private Player _player;
     private int level, _foodcount;
     private boolean _running = false, _reset = true;
+    private static final String LEVEL ="Level";
 
     private Button nextLevelButton, previousLevelButton, editorButton, execButton, resetButton;
 
@@ -337,24 +339,34 @@ public class Board implements Screen {
     private static int[][] getLevel(int level) {
         switch (level) {
         case 0:
+        	Log.i(LEVEL,"level is 0");
             return LEVEL_0;
         case 1:
+        	Log.i(LEVEL,"level is 1");
             return LEVEL_1;
         case 2:
+        	Log.i(LEVEL,"level is 2");
             return LEVEL_2;
         case 3:
+        	Log.i(LEVEL,"level is 3");
             return LEVEL_3;
         case 4:
+        	Log.i(LEVEL,"level is 4");
             return LEVEL_4;
         case 5:
+        	Log.i(LEVEL,"level is 5");
             return LEVEL_5;
         case 6:
+        	Log.i(LEVEL,"level is 6");
             return LEVEL_6;
         case 7:
+        	Log.i(LEVEL,"level is 7");
             return LEVEL_7;
         case 8:
+        	Log.i(LEVEL,"level is 8");
             return LEVEL_8;
         case 9:
+        	Log.i(LEVEL,"level is 9");
             return LEVEL_9;
         default:
             return generateRandomLevel();

@@ -18,6 +18,8 @@ import android.view.MotionEvent;
  * @author Carlos Martinez
  */
 public class Game {
+
+	
     public static final int BOARD = 1;
     public static final int EDITOR = 2;
     public static final int TUTORIAL = 3;
