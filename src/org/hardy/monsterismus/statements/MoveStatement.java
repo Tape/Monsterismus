@@ -4,6 +4,7 @@ import org.hardy.monsterismus.Player;
 import org.hardy.monsterismus.screens.Board;
 
 import processing.core.PGraphics;
+import processing.core.PImage;
 
 /**
  * 
@@ -17,6 +18,7 @@ public class MoveStatement extends ProgrammingStatement {
     private static final int FILL_COLOR = 0xFF00FF00;
     private static final int BASE_WIDTH = 100;
     private static final int BASE_HEIGHT = 40;
+    public static PImage image;
 
     public int getColor() {
         return FILL_COLOR;

@@ -2,6 +2,7 @@ package org.hardy.monsterismus;
 
 import org.hardy.monsterismus.blocks.*;
 import org.hardy.monsterismus.screens.*;
+import org.hardy.monsterismus.statements.IfStatement;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

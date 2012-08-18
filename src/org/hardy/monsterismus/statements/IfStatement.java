@@ -4,6 +4,7 @@ import org.hardy.monsterismus.api.Nestable;
 import org.hardy.monsterismus.statements.conditionals.Conditional;
 
 import processing.core.PGraphics;
+import processing.core.PImage;
 
 /**
  * 
@@ -17,6 +18,7 @@ public class IfStatement extends ProgrammingStatement {
     private static final int FILL_COLOR = 0xFFFF0000;
     private static final int BASE_WIDTH = 300;
     private static final int BASE_HEIGHT = 90;
+    public static PImage image;
 
     public int getColor() {
         return FILL_COLOR;
