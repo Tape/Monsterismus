@@ -68,7 +68,7 @@ public class SplashScreen implements Screen {
         $graphics.text("Carlos Martinez", 75, 505);
 
         // Draw buttons.
-        _tutorial_button.draw($graphics);
+        //_tutorial_button.draw($graphics);
         _play_button.draw($graphics);
     }
 
@@ -76,11 +76,11 @@ public class SplashScreen implements Screen {
         int x = (int) $event.getX(), y = (int) $event.getY();
         switch ($event.getAction()) {
         case MotionEvent.ACTION_DOWN:
-            _tutorial_button.isClicked(x, y);
+            //_tutorial_button.isClicked(x, y);
             _play_button.isClicked(x, y);
             break;
         case MotionEvent.ACTION_UP:
-            _tutorial_button.release();
+            //_tutorial_button.release();
             _play_button.release();
             break;
         }
